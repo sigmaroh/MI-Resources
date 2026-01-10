@@ -4,21 +4,21 @@
 **Mean Squared Error (MSE)** is a common loss function used in regression problems to measure the average squared difference between predicted values and actual observed values.
 
 ## Formula
-\[
-\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-\]
+Mean Squared Error (MSE) is calculated as:
+
+MSE = (1/n) × Σ(yᵢ - ŷᵢ)²
 
 Where:
-- \( n \) = number of data points
-- \( y_i \) = actual value for the \( i \)-th data point
-- \( \hat{y}_i \) = predicted value for the \( i \)-th data point
+- n = number of data points
+- yᵢ = actual value for the i-th data point
+- ŷᵢ = predicted value for the i-th data point
 
 ## Calculation Steps
 1. **Compute predictions** using your model
-2. **Calculate errors**: \( e_i = y_i - \hat{y}_i \)
-3. **Square each error**: \( e_i^2 \)
+2. **Calculate errors**: eᵢ = yᵢ - ŷᵢ
+3. **Square each error**: (eᵢ)²
 4. **Sum all squared errors**
-5. **Divide by \( n \)** to get the average
+5. **Divide by n** to get the average
 
 ## Example
 Given predictions and actual values:
