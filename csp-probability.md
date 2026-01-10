@@ -498,6 +498,150 @@ So the final domains are:
 
 ---
 
+```md
+# Generalized Arc Consistency (GAC) – Step-by-Step Execution
+
+## Constraint Network γ = (V, D, C)
+
+### Variables
+V = {a, b, c, d}
+
+### Domains (initial)
+Da = Db = Dc = Dd = {1,2,3,4,5,6,7,8,9,10}
+
+### Constraints
+- c1: 2|a − c| > 3
+- c2: b² − 3d < 9
+- c3: b + 3 < c
+
+---
+
+## Initial To-do-arcs (lexicographic, FIFO)
+
+To-do-arcs₀ =
+[(a,c1), (c,c1), (b,c2), (d,c2), (b,c3), (c,c3)]
+
+---
+
+## GAC Execution
+
+### Iteration 1
+**To-do-arcs**:  
+[(a,c1), (c,c1), (b,c2), (d,c2), (b,c3), (c,c3)]
+
+**Removed**: (a,c1)
+
+**Revise result**:  
+Da = {1,2,3,4,5,6,7,8,9,10}
+
+**Added to M**: ∅
+
+---
+
+### Iteration 2
+**Removed**: (c,c1)
+
+**Revise result**:  
+Dc = {1,2,3,4,5,6,7,8,9,10}
+
+**Added to M**: ∅
+
+---
+
+### Iteration 3
+**Removed**: (b,c2)
+
+Constraint: b² − 3d < 9
+
+**Revise result**:  
+Db = {1,2,3,4,5,6}
+
+**Added to M**:  
+(d,c2)
+
+---
+
+### Iteration 4
+**Removed**: (d,c2)
+
+Constraint: b² − 3d < 9, with Db = {1,…,6}
+
+**Revise result**:  
+Dd = {10}
+
+**Added to M**:  
+(b,c2)
+
+---
+
+### Iteration 5
+**Removed**: (b,c3)
+
+Constraint: b + 3 < c
+
+**Revise result**:  
+Db = {1,2,3,4,5,6}
+
+**Added to M**: ∅
+
+---
+
+### Iteration 6
+**Removed**: (c,c3)
+
+Constraint: b + 3 < c, with Db = {1,…,6}
+
+**Revise result**:  
+Dc = {5,6,7,8,9,10}
+
+**Added to M**:  
+(b,c3)
+
+---
+
+### Iteration 7
+**Removed**: (d,c2)
+
+**Revise result**:  
+Dd = {10}
+
+**Added to M**: ∅
+
+---
+
+### Iteration 8
+**Removed**: (b,c2)
+
+**Revise result**:  
+Db = {1,2,3,4,5,6}
+
+**Added to M**: ∅
+
+---
+
+### Iteration 9
+**Removed**: (b,c3)
+
+**Revise result**:  
+Db = {1,2,3,4,5,6}
+
+**Added to M**: ∅
+
+---
+
+## Final GAC Domains
+
+- Da = {1,2,3,4,5,6,7,8,9,10}
+- Db = {1,2,3,4,5,6}
+- Dc = {5,6,7,8,9,10}
+- Dd = {10}
+
+---
+
+**GAC reached**: To-do-arcs is empty.
+```
+
+
 
 # README: Variable Elimination Algorithm for CSPs
 
@@ -536,6 +680,7 @@ In the variable elimination algorithm for CSPs (Constraint Satisfaction Problems
 So the process is not about removing constraints, but about eliminating variables by combining the relevant constraint tables.
 
 **Answer: b**
+
 
 
 
