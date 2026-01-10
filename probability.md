@@ -1,4 +1,4 @@
-# Generalized Arc Consistency on a Constraint Network
+# Arc Consistency on a Constraint Network
 This task involves applying the Generalized Arc Consistency (GAC) algorithm to the constraint network γ = (V, D, C):
 
 ## Problem Statement
