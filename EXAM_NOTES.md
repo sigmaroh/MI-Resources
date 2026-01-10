@@ -6,916 +6,1055 @@
 
 ## 📖 Table of Contents
 
-1. [Machine Learning Basics](#1-machine-learning-basics)
-2. [K-Nearest Neighbors (K-NN)](#2-k-nearest-neighbors-k-nn)
-3. [Linear Regression & MSE](#3-linear-regression--mse)
-4. [Neural Networks](#4-neural-networks)
-5. [Constraint Satisfaction Problems (CSP)](#5-constraint-satisfaction-problems-csp)
+1. [Agents](#1-agents)
+2. [Search Algorithms](#2-search-algorithms)
+3. [Constraint Satisfaction Problems (CSP)](#3-constraint-satisfaction-problems-csp)
+4. [Planning](#4-planning)
+5. [Game Trees & Minimax](#5-game-trees--minimax)
 6. [Probability & Independence](#6-probability--independence)
 7. [Bayesian Networks](#7-bayesian-networks)
-8. [Search Algorithms](#8-search-algorithms)
-9. [Game Trees & Minimax](#9-game-trees--minimax)
-10. [Markov Decision Processes (MDPs)](#10-markov-decision-processes-mdps)
-11. [Reinforcement Learning & Q-Learning](#11-reinforcement-learning--q-learning)
-12. [Key Exam Concepts](#12-key-exam-concepts)
+8. [Bayesian Network Inference](#8-bayesian-network-inference)
+9. [Machine Learning Basics](#9-machine-learning-basics)
+10. [K-Nearest Neighbors (K-NN)](#10-k-nearest-neighbors-k-nn)
+11. [Linear Regression & MSE](#11-linear-regression--mse)
+12. [Neural Networks](#12-neural-networks)
+13. [Learning Evaluation](#13-learning-evaluation)
+14. [Clustering](#14-clustering)
+15. [Markov Decision Processes (MDPs)](#15-markov-decision-processes-mdps)
+16. [Reinforcement Learning & Q-Learning](#16-reinforcement-learning--q-learning)
+17. [Key Exam Concepts](#17-key-exam-concepts)
 
 ---
 
-## 1. Machine Learning Basics
+## 1. Agents
+
+**Agent:** An entity that perceives its environment through sensors and acts upon it through actuators.
+
+**Rational Agent:** Selects actions that maximize expected performance measure given percept sequence and built-in knowledge.
+
+### PEAS Framework
+
+To design an agent, specify:
+- **P**erformance measure: How we evaluate success
+- **E**nvironment: What the agent operates in  
+- **A**ctuators: How agent acts on environment
+- **S**ensors: How agent perceives environment
+
+**Example - Self-Driving Car:**
+- P: Safety, speed, legality, comfort, profit
+- E: Roads, traffic, pedestrians, weather
+- A: Steering, accelerator, brake, horn, display
+- S: Cameras, sonar, GPS, speedometer, engine sensors
+
+### Agent Types
+
+| Type | Description | Chooses Action Based On |
+|------|-------------|------------------------|
+| **Simple Reflex** | Condition-action rules | Current percept only |
+| **Model-Based** | Maintains internal state | Current percept + internal model |
+| **Goal-Based** | Plans to reach goals | Goals + how world evolves |
+| **Utility-Based** | Maximizes utility function | Expected utility of outcomes |
+| **Learning** | Improves over time | All above + learning element |
+
+### Environment Properties
+
+| Property | Options | Example |
+|----------|---------|---------|
+| **Observable** | Fully / Partially | Chess (fully) vs Poker (partially) |
+| **Deterministic** | vs Stochastic | Chess (deterministic) vs Dice game (stochastic) |
+| **Episodic** | vs Sequential | Image classification vs Chess |
+| **Static** | vs Dynamic | Crossword (static) vs Self-driving (dynamic) |
+| **Discrete** | vs Continuous | Chess (discrete) vs Taxi driving (continuous) |
+| **Single-agent** | vs Multi-agent | Puzzle (single) vs Soccer (multi) |
+
+**Hardest environment:** Partially observable, stochastic, sequential, dynamic, continuous, multi-agent
+
+---
+
+## 2. Search Algorithms
+
+**Uninformed:**
+
+| Alg | Complete | Optimal | Space     | Time      |
+|-----|----------|---------|-----------|-----------|
+| BFS | Yes      | Yes*    | O(b^d)    | O(b^d)    |
+| DFS | No**     | No      | O(bd)     | O(b^m)    |
+| UCS | Yes      | Yes     | O(b^d)    | O(b^d)    |
+
+*If step costs same.  
+**Complete if finite search space.
+
+**Informed:**
+
+- **A\***: $f(n)=g(n)+h(n)$  
+    - $g(n)$ = cost so far  
+    - $h(n)$ = heuristic  
+    - Admissible $h$ = never overestimates
+    - Consistent $h$: $h(n) \leq cost(n,n') + h(n')$
+
+---
+
+## 3. Constraint Satisfaction Problems (CSP)
+
+**Key Concepts:**
+- *Variables*: $V=\{a, b, c, d, ...\}$
+- *Domains*: possible values for each variable
+- *Constraints*: rules that limit combinations
+
+**GAC (Generalized Arc Consistency):**
+- For every variable's value, there must be some compatible value in other variables (as per constraints)
+- Prune by removing unsupported values
+- Repeat until "stuck"
+
+**Examples:**
+
+***Simple CSP:***
+- $V = \{a, b, c, d\}, D = \{1,2,3,4,5\}$
+- a + 2 < d; b × d < 6; a + c < 6  
+After GAC:
+- a ∈ {1,2}
+- b ∈ {1}
+- c ∈ {1,2,3,4}
+- d ∈ {4,5}
+
+***Equality/Inequality constraints:***
+- $V = \{a,b,c,d\}$, $D = \{1,2,3\}$
+- b = a, b > c, a ≠ c, c ≠ d, d ≤ a  
+After GAC:
+- a ∈ {2,3}
+- b ∈ {2,3}
+- c ∈ {1,2}
+- d ∈ {1,2,3}
+
+**Variable Elimination:**  
+- Construct tables per constraint
+- At each step, combine tables and eliminate a variable
+
+---
+
+## 4. Planning
+
+**Planning Problem:** Find sequence of actions to reach goal state from initial state.
+
+### STRIPS Representation
+
+**State:** Conjunction of facts (ground atoms)  
+**Goal:** Conjunction of literals  
+**Action:** (preconditions, effects)
+
+**Example Action:** *Fly(p, from, to)*
+- **Precondition:** At(p, from), Plane(p), Airport(from), Airport(to)
+- **Effect:** ¬At(p, from), At(p, to)
+
+### Forward (Progression) Search
+- Start from initial state
+- Apply applicable actions
+- Check if goal reached
+- **Branching factor:** All applicable actions in current state
+
+### Backward (Regression) Search  
+- Start from goal
+- Find actions that achieve goal
+- Regress to find what must be true before
+- **Branching factor:** Actions relevant to current goal
+
+### Planning Graphs
+
+**Structure:**
+- Alternating state levels and action levels
+- S₀ → A₀ → S₁ → A₁ → S₂ ...
+
+**Mutexes (Mutual Exclusions):**
+- **Inconsistent effects:** One action negates effect of another
+- **Interference:** Effect of one deletes precondition of other
+- **Competing needs:** Preconditions are mutex
+
+**Heuristics from Planning Graph:**
+- **Level cost:** First level where all goal literals appear
+- **Max-level:** Max of individual goal literal first appearances
+- **Set-level:** First level where all goals appear non-mutex
+
+### GraphPlan Algorithm
+1. Expand planning graph until all goals appear non-mutex
+2. Try to extract solution (backward search in graph)
+3. If extraction fails, expand graph further
+4. Repeat until solution found or proven impossible
+
+---
+
+## 5. Game Trees & Minimax
+
+**Minimax:**
+- Max nodes pick max of children
+- Min nodes pick min
+
+Pseudocode:
+```pseudo
+function MINIMAX(node, depth, maximizingPlayer):
+    if depth == 0 or node is terminal:
+        return evaluation(node)
+    if maximizingPlayer:
+        value = -∞
+        for each child:
+            value = max(value, MINIMAX(child, depth-1, false))
+        return value
+    else:
+        value = +∞
+        for each child:
+            value = min(value, MINIMAX(child, depth-1, true))
+        return value
+```
+
+**Alpha-beta pruning:**  
+Keep track of best value for max ($\alpha$), min ($\beta$). Prune when $\alpha \geq \beta$.
+
+- Alpha-beta gives same answer as minimax, but fewer nodes.
+- Best case: O(b^(d/2))
+
+---
+
+## 6. Probability & Independence
+
+**Definition of Independence:**  
+$P(X,Y) = P(X)P(Y)$ (for all values of X & Y)
+
+**Example Table:**
+
+|        | Disc=yes | Disc=no | P(Pos) |
+|--------|----------|---------|--------|
+| Pos=Y  | 0.03     | 0.27    | 0.30   |
+| Pos=N  | 0.07     | 0.63    | 0.70   |
+| P(Disc)| 0.10     | 0.90    |        |
+
+All combinations match:  
+e.g., $0.03 = 0.30×0.10$, $0.27 = 0.30×0.90$... so Positive ⟂ Discount
+
+**Useful Probability Rules:**
+- $P(A,B) = P(A|B) \cdot P(B)$
+- Chain: $P(A,B,C) = P(A)P(B|A)P(C|A,B)$
+- Bayes: $P(A|B) = P(B|A)P(A)/P(B)$
+- Marginal: $P(X) = \sum_y P(X,Y=y)$
+
+---
+
+## 7. Bayesian Networks
+
+- **Bayesian Network**: DAG with CPTs at each node
+- Encodes conditional independencies.
+
+**Example Structure:**
+- Q → S, Q → P, Q → B
+- C → S, C → B
+- S → P, S → B
+- P → B
+
+**CPT Size:**
+- General: $|Dom(X)| \times$ (product of parent sizes)
+- Table:
+
+| Var | Parents    | CPT            | #Entries      |
+|-----|------------|----------------|--------------|
+| Q   | none       | P(Q)           | 5            |
+| C   | none       | P(C)           | 4            |
+| S   | Q, C       | P(S|Q,C)       | 3×5×4 = 60   |
+| P   | Q, S       | P(P|Q,S)       | 3×5×3 = 45   |
+| B   | Q,S,C,P    | P(B|Q,S,C,P)   | 2×5×3×4×3=360|
+
+**Chain Rule:**  
+$P(Q,C,S,P,B) = P(Q)P(C)P(S|Q,C)P(P|Q,S)P(B|Q,S,C,P)$
+
+---
+
+## 8. Bayesian Network Inference
+
+### Exact Inference: Variable Elimination
+
+**Goal:** Compute P(X|e) for query variable X given evidence e
+
+**Algorithm:**
+1. **Start with factors:** One for each CPT
+2. **Join factors:** Multiply factors that share variables
+3. **Eliminate (sum out):** For each hidden variable:
+   - Join all factors containing it
+   - Sum over that variable's values
+4. **Normalize:** Final factor gives unnormalized P(X, e)
+
+**Example:** P(B|j,m) in Burglary network
+
+```
+Factors: P(B), P(E), P(A|B,E), P(J|A), P(M|A)
+Evidence: J=true, M=true
+
+1. Eliminate E:
+   - Join P(E), P(A|B,E) → f₁(B,A)
+   - Sum over E: f₁(B,A) = Σₑ P(E=e) P(A|B,e)
+
+2. Eliminate A:  
+   - Join f₁(B,A), P(J|A), P(M|A) → f₂(B)
+   - Sum over A: f₂(B) = Σₐ f₁(B,a) P(j|a) P(m|a)
+
+3. Final:
+   - Multiply by P(B), normalize
+```
+
+**Complexity:** O(n × d^(w+1)) where w = induced width (treewidth)
+
+### Approximate Inference: Sampling
+
+**Direct Sampling:**
+1. Sample variables in topological order
+2. Use CPTs to determine probabilities
+3. Count samples matching query
+
+**Rejection Sampling:**
+- Generate samples, reject those inconsistent with evidence
+- Very inefficient if evidence is rare
+
+**Likelihood Weighting:**
+- Fix evidence variables
+- Sample only non-evidence variables
+- Weight each sample by P(evidence | parents)
+
+**Gibbs Sampling (MCMC):**
+- Start with random assignment
+- Sample each non-evidence variable given others
+- After burn-in, collect samples
+- More efficient for rare evidence
+
+---
+
+## 9. Machine Learning Basics
 
 ### Types of Learning
 
-#### **Supervised Learning**
-- Training dataset **is labeled** with target features
-- Goal: Learn mapping from inputs to outputs
+**Supervised Learning**
+- Training data is **labeled**
+- Learn a mapping from inputs to outputs
 - Examples: Classification, Regression
 
-#### **Unsupervised Learning**
-- Training dataset is **NOT labeled** with target features
-- Goal: Find patterns, structures, groupings in data
+**Unsupervised Learning**
+- Training data is **not labeled**
+- Find patterns, structure, or groups in the data
 - Examples: Clustering, Dimensionality Reduction
 
-#### **Reinforcement Learning**
-- Agent learns through interaction with environment
-- Receives rewards/penalties for actions
-- Goal: Maximize cumulative reward over time
+**Reinforcement Learning**
+- Agent interacts with environment; receives rewards/penalties
+- Goal: Maximize total reward over time
 
 ---
 
 ### Overfitting vs. Underfitting
 
-| Condition | Train Error | Test Error | Interpretation |
-|-----------|-------------|------------|----------------|
-| **Overfitting** | Low | High | Model memorizes training data, doesn't generalize |
-| **Underfitting** | High | High | Model too simple, can't capture patterns |
-| **Good Fit** | Low | Low | Model generalizes well |
+| Condition     | Train Error | Test Error | Interpretation                              |
+|---------------|-------------|------------|----------------------------------------------|
+| Overfitting   | Low         | High       | Memorizes training data, can't generalize    |
+| Underfitting  | High        | High       | Too simple, misses patterns                  |
+| Good Fit      | Low         | Low        | Generalizes well                             |
 
-**Key Point:** Overfitting = **Train error is low but test error is high**
+> **Key:** Overfitting = Low train error, high test error
 
 ---
 
 ### Model Selection
 
-**Q: How to choose the best model for classification?**
-- **Answer:** Depends on the application
-- Different metrics for different goals:
-  - **Accuracy**: Overall correctness
-  - **Precision**: Of predicted positives, how many are correct?
-  - **Recall**: Of actual positives, how many were found?
-  - **F1-Score**: Harmonic mean of precision and recall
+How do you choose the best model for classification?
+- It **depends on the metric that's most important** for your application:
+    - **Accuracy:** % predicted correctly overall
+    - **Precision:** Of predicted positives, what percent were correct?
+    - **Recall:** Of actual positives, what percent did we find?
+    - **F1-Score:** Harmonic mean of precision & recall
+
+---
+
+## 10. K-Nearest Neighbors (K-NN)
+
+**Supervised Learning**
+- Training data is **labeled**
+- Learn a mapping from inputs to outputs
+- Examples: Classification, Regression
+
+**Unsupervised Learning**
+- Training data is **not labeled**
+- Find patterns, structure, or groups in the data
+- Examples: Clustering, Dimensionality Reduction
+
+**Reinforcement Learning**
+- Agent interacts with environment; receives rewards/penalties
+- Goal: Maximize total reward over time
+
+---
+
+### Overfitting vs. Underfitting
+
+| Condition     | Train Error | Test Error | Interpretation                              |
+|---------------|-------------|------------|----------------------------------------------|
+| Overfitting   | Low         | High       | Memorizes training data, can't generalize    |
+| Underfitting  | High        | High       | Too simple, misses patterns                  |
+| Good Fit      | Low         | Low        | Generalizes well                             |
+
+> **Key:** Overfitting = Low train error, high test error
+
+---
+
+### Model Selection
+
+How do you choose the best model for classification?
+- It **depends on the metric that's most important** for your application:
+    - **Accuracy:** % predicted correctly overall
+    - **Precision:** Of predicted positives, what percent were correct?
+    - **Recall:** Of actual positives, what percent did we find?
+    - **F1-Score:** Harmonic mean of precision & recall
 
 ---
 
 ## 2. K-Nearest Neighbors (K-NN)
 
-### Algorithm Overview
-1. Calculate distance from new point to all training points
-2. Select K nearest neighbors
-3. Classify based on majority vote (classification) or average (regression)
+**Algorithm Steps**
+1. Compute distances to all training points
+2. Select K closest neighbors
+3. For classification: **vote** among labels; for regression: **average**
 
-### Distance Metrics
+**Distance Metrics:**
+- **Euclidean:** For continuous/mixed features  
+  $$d = \sqrt{(\text{CategoricalDist})^2 + (f_2^\text{new} - f_2^i)^2}$$
+- **Manhattan:**  
+  $$d = \text{CategoricalDist}(F1) + |F2_\text{new} - F2_i|$$
 
-#### **Euclidean Distance**
-For mixed features (categorical + numerical):
+**Example with Categorical + Numerical Features**
 
-\[
-d_{euclidean} = \sqrt{\text{CategoricalDist}^2 + (f_2^{new} - f_2^i)^2}
-\]
-
-#### **Manhattan Distance**
-For mixed features:
-
-\[
-d_{manhattan} = \text{CategoricalDist}(F1) + |F2_{new} - F2_i|
-\]
-
-### Example with Mixed Features
-
-**Setup:**
-- Feature 1: Categorical {1, 2, 3} with distance table
-- Feature 2: Numerical
-
-**Distance Table for Feature 1:**
+Distance table (Feature 1: Categorical):
 
 |     | 1  | 2  | 3  |
-|-----|----|----|----| 
+|-----|----|----|----|
 | 1   | 0  | 20 | 60 |
 | 2   | 20 | 0  | 35 |
 | 3   | 60 | 35 | 0  |
 
-**Dataset:**
+Dataset:
 
 | ID | F1 | F2  | Class |
-|----|----| ----|-------|
+|----|----|-----|-------|
 | 1  | 2  | 88  | A     |
 | 2  | 2  | 80  | A     |
 | 3  | 3  | 110 | A     |
 | 4  | 1  | 69  | B     |
 | 5  | 2  | 77  | B     |
 
-**New observation:** F1=2, F2=67
+**Query:** F1=2, F2=67
 
-**Manhattan Distances:**
-- ID5: 0 + |67-77| = **10** (Class B)
-- ID2: 0 + |67-80| = **13** (Class A)
-- ID1: 0 + |67-88| = **21** (Class A)
-- ID4: 20 + |67-69| = **22** (Class B)
-- ID3: 35 + |67-110| = **78** (Class A)
+Manhattan Distances (|67-F2| plus categorical):
 
-**Results:**
-- **1-NN Manhattan:** Class **B** (ID5)
-- **3-NN Manhattan:** B, A, A → Class **A** (majority)
+- 5: 0 + |67-77| = **10** (B)
+- 2: 0 + |67-80| = **13** (A)
+- 1: 0 + |67-88| = **21** (A)
+- 4: 20 + |67-69| = **22** (B)
+- 3: 35 + |67-110| = **78** (A)
 
-**Euclidean Distances:**
-- ID5: √(0² + 10²) = **10.0** (Class B)
-- ID2: √(0² + 13²) = **13.0** (Class A)
-- ID4: √(20² + 2²) = **20.10** (Class B)
-- ID1: √(0² + 21²) = **21.0** (Class A)
-- ID3: √(35² + 43²) = **55.44** (Class A)
+Results:
+- 1-NN: **B** (ID5)
+- 3-NN: B, A, A → **A** (majority)
 
-**Results:**
-- **1-NN Euclidean:** Class **B** (ID5)
-- **3-NN Euclidean:** B, A, B → Class **B** (majority)
+Euclidean Distances:
 
----
+- 5: √(0² + 10²) = **10.0** (B)
+- 2: √(0² + 13²) = **13.0** (A)
+- 4: √(20² + 2²) ≈ **20.10** (B)
+- 1: √(0² + 21²) = **21.0** (A)
+- 3: √(35² + 43²) ≈ **55.44** (A)
 
-### K-NN and Overfitting
+Results:
+- 1-NN: **B** (ID5)
+- 3-NN: B, A, B → **B**
 
-**Q: Which value of K is more likely to lead to overfitting?**
-- **Answer:** **K=1** (smaller K values)
-- Smaller K → More sensitive to noise → Overfitting
-- Larger K → Smoother decision boundaries → Less overfitting
+**Overfitting:**  
+Low K (e.g. K=1) makes K-NN easily overfit to noise.  
+High K = more smoothing, less overfitting.
 
 ---
 
 ## 3. Linear Regression & MSE
 
-### Linear Regression Model
+**Model:**
+$$\hat{y} = w_0 + w_1x_1 + ... + w_nx_n$$
 
-\[
-\hat{y} = w_0 + w_1 x_1 + w_2 x_2 + ... + w_n x_n
-\]
+**MSE (Mean Squared Error):**
 
-Where:
-- \( \hat{y} \) = predicted value
-- \( w_0 \) = bias/intercept
-- \( w_i \) = coefficient for feature \( x_i \)
+$$
+MSE = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2
+$$
 
-### Mean Squared Error (MSE)
-
-\[
-MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-\]
-
-**Properties:**
-- Always non-negative
-- Penalizes large errors more (due to squaring)
+Properties:
+- Always ≥ 0
+- Bigger errors penalized extra
 - Lower MSE = better model
-- MSE = 0 means perfect predictions
 
-### Example Calculation
+**Example:**  
+Given weights $w_0=1$, $w_1=2$, $w_2=-1$
 
-**Given:**
-- w₀ = 1, w₁ = 2, w₂ = -1
+| x₁ | x₂ | y | ŷ | Error | Error² |
+|----|----|---|----|-------|--------|
+| 3  | 2  | 4 |  5 |   -1  |   1    |
+| 1  | 4  | 2 | -1 |    3  |   9    |
+| 2  | 0  | 1 |  5 |   -4  |  16    |
+| 1  | 1  | 3 |  2 |    1  |   1    |
+| 0  | 4  | -1| -3 |    2  |   4    |
 
-| x₁ | x₂ | y  | ŷ | Error | Squared Error |
-|----|----|----|----|-------|---------------|
-| 3  | 2  | 4  | 5  | -1    | 1             |
-| 1  | 4  | 2  | -1 | 3     | 9             |
-| 2  | 0  | 1  | 5  | -4    | 16            |
-| 1  | 1  | 3  | 2  | 1     | 1             |
-| 0  | 4  | -1 | -3 | 2     | 4             |
-
-**Predictions:**
-- Row 1: ŷ = 1 + 2(3) + (-1)(2) = 5
-- Row 2: ŷ = 1 + 2(1) + (-1)(4) = -1
-- Row 3: ŷ = 1 + 2(2) + (-1)(0) = 5
-- Row 4: ŷ = 1 + 2(1) + (-1)(1) = 2
-- Row 5: ŷ = 1 + 2(0) + (-1)(4) = -3
-
-**MSE = (1 + 9 + 16 + 1 + 4) / 5 = 31 / 5 = 6.2**
+MSE $=(1+9+16+1+4)/5 = 6.2$
 
 ---
 
 ## 4. Neural Networks
 
-### Backpropagation
+**Backpropagation:**  
+Weight update from neuron A to B depends on:
+- Error at neuron B
+- Input activation from A
+- Activation function
 
-**Q: What affects weight update from neuron A to neuron B?**
-
-Correct factors:
-- ✅ **a. The error term for neuron B**
-- ✅ **d. The input through that link during forward propagation**
-- ✅ **f. The type of activation function**
-
-**Weight Update Rule:**
-
-\[
+Update rule:  
+$$
 \Delta w_{AB} = \alpha \cdot \text{input}_A \cdot \text{error}_B \cdot \text{activation}'
-\]
+$$
+
+**Learning Rate ($\alpha$):**
+- Too small: slow learning
+- Too big: may not converge
+- Just right: fast, stable learning
+
+Gradient descent used for:  
+- Linear regression ✅  
+- Neural networks ✅  
+- NOT for: decision trees, k-NN, k-means
+
+**Learning rate controls:**  
+- how much you update weights
 
 ---
 
-### Learning Rate (α)
+## 13. Learning Evaluation
 
-**Q: Which statement is true about learning rate α in gradient descent?**
+### Train / Validation / Test Split
 
-✅ **Correct:** If the learning rate is very small, gradient descent can be slow to converge. If too large, gradient descent will overshoot.
+**Standard Practice:**
+- **Training Set** (60-70%): Learn model parameters
+- **Validation Set** (15-20%): Tune hyperparameters
+- **Test Set** (15-20%): Final evaluation (use ONCE!)
 
-**Learning Rate Effects:**
-- **Too small α:** Slow convergence, many iterations needed
-- **Too large α:** Overshooting, unstable, may diverge
-- **Optimal α:** Fast, stable convergence
+**Golden Rule:** NEVER use test data for training or model selection
+
+### Cross-Validation
+
+**K-Fold Cross-Validation:**
+1. Split data into K equal folds
+2. For each fold i:
+   - Train on all folds except i
+   - Test on fold i
+3. Average performance across all K runs
+
+**Benefits:**
+- Better use of limited data
+- More reliable performance estimate
+- Reduces variance in evaluation
+
+**Leave-One-Out (LOO):** K = n (number of examples)
+- Maximum data for training
+- Computationally expensive
+- Low bias, high variance
+
+**Stratified K-Fold:** Preserves class distribution in each fold
+
+### Confusion Matrix
+
+For binary classification:
+
+```
+              Predicted
+            Positive  Negative
+Actual Pos    TP        FN
+       Neg    FP        TN
+```
+
+**Metrics:**
+
+| Metric | Formula | Meaning |
+|--------|---------|---------|
+| **Accuracy** | (TP+TN)/Total | Overall correctness |
+| **Precision** | TP/(TP+FP) | Of predicted +, how many correct? |
+| **Recall (Sensitivity)** | TP/(TP+FN) | Of actual +, how many found? |
+| **Specificity** | TN/(TN+FP) | Of actual -, how many correct? |
+| **F1-Score** | 2×P×R/(P+R) | Harmonic mean of P and R |
+
+**Example:**
+
+```
+             Predicted
+           Cancer  Healthy
+Actual Can   90      10     (100 total)
+       Hea   20     880     (900 total)
+```
+
+- Accuracy = (90+880)/1000 = 0.97
+- Precision = 90/(90+20) = 0.818
+- Recall = 90/(90+10) = 0.90
+- F1 = 2×0.818×0.90/(0.818+0.90) = 0.857
+
+### When to Use Which Metric?
+
+| Scenario | Metric | Why |
+|----------|--------|-----|
+| Balanced classes | Accuracy | Treats all errors equally |
+| False positives costly | Precision | Minimize FP (e.g., spam filter) |
+| False negatives costly | Recall | Minimize FN (e.g., disease detection) |
+| Need balance | F1-Score | Balances precision and recall |
+| Imbalanced classes | F1, Precision, Recall | Accuracy can be misleading |
+
+### ROC Curve & AUC
+
+**ROC (Receiver Operating Characteristic):**
+- Plot: True Positive Rate (Recall) vs False Positive Rate
+- TPR = TP/(TP+FN)
+- FPR = FP/(FP+TN)
+- Each point = different classification threshold
+
+**AUC (Area Under Curve):**
+- AUC = 1.0: Perfect classifier
+- AUC = 0.5: Random classifier
+- AUC > 0.8: Good classifier
+
+**Benefits:**
+- Threshold-independent evaluation
+- Works well for imbalanced data
+- Compares classifiers easily
+
+### Bias-Variance Tradeoff
+
+**Bias:** Error from wrong assumptions
+- High bias → underfitting
+- Simple models have high bias
+
+**Variance:** Error from sensitivity to training data
+- High variance → overfitting
+- Complex models have high variance
+
+**Total Error = Bias² + Variance + Irreducible Error**
+
+**Goal:** Find sweet spot with low bias AND low variance
 
 ---
 
-### Gradient Descent Applicability
+## 14. Clustering
 
-**Which ML methods can use gradient descent?**
-- ✅ **Linear Regression**
-- ❌ Decision Trees (use splitting criteria)
-- ❌ K-means (uses expectation-maximization)
-- ❌ K-nearest neighbors (no training phase)
-- ✅ **Neural Networks** (backpropagation)
+### K-Means Clustering
+
+**Algorithm:**
+```
+1. Initialize K cluster centers (randomly or K-means++)
+2. Repeat until convergence:
+   a. Assignment step: Assign each point to nearest center
+   b. Update step: Move centers to mean of assigned points
+3. Stop when centers don't change (or change < threshold)
+```
+
+**Distance:** Usually Euclidean: $d(x,y) = \sqrt{\sum_i (x_i - y_i)^2}$
+
+**Example:**
+
+```
+Data: (1,1), (2,1), (4,3), (5,4)
+K = 2
+
+Initial centers: c₁=(1,1), c₂=(2,1)
+
+Iteration 1:
+- Assign: {(1,1), (2,1)} → c₁; {(4,3), (5,4)} → c₂
+- Update: c₁=(1.5,1), c₂=(4.5,3.5)
+
+Iteration 2:
+- Assign: {(1,1), (2,1)} → c₁; {(4,3), (5,4)} → c₂
+- Update: c₁=(1.5,1), c₂=(4.5,3.5)
+- No change → Stop
+```
+
+**Objective Function (Within-Cluster Sum of Squares):**
+$$
+WCSS = \sum_{k=1}^K \sum_{x \in C_k} ||x - \mu_k||^2
+$$
+
+K-means minimizes WCSS
+
+### Choosing K
+
+**Elbow Method:**
+- Plot WCSS vs K
+- Look for "elbow" where improvement slows
+- Diminishing returns after optimal K
+
+**Silhouette Score:**
+$$
+s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
+$$
+- a(i) = avg distance to points in same cluster
+- b(i) = avg distance to points in nearest other cluster
+- s(i) ∈ [-1, 1], higher is better
+- Average over all points to get overall score
+
+### K-Means Properties
+
+**Advantages:**
+- Simple, fast, scalable
+- Works well for spherical clusters
+- Easy to implement
+
+**Disadvantages:**
+- Must specify K in advance
+- Sensitive to initialization (use K-means++)
+- Assumes spherical clusters of similar size
+- Affected by outliers
+
+**Time Complexity:** O(n × K × d × iterations)
+- n = number of points
+- K = number of clusters
+- d = number of dimensions
+
+### Hierarchical Clustering
+
+**Agglomerative (Bottom-Up):**
+```
+1. Start: Each point is its own cluster
+2. Repeat:
+   - Find two closest clusters
+   - Merge them
+3. Stop: When desired # clusters reached (or all merged)
+```
+
+**Linkage Methods:**
+
+| Method | Distance Between Clusters | Property |
+|--------|---------------------------|----------|
+| **Single** | min(d(a,b)) | Forms long chains |
+| **Complete** | max(d(a,b)) | Compact clusters |
+| **Average** | avg(d(a,b)) | Compromise |
+| **Centroid** | d(μ_A, μ_B) | Similar to K-means |
+| **Ward** | Minimizes variance | Best for spherical clusters |
+
+**Output:** Dendrogram (tree showing merges)
+
+**Advantages:**
+- No need to specify K upfront
+- Produces hierarchy of clusters
+- Works with any distance metric
+
+**Disadvantages:**
+- Slow: O(n³) naive, O(n² log n) optimized
+- Can't undo merges (greedy)
+- Sensitive to noise and outliers
+
+### Distance Metrics
+
+**Euclidean:** $d(x,y) = \sqrt{\sum_i (x_i-y_i)^2}$
+- Most common
+- Sensitive to scale
+
+**Manhattan:** $d(x,y) = \sum_i |x_i-y_i|$
+- Less sensitive to outliers
+- Good for grid-like data
+
+**Cosine Similarity:** $sim(x,y) = \frac{x \cdot y}{||x|| \times ||y||}$
+- Good for high-dimensional sparse data
+- Used in text/document clustering
+- Range: [-1, 1], higher = more similar
+
+**Jaccard (for sets):** $J(A,B) = \frac{|A \cap B|}{|A \cup B|}$
+- For binary/categorical data
 
 ---
 
-### Key Neural Network Concepts
+## 15. Constraint Satisfaction Problems (CSP)
 
-**Learning Rate:**
-- ✅ Determines **how much** we update each weight
-- ❌ Does NOT determine how many times we update
-- ❌ Does NOT determine batch size
-- ❌ Does NOT control which weights to update
+**Key Concepts:**
+- *Variables*: $V=\{a, b, c, d, ...\}$
+- *Domains*: possible values for each variable
+- *Constraints*: rules that limit combinations
 
----
+**GAC (Generalized Arc Consistency):**
+- For every variable's value, there must be some compatible value in other variables (as per constraints)
+- Prune by removing unsupported values
+- Repeat until "stuck"
 
-## 5. Constraint Satisfaction Problems (CSP)
+**Examples:**
 
-### Components
-- **Variables:** V = {a, b, c, d, ...}
-- **Domains:** D_v = possible values for each variable
-- **Constraints:** Rules that must be satisfied
+***Simple CSP:***
+- $V = \{a, b, c, d\}, D = \{1,2,3,4,5\}$
+- a + 2 < d; b × d < 6; a + c < 6  
+After GAC:
+- a ∈ {1,2}
+- b ∈ {1}
+- c ∈ {1,2,3,4}
+- d ∈ {4,5}
 
-### Generalized Arc Consistency (GAC) Algorithm
+***Equality/Inequality constraints:***
+- $V = \{a,b,c,d\}$, $D = \{1,2,3\}$
+- b = a, b > c, a ≠ c, c ≠ d, d ≤ a  
+After GAC:
+- a ∈ {2,3}
+- b ∈ {2,3}
+- c ∈ {1,2}
+- d ∈ {1,2,3}
 
-**Goal:** Prune domains by removing values that cannot participate in any solution
-
-**Process:**
-1. Create arc pairs for each constraint
-2. For each arc (X, Y), ensure every value in D_X has a compatible value in D_Y
-3. Remove values that have no support
-4. Repeat until no more changes
-
----
-
-### Example 1: Simple CSP
-
-**Variables:** V = {a, b, c, d}  
-**Domains:** All variables ∈ {1, 2, 3, 4, 5}  
-**Constraints:**
-- a + 2 < d
-- b × d < 6
-- a + c < 6
-
-**After GAC:**
-- **a ∈ {1, 2}**
-- **b ∈ {1}**
-- **c ∈ {1, 2, 3, 4}**
-- **d ∈ {4, 5}**
-
-**Reasoning:**
-1. a + 2 < d → a ∈ {1,2}, d ∈ {4,5}
-2. b × d < 6 with d ∈ {4,5} → only b=1 works
-3. a + c < 6 with a ∈ {1,2} → c ∈ {1,2,3,4}
-
----
-
-### Example 2: Equality and Inequality Constraints
-
-**Variables:** V = {a, b, c, d}  
-**Domains:** All ∈ {1, 2, 3}  
-**Constraints:**
-- b = a
-- b > c
-- a ≠ c
-- c ≠ d
-- d ≤ a
-
-**After GAC:**
-- **a ∈ {2, 3}**
-- **b ∈ {2, 3}**
-- **c ∈ {1, 2}**
-- **d ∈ {1, 2, 3}**
-
-**Valid Tuples:**
-- (2, 2, 1, 2)
-- (3, 3, 1, 2)
-- (3, 3, 1, 3)
-- (3, 3, 2, 1)
-- (3, 3, 2, 3)
-
----
-
-### Variable Elimination Algorithm
-
-**Q: In variable elimination for CSPs, which is correct?**
-
-✅ **Correct:** We construct a table for each constraint, and at each step the algorithm removes a variable by combining all its constraints.
-
-**Process:**
-1. Start with one factor (table) per constraint
-2. Choose a variable to eliminate
-3. Join all factors involving that variable
-4. Project out (eliminate) that variable
-5. Repeat until all variables eliminated or solution found
+**Variable Elimination:**  
+- Construct tables per constraint
+- At each step, combine tables and eliminate a variable
 
 ---
 
 ## 6. Probability & Independence
 
-### Independence Test
+**Definition of Independence:**  
+$P(X,Y) = P(X)P(Y)$ (for all values of X & Y)
 
-Two variables X and Y are **independent** if:
+**Example Table:**
 
-\[
-P(X, Y) = P(X) \times P(Y)
-\]
+|        | Disc=yes | Disc=no | P(Pos) |
+|--------|----------|---------|--------|
+| Pos=Y  | 0.03     | 0.27    | 0.30   |
+| Pos=N  | 0.07     | 0.63    | 0.70   |
+| P(Disc)| 0.10     | 0.90    |        |
 
-For all values of X and Y.
+All combinations match:  
+e.g., $0.03 = 0.30×0.10$, $0.27 = 0.30×0.90$... so Positive ⟂ Discount
 
----
-
-### Example: Restaurant Reviews
-
-**Data:** 10,000 reviews with:
-- Positive (yes/no)
-- Discount (yes/no)
-- Long (yes/no)
-
-**Joint Distribution after marginalizing Long:**
-
-| P(Positive, Discount) | Discount=yes | Discount=no | P(Positive) |
-|-----------------------|--------------|-------------|-------------|
-| Positive = yes        | 0.03         | 0.27        | **0.30**    |
-| Positive = no         | 0.07         | 0.63        | **0.70**    |
-| **P(Discount)**       | **0.10**     | **0.90**    |             |
-
-**Independence Check:**
-- P(yes, yes) = 0.03 = 0.30 × 0.10 ✓
-- P(yes, no) = 0.27 = 0.30 × 0.90 ✓
-- P(no, yes) = 0.07 = 0.70 × 0.10 ✓
-- P(no, no) = 0.63 = 0.70 × 0.90 ✓
-
-**Conclusion:** Positive and Discount are **INDEPENDENT**
-
----
-
-### Probability Rules
-
-**Joint Probability:**
-\[
-P(A, B) = P(A|B) \times P(B) = P(B|A) \times P(A)
-\]
-
-**Chain Rule:**
-\[
-P(A, B, C) = P(A) \times P(B|A) \times P(C|A,B)
-\]
-
-**Bayes' Theorem:**
-\[
-P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}
-\]
-
-**Marginalization:**
-\[
-P(X) = \sum_{y} P(X, Y=y)
-\]
+**Useful Probability Rules:**
+- $P(A,B) = P(A|B) \cdot P(B)$
+- Chain: $P(A,B,C) = P(A)P(B|A)P(C|A,B)$
+- Bayes: $P(A|B) = P(B|A)P(A)/P(B)$
+- Marginal: $P(X) = \sum_y P(X,Y=y)$
 
 ---
 
 ## 7. Bayesian Networks
 
-### Definition
-A Bayesian Network is:
-- **Directed Acyclic Graph (DAG)** representing variables
-- **Conditional Probability Tables (CPTs)** for each node
-- Encodes conditional independence assumptions
+- **Bayesian Network**: DAG with CPTs at each node
+- Encodes conditional independencies.
 
-### Structure
-
-**Example Network:**
+**Example Structure:**
 - Q → S, Q → P, Q → B
 - C → S, C → B
 - S → P, S → B
 - P → B
 
-**Variables:**
-- Q: Quality {very poor, poor, average, good, very good} (5 values)
-- S: Size {small, medium, big} (3 values)
-- C: Color {red, blue, green, yellow} (4 values)
-- P: Price {cheap, expensive, luxury} (3 values)
-- B: Buy {yes, no} (2 values)
+**CPT Size:**
+- General: $|Dom(X)| \times$ (product of parent sizes)
+- Table:
 
----
+| Var | Parents    | CPT            | #Entries      |
+|-----|------------|----------------|--------------|
+| Q   | none       | P(Q)           | 5            |
+| C   | none       | P(C)           | 4            |
+| S   | Q, C       | P(S|Q,C)       | 3×5×4 = 60   |
+| P   | Q, S       | P(P|Q,S)       | 3×5×3 = 45   |
+| B   | Q,S,C,P    | P(B|Q,S,C,P)   | 2×5×3×4×3=360|
 
-### CPT Size Calculation
-
-**Formula:** 
-\[
-\text{CPT size} = |Domain(X)| \times \prod_{\text{parent } Y} |Domain(Y)|
-\]
-
-**For This Network:**
-
-| Variable | Parents      | CPT          | # Entries              |
-|----------|-------------|--------------|------------------------|
-| Q        | none        | P(Q)         | 5                      |
-| C        | none        | P(C)         | 4                      |
-| S        | Q, C        | P(S\|Q,C)    | 3 × 5 × 4 = **60**     |
-| P        | Q, S        | P(P\|Q,S)    | 3 × 5 × 3 = **45**     |
-| B        | Q, S, C, P  | P(B\|Q,S,C,P)| 2 × 5 × 3 × 4 × 3 = **360** |
-
----
-
-### Joint Probability Factorization
-
-**Chain Rule for Bayesian Networks:**
-
-\[
-P(Q, C, S, P, B) = P(Q) \times P(C) \times P(S|Q,C) \times P(P|Q,S) \times P(B|Q,S,C,P)
-\]
-
-**Example:**
-\[
-P(\text{good, red, small, cheap, yes}) = 
-\]
-\[
-P(\text{good}) \times P(\text{red}) \times P(\text{small}|\text{good, red}) \times
-\]
-\[
-P(\text{cheap}|\text{good, small}) \times P(\text{yes}|\text{good, small, red, cheap})
-\]
-
----
-
-### Inference in Bayesian Networks
-
-**Types of Queries:**
-1. **Prior Marginal:** P(X)
-2. **Posterior Marginal:** P(X | evidence)
-3. **Most Probable Explanation (MPE):** argmax P(X | evidence)
-
-**Methods:**
-- **Exact:** Variable elimination, junction tree
-- **Approximate:** Monte Carlo sampling, Markov Chain Monte Carlo
+**Chain Rule:**  
+$P(Q,C,S,P,B) = P(Q)P(C)P(S|Q,C)P(P|Q,S)P(B|Q,S,C,P)$
 
 ---
 
 ## 8. Search Algorithms
 
-### Uninformed Search
+**Uninformed:**
 
-| Algorithm | Complete? | Optimal? | Space | Time |
-|-----------|-----------|----------|-------|------|
-| BFS       | Yes       | Yes*     | O(b^d)| O(b^d)|
-| DFS       | No**      | No       | O(bd) | O(b^m)|
-| UCS       | Yes       | Yes      | O(b^d)| O(b^d)|
+| Alg | Complete | Optimal | Space     | Time      |
+|-----|----------|---------|-----------|-----------|
+| BFS | Yes      | Yes*    | O(b^d)    | O(b^d)    |
+| DFS | No**     | No      | O(bd)     | O(b^m)    |
+| UCS | Yes      | Yes     | O(b^d)    | O(b^d)    |
 
-*If step costs are uniform  
-**Complete in finite spaces
+*If step costs same.  
+**Complete if finite search space.
 
-### Informed Search
+**Informed:**
 
-**A* Search:**
-\[
-f(n) = g(n) + h(n)
-\]
-
-Where:
-- g(n) = cost from start to node n
-- h(n) = heuristic estimate from n to goal
-- f(n) = estimated total cost
-
-**Properties:**
-- **Complete:** Yes (with admissible heuristic)
-- **Optimal:** Yes (with admissible + consistent heuristic)
-
-**Admissible Heuristic:** Never overestimates true cost (h(n) ≤ h*(n))
-
-**Consistent Heuristic:** h(n) ≤ cost(n, n') + h(n')
+- **A\***: $f(n)=g(n)+h(n)$  
+    - $g(n)$ = cost so far  
+    - $h(n)$ = heuristic  
+    - Admissible $h$ = never overestimates
+    - Consistent $h$: $h(n) \leq cost(n,n') + h(n')$
 
 ---
 
 ## 9. Game Trees & Minimax
 
-### Minimax Algorithm
+**Minimax:**
+- Max nodes pick max of children
+- Min nodes pick min
 
-**Goal:** Find optimal move assuming opponent plays optimally
-
-**Rules:**
-- **MAX player:** Choose move with highest value
-- **MIN player:** Choose move with lowest value
-
-**Pseudocode:**
-```
+Pseudocode:
+```pseudo
 function MINIMAX(node, depth, maximizingPlayer):
     if depth == 0 or node is terminal:
         return evaluation(node)
-    
     if maximizingPlayer:
         value = -∞
-        for each child of node:
+        for each child:
             value = max(value, MINIMAX(child, depth-1, false))
         return value
     else:
         value = +∞
-        for each child of node:
+        for each child:
             value = min(value, MINIMAX(child, depth-1, true))
         return value
 ```
 
----
+**Alpha-beta pruning:**  
+Keep track of best value for max ($\alpha$), min ($\beta$). Prune when $\alpha \geq \beta$.
 
-### Example: Minimax Tree
-
-**Given values:**
-- Leaves: I=-3, J=-9, K=4, L=-3, M=3, N=10, D=-7
-- Non-terminal heuristics: e=-6, f=3, g=-8, h=-7
-
-**Full-Depth Minimax:**
-1. e = max(I, J) = max(-3, -9) = **-3**
-2. f = max(I, J) = **-3**
-3. g = max(K, L) = max(4, -3) = **4**
-4. h = max(M, N) = max(3, 10) = **10**
-5. B = min(e, f) = min(-3, -3) = **-3**
-6. C = min(g, h) = min(4, 10) = **4**
-7. A = max(B, C, D) = max(-3, 4, -7) = **4**
-
-**Best move:** Choose **C** (value 4)
+- Alpha-beta gives same answer as minimax, but fewer nodes.
+- Best case: O(b^(d/2))
 
 ---
 
-**Depth-Limited Minimax (depth=2):**
-Use heuristic values at depth 2:
-1. B = min(-6, 3) = **-6**
-2. C = min(-8, -7) = **-8**
-3. A = max(-6, -8, -7) = **-6**
+## 15. Markov Decision Processes (MDPs)
 
-**Best move:** Choose **B** (value -6)
+**Key elements:**
+- States: $S$
+- Actions: $A$
+- Transitions: $P(s'|s,a)$
+- Rewards: $R(s,a)$
+- Discount: $\gamma$
 
-**Note:** Best move changes with depth-limited search!
+**Value Iteration:** (Bellman Equation)
 
----
+$$
+V_{k+1}(s) = \max_a \left( R(s,a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \right)
+$$
 
-### Alpha-Beta Pruning
+**Steps:**
+1. Start with $V_0$ for all states
+2. Update using Bellman until converge
+3. Policy $\pi(s) = \arg\max_a [R(s,a) + \gamma \sum_{s'} P(s'|s,a) V(s')]$
 
-**Optimization:** Prune branches that cannot affect final decision
-
-\[
-\alpha = \text{best value for MAX so far}
-\]
-\[
-\beta = \text{best value for MIN so far}
-\]
-
-**Prune when:** α ≥ β
-
-**Benefits:**
-- Same result as minimax
-- Fewer nodes evaluated
-- Best case: O(b^(d/2)) vs O(b^d)
+**Discount factor $\gamma$:**
+- High $\gamma$: long-term reward
+- Low $\gamma$: immediate reward
 
 ---
 
-## 10. Markov Decision Processes (MDPs)
+## 16. Reinforcement Learning & Q-Learning
 
-### MDP Components
+**Q-Learning core idea:**  
+Learn $Q(s,a)$ = expected cumulative reward from (s,a) onward.
 
-1. **States:** S = {s₁, s₂, ..., sₙ}
-2. **Actions:** A = {a₁, a₂, ..., aₘ}
-3. **Transition Model:** P(s'|s, a)
-4. **Reward Function:** R(s, a) or R(s, a, s')
-5. **Discount Factor:** γ ∈ [0, 1]
+**Q-Learning update:**
 
----
+$$
+Q(s,a) \leftarrow Q(s,a) + \alpha \left[ R + \gamma \max_{a'}Q(s', a') - Q(s,a)\right]
+$$
 
-### Value Iteration
+Only update $Q(s,a)$ for action actually taken.
 
-**Bellman Update:**
+**Epsilon-Greedy:**  
+- With probability $\epsilon$: random action (explore)
+- With $1-\epsilon$: best action (exploit)
 
-\[
-V_{k+1}(s) = \max_a \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \right]
-\]
-
-**Algorithm:**
-1. Initialize V₀(s) for all states
-2. Repeat until convergence:
-   - For each state s:
-     - Update V(s) using Bellman equation
-3. Extract policy: π(s) = argmax_a [R(s,a) + γ Σ P(s'|s,a) V(s')]
+**Parameters:**
+- $\alpha =$ learning rate (how big is update)
+- $\gamma =$ discount factor (future value weight)
+- $\epsilon =$ exploration rate
 
 ---
 
-### MDP Example: Student & Solutions
+## 17. Key Exam Concepts
 
-**Setup:**
-- 3×3 grid
-- Student at various positions
-- Goal: Get solutions (+5)
-- Avoid teacher at (3,2) (-10)
-- Movement cost: -0.3
+**Summary Table:**
 
-**Transition Model:**
-- 50% intended direction
-- 30% stay in place
-- 20% move right (relative to intended)
-
-**Discount factor:** γ = 0.6
-
----
-
-**Initial Values V₀:**
-```
-(1,3)=-2   (2,3)=3    (3,3)=6
-(1,2)=6    (2,2)=-4   (3,2)=-12
-(1,1)=3    (2,1)=1    (3,1)=0
-```
-
-**After 1 iteration V₁:**
-- (3,2) = **-10.0** (terminal)
-- (1,3) = **1.0**
-- (3,3) = **5.0** (terminal)
-
-**After 2 iterations V₂:**
-- (2,3) = **1.618**
-- (3,2) = **-10.000**
-- (2,2) = **0.812**
-
----
-
-### Discount Factor Effects
-
-**High discount factor (γ → 1):**
-- ✅ Values future rewards more
-- ✅ Encourages long-term planning
-- Makes agent "patient"
-
-**Low discount factor (γ → 0):**
-- ✅ Values immediate rewards more
-- ✅ Discourages long-term planning
-- Makes agent "myopic"
-
-**Note:** Discount factor is NOT related to exploration/exploitation
-
----
-
-## 11. Reinforcement Learning & Q-Learning
-
-### Q-Learning Algorithm
-
-**Q-value:** Expected cumulative reward from state s, taking action a, then following optimal policy
-
-\[
-Q(s, a) = \text{Expected total reward starting from } s, \text{ doing } a
-\]
-
----
-
-### Q-Learning Update Rule
-
-\[
-Q(s,a) \leftarrow Q(s,a) + \alpha \left[ R + \gamma \max_{a'} Q(s',a') - Q(s,a) \right]
-\]
-
-Where:
-- α = learning rate (0 to 1)
-- R = immediate reward
-- γ = discount factor
-- s' = next state after taking action a in state s
-
-**Key Point:** Only update Q(s,a) for the actual (state, action) pair taken
-
----
-
-### Q-Table Example 1
-
-**Given Q-values:**
-
-| State | a1  | a2  | a3  |
-|-------|-----|-----|-----|
-| S     | 13  | 8   | 5   |
-| W     | 12  | 0   | 6   |
-| L     | 0   | 2   | 5   |
-
-**Questions:**
-
-1. **Value of each state:**
-   - V(S) = max(13, 8, 5) = **13**
-   - V(W) = max(12, 0, 6) = **12**
-   - V(L) = max(0, 2, 5) = **5**
-
-2. **Best action in each state:**
-   - S: **a1** (Q=13)
-   - W: **a1** (Q=12)
-   - L: **a3** (Q=5)
-
----
-
-### Q-Table Example 2
-
-**Given Q-values:**
-
-| State | a1  | a2  | a3  |
-|-------|-----|-----|-----|
-| s1    | 8   | 10  | 15  |
-| s2    | -20 | 7   | 13  |
-
-**Questions:**
-
-1. **Currently at s1, what action to maximize expected reward?**
-   - **Answer: a3** (Q=15)
-
-2. **At s1, expected cumulative reward with best policy?**
-   - **Answer: 15** (= V(s1) = max Q(s1, a))
-
-3. **Currently at s2, what action?**
-   - **Answer: a3** (Q=13)
-
-4. **At s2, expected reward?**
-   - **Answer: 13**
-
----
-
-### Q-Learning Table Update Example
-
-**Scenario:**
-- Current state: s1
-- Take action: a1
-- Receive reward: R = 100
-- New state: s2
-- Q(s2, a1) = -20, Q(s2, a2) = 7, Q(s2, a3) = 13
-
-**Which Q-values update?**
-- **Only Q(s1, a1)** updates
-- All other entries remain unchanged
-
-**Update (assuming α=1, γ=1):**
-\[
-Q(s1, a1) = R + \gamma \max_{a'} Q(s2, a') = 100 + 1 \times 13 = 113
-\]
-
-**Updated Table:**
-
-| State | a1  | a2  | a3  |
-|-------|-----|-----|-----|
-| s1    | 113 | 10  | 15  |
-| s2    | -20 | 7   | 13  |
-
----
-
-### Exploration vs. Exploitation
-
-**Epsilon-Greedy Strategy:**
-- With probability ε: **Explore** (random action)
-- With probability 1-ε: **Exploit** (best known action)
-
-**Effects of ε:**
-- **Higher ε:** More exploration, discover new strategies
-- **Lower ε:** More exploitation, use known good strategies
-
-**Important:**
-- ε controls exploration/exploitation balance
-- Discount factor γ controls future reward valuation
-- Learning rate α controls update magnitude
-
-**Relationships:**
-- ✅ Higher ε → more exploration
-- ✅ Higher γ → values long-term rewards more
-- ❌ Discount factor NOT related to exploration/exploitation
-
----
-
-## 12. Key Exam Concepts
-
-### Decision Making Summary
-
-| Algorithm/Method | Best Action | Based On |
-|------------------|-------------|----------|
-| **Minimax** | Best move | Recursive min/max of child values |
-| **MDP Value Iteration** | Best action | argmax [R + γ Σ P(s'\|s,a)V(s')] |
-| **Q-Learning** | Best action | argmax Q(s, a) |
-
----
-
-### Training & Testing
+| Method         | Picks Best Action By:                        |
+|----------------|---------------------------------------------|
+| Minimax        | Recursively computing min/max                |
+| Value Iteration| $\arg\max$ of Bellman update                 |
+| Q-learning     | $\arg\max Q(s, a)$                           |
 
 **Supervised Learning Process:**
-1. **Training Phase:** Learn parameters from labeled data
-2. **Validation Phase:** Tune hyperparameters
-3. **Testing Phase:** Evaluate on unseen data
+1. Train on labeled data
+2. Validate (tune hyperparameters)
+3. Test on unseen data
 
 **Key Metrics:**
-- **Accuracy:** (TP + TN) / Total
-- **Precision:** TP / (TP + FP)
-- **Recall:** TP / (TP + FN)
-- **F1:** 2 × (Precision × Recall) / (Precision + Recall)
+- Accuracy: (TP+TN)/Total
+- Precision: TP/(TP+FP)
+- Recall: TP/(TP+FN)
+- F1: $2 \times$ (Precision × Recall) / (Precision + Recall)
 
----
+**Common Pitfalls:**
+- Learning rate does **not** affect # updates, only size
+- Discount factor does **not** affect exploration, $\epsilon$ does
+- Small K in K-NN = overfitting
+- Only update $Q(s,a)$ for actual (s,a)
+- Overfitting = low train error + high test error
 
-### Common Pitfalls
+**Formula Quick Reference:**
 
-❌ **Wrong:** Thinking learning rate affects number of updates  
-✅ **Right:** Learning rate affects magnitude of weight updates
-
-❌ **Wrong:** Discount factor affects exploration  
-✅ **Right:** Epsilon (ε) affects exploration
-
-❌ **Wrong:** Smaller K in K-NN reduces overfitting  
-✅ **Right:** Larger K reduces overfitting
-
-❌ **Wrong:** In Q-learning, update all Q-values  
-✅ **Right:** Only update Q(s,a) for the action taken
-
-❌ **Wrong:** Overfitting means high train and test error  
-✅ **Right:** Overfitting means low train, high test error
-
----
-
-### Formula Quick Reference
-
-**MSE:**
-\[
-MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-\]
-
-**Bellman Equation (MDP):**
-\[
-V(s) = \max_a \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V(s') \right]
-\]
-
-**Q-Learning Update:**
-\[
-Q(s,a) \leftarrow Q(s,a) + \alpha \left[ R + \gamma \max_{a'} Q(s',a') - Q(s,a) \right]
-\]
-
-**Bayes' Theorem:**
-\[
-P(A|B) = \frac{P(B|A) P(A)}{P(B)}
-\]
-
-**Independence:**
-\[
-P(X,Y) = P(X) P(Y)
-\]
+- MSE: $\frac{1}{n}\sum (y_i - \hat{y}_i)^2$
+- Bellman: $V(s) = \max_a [R(s,a) + \gamma \sum_{s'} P(s'|s,a)V(s')]$
+- Q-learning: $Q(s,a) \leftarrow Q(s,a) + \alpha [R + \gamma \max_{a'} Q(s',a') - Q(s,a)]$
+- Bayes: $P(A|B) = P(B|A)P(A)/P(B)$
+- Independence: $P(X,Y) = P(X)P(Y)$
 
 ---
 
 ## 📝 Exam Preparation Checklist
 
-### Must Know Cold:
-- ✅ Difference between supervised and unsupervised learning
-- ✅ What overfitting looks like (low train, high test error)
-- ✅ How K-NN classifies (distance + voting)
-- ✅ MSE calculation steps
-- ✅ What affects neural network weight updates
-- ✅ Learning rate effects (too small = slow, too large = overshoot)
-- ✅ GAC algorithm for CSPs
-- ✅ Independence test: P(X,Y) = P(X)P(Y)
-- ✅ CPT size calculation for Bayesian Networks
-- ✅ Minimax algorithm (max for MAX, min for MIN)
-- ✅ MDP Value Iteration Bellman equation
-- ✅ Q-Learning update rule (only update Q(s,a) taken)
-- ✅ Discount factor vs learning rate vs epsilon
+**Must Know Cold**
+- **Agents:** PEAS framework, agent types, environment properties
+- **Search:** BFS/DFS/A*, admissible heuristics
+- **CSP:** GAC algorithm, variable elimination
+- **Planning:** STRIPS, forward/backward search, planning graphs
+- **Game Theory:** Minimax, alpha-beta pruning
+- **Probability:** Independence test ($P(X,Y)=P(X)P(Y)$), Bayes' theorem
+- **Bayesian Networks:** CPT sizes, chain rule factorization
+- **BN Inference:** Variable elimination steps
+- **ML Basics:** Supervised vs. Unsupervised vs. RL
+- **K-NN:** Distance calculations, voting, overfitting with small K
+- **Linear Regression:** MSE calculation steps
+- **Neural Networks:** Backpropagation, learning rate effects
+- **Evaluation:** Confusion matrix metrics, cross-validation
+- **Clustering:** K-means algorithm, choosing K
+- **MDPs:** Bellman equation, value iteration
+- **Q-Learning:** Update rule (only update taken $(s,a)$)
+- **Parameters:** Distinguish $\gamma$, $\alpha$, $\epsilon$ effects
 
-### Practice Problems:
-1. Calculate distances for K-NN with mixed features
-2. Compute MSE given model predictions
-3. Apply GAC to constrained CSP
-4. Check independence from data table
-5. Calculate CPT sizes for Bayesian Network
-6. Perform minimax on game tree
-7. Execute one iteration of Value Iteration
-8. Update Q-table given transition
-9. Identify which ML methods use gradient descent
+**Practice Problems:**
+1. Design PEAS for an agent
+2. Apply A* search with heuristic
+3. GAC on constraint problem
+4. STRIPS action representation
+5. Minimax tree evaluation
+6. Independence check from data table
+7. Calculate CPT sizes for BN
+8. Variable elimination inference
+9. K-NN with mixed features
+10. Calculate MSE
+11. Backpropagation weight update
+12. Confusion matrix metrics
+13. K-means clustering iteration
+14. MDP value iteration step
+15. Q-table update
 
 ---
 
 ## 🎯 Final Tips
 
-1. **Read questions carefully** - "NOT" questions are common
-2. **Show your work** - partial credit on calculations
-3. **Check units** - probabilities sum to 1, errors can be negative
-4. **Draw diagrams** - for Bayesian Networks and game trees
-5. **Verify independence** - check ALL combinations
-6. **Count carefully** - CPT sizes, domain products
-7. **Remember edge cases** - terminal states, boundary conditions
-8. **Practice time management** - don't get stuck on one problem
+1. **Read the questions closely:** look for "NOT"
+2. **Show your work:** partial credit!
+3. **Check units:** probs sum to 1, squared errors can be big
+4. **Draw diagrams!** (BNs, game trees)
+5. **Check independence for all combos**
+6. **Count CPTs carefully**
+7. **Think through edge/terminal states**
+8. **Manage your time** – don't get stuck
 
 ---
 
 **Good luck with your examination! 🎓**
 
-*This study guide consolidates all key concepts from the MI course. Review each section, practice the examples, and test yourself with the exercises.*
+*This study guide covers all essential MI concepts. Review, practice, and succeed!*
 
