@@ -28,13 +28,12 @@
 - [Formula Sheet](#formula-sheet)
 - [Problem-Solving Templates](#problem-solving-templates)
 - [Common Mistakes](#common-mistakes)
-- [Exam Checklist](#exam-checklist)
 
 ---
 
 # Part I: Core Topics
 
-## 1. Agents
+x## 1. Agents
 
 **Agent:** Entity that perceives environment through sensors and acts through actuators.
 
@@ -75,7 +74,183 @@ To design an agent, specify:
 | **Discrete** | vs Continuous | Chess vs Taxi driving |
 | **Single-agent** | vs Multi-agent | Puzzle vs Soccer |
 
+#### Detailed Property Descriptions
+
+**1. Observable (Fully vs Partially)**
+- **Fully Observable:** Agent has access to complete state of environment at all times
+  - Can see everything relevant to decision-making
+  - No hidden information
+  - Example: Chess (see entire board), Checkers
+- **Partially Observable:** Agent has incomplete/limited information about state
+  - Some information is hidden or uncertain
+  - Cannot see everything at once
+  - Example: Poker (can't see opponent's cards), Self-driving car (can't see around corners)
+
+**2. Deterministic vs Stochastic**
+- **Deterministic:** Next state is completely determined by current state and action
+  - Same action in same state always produces same result
+  - Predictable outcomes
+  - Example: Chess (same move always has same effect)
+- **Stochastic:** Next state involves randomness/uncertainty
+  - Same action may produce different outcomes
+  - Probability involved
+  - Example: Dice games, Weather prediction, Robot with unreliable sensors
+
+**3. Episodic vs Sequential**
+- **Episodic:** Each action/episode is independent
+  - Current decision doesn't affect future decisions
+  - No memory of past needed
+  - Example: Image classification (each image independent), Spam detection
+- **Sequential:** Current decisions affect future states/decisions
+  - Actions have long-term consequences
+  - Need to consider future implications
+  - Example: Chess (moves affect future game), Autonomous driving
+
+**4. Static vs Dynamic**
+- **Static:** Environment doesn't change while agent is thinking
+  - Can take time to decide without world changing
+  - No time pressure
+  - Example: Crossword puzzle, Chess with no clock
+- **Dynamic:** Environment changes while agent deliberates
+  - Must consider time passing
+  - World evolves independently
+  - Example: Self-driving car, Real-time strategy games
+
+**5. Discrete vs Continuous**
+- **Discrete:** Finite/countable number of states and actions
+  - Clear distinct states
+  - Enumerable possibilities
+  - Example: Chess (finite board positions), Tic-tac-toe
+- **Continuous:** Infinite range of possible states/actions
+  - Values can vary smoothly
+  - Real-valued parameters
+  - Example: Taxi driving (speed, position), Robot arm control
+
+**6. Single-agent vs Multi-agent**
+- **Single-agent:** Only one agent making decisions
+  - No other intelligent entities
+  - Environment is passive
+  - Example: Puzzle solving, Single-player games
+- **Multi-agent:** Multiple agents interact
+  - Other agents also making decisions
+  - May cooperate or compete
+  - Example: Poker (multiple players), Soccer, Traffic with other drivers
+  - **Competitive:** Agents have conflicting goals (Poker, Chess)
+  - **Cooperative:** Agents share goals (Team robotics)
+
+#### Quick Classification Guide
+
+**Ask these questions:**
+
+1. **Observable?** Can the agent see everything relevant? Or is information hidden?
+2. **Deterministic?** Does the same action always produce the same result?
+3. **Episodic?** Are decisions independent? Or do current actions affect future?
+4. **Static?** Does the world stay still while agent thinks? Or does it change?
+5. **Discrete?** Are there finite distinct options? Or smooth continuous values?
+6. **Single-agent?** Is it acting alone? Or are there other intelligent agents?
+
 **Hardest environment:** Partially observable, stochastic, sequential, dynamic, continuous, multi-agent
+
+#### Exercise 1 Solution Guide
+
+**Domain 1: Poker (Group playing poker)**
+
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **No** (Partial) | Cannot see other players' cards - hidden information |
+| Deterministic | **No** (Stochastic) | Card shuffling is random, outcomes uncertain |
+| Episodic | **No** (Sequential) | Betting decisions affect future rounds, bluffing has consequences |
+| Static | **Yes** | Game state doesn't change while you're thinking about your move |
+| Discrete | **Yes** | Finite number of cards, finite betting amounts (usually) |
+| Single-agent | **No** (Multi-agent) | Multiple players competing against each other |
+
+**Domain 2: Car Driving (Person driving a car)**
+
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **No** (Partial) | Can't see around corners, behind obstacles, other drivers' intentions |
+| Deterministic | **No** (Stochastic) | Other drivers unpredictable, road conditions vary, mechanical uncertainty |
+| Episodic | **No** (Sequential) | Current driving decisions affect future position and safety |
+| Static | **No** (Dynamic) | Traffic, pedestrians, signals change while you're driving |
+| Discrete | **No** (Continuous) | Speed, steering angle, position are continuous values |
+| Single-agent | **No** (Multi-agent) | Many other drivers on the road |
+
+**Domain 3: Machine Detecting Underweight Chocolate Bars**
+
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **Yes** (Fully) | Can measure weight directly with sensor |
+| Deterministic | **Yes/No** | Depends on sensor reliability. Often considered deterministic for ideal sensor |
+| Episodic | **Yes** | Each chocolate bar measurement is independent |
+| Static | **Yes** | Chocolate bar doesn't change while being weighed |
+| Discrete | **No** (Continuous) | Weight is a continuous measurement |
+| Single-agent | **Yes** | Only one machine, no other agents involved |
+
+**Domain 4: Doctor Performing Medical Diagnosis**
+
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **No** (Partial) | Cannot directly observe internal conditions, relies on symptoms/tests |
+| Deterministic | **No** (Stochastic) | Same symptoms can indicate different diseases, test results have uncertainty |
+| Episodic | **No** (Sequential) | Treatment decisions affect patient's future state and health |
+| Static | **No** (Dynamic) | Patient's condition can change during diagnosis/treatment |
+| Discrete | **No** (Continuous) | Many measurements are continuous (temperature, blood pressure, etc.) |
+| Single-agent | **Yes/No** | Usually single doctor making decisions (yes), but could involve patient cooperation |
+
+**Note:** Some classifications can be debated depending on assumptions. The chocolate machine's "Deterministic" depends on sensor quality - perfect sensor = deterministic, noisy sensor = stochastic. Doctor's "Single-agent" depends on whether you consider the patient as another agent.
+
+#### Exercise 2 Solution Guide - Agent Assertions
+
+**(a) An agent that senses only partial information about the state cannot be perfectly rational.**
+
+**Answer: FALSE**
+
+**Explanation:** Rationality means selecting actions that maximize expected performance given the available information. An agent can be perfectly rational even with partial observability - it just makes the best decisions possible with the information it has. Example: A poker player can be rational despite not seeing opponents' cards.
+
+**(b) There exist task environments in which no pure reflex agent can behave rationally.**
+
+**Answer: TRUE**
+
+**Explanation:** Pure reflex agents only react to current percepts without memory. In sequential environments where past information is crucial, they cannot be rational. Example: In a maze, a reflex agent can get stuck in loops since it can't remember where it's been.
+
+**(c) There exists a task environment in which every agent is rational.**
+
+**Answer: TRUE**
+
+**Explanation:** In a trivial environment with only one possible action, or where all actions lead to equally good outcomes, every agent (including random ones) would be rational since any choice is optimal.
+
+**(d) The input to an agent program is the same as the input to the agent function.**
+
+**Answer: FALSE**
+
+**Explanation:** 
+- **Agent function** maps entire percept history/sequence to actions
+- **Agent program** takes only the current percept as input (keeps internal state if needed)
+- Program implements the function but doesn't take full history as input each time
+
+**(e) It is possible for a given agent to be perfectly rational in two distinct task environments.**
+
+**Answer: TRUE**
+
+**Explanation:** An agent designed for one environment might happen to also be optimal in another. Example: An agent that always chooses "move forward" could be rational in multiple simple environments where forward is always best.
+
+**(f) Every agent is rational in an unobservable environment.**
+
+**Answer: FALSE**
+
+**Explanation:** Even with no observations, some actions may be better than others based on prior knowledge. A random agent is not rational if there's a known better strategy. Example: In a minefield, random walking is not as rational as staying still.
+
+**(g) A perfectly rational poker-playing agent never loses.**
+
+**Answer: FALSE**
+
+**Explanation:** Rationality means maximizing expected performance, not guaranteeing wins. In stochastic games with randomness and hidden information, even optimal play can lose due to bad luck (bad cards). Rationality is about long-term expected value, not individual outcomes.
+
+**(h) Suppose an agent selects its next action uniformly at random from a set of possible actions. There exists a deterministic task environment in which this agent is rational.**
+
+**Answer: TRUE**
+
+**Explanation:** If all actions lead to equally good outcomes, then random selection is as rational as any other strategy. Example: Environment where every action gives the same reward - random choice is optimal (or rather, all choices are equally optimal).
 
 ---
 
