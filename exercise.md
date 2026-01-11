@@ -144,7 +144,7 @@ Calculate:
 |  1 |  1 |  3  |  2 |     1     |       1       |
 |  0 |  4 | -1  | -3 |     2     |       4       |
 |----|----|-----|----|-----------|---------------|
-|          **Sum of squared errors**         |      **31**      |
+|**Sum of squared errors**       |   **31**      |
 
 ## 🧮 MSE Calculation
 **Sum of squared errors:** 1 + 9 + 16 + 1 + 4 = 31
