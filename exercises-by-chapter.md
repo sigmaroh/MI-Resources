@@ -556,7 +556,7 @@ There are **10,000 reviews** for a restaurant, each annotated with three boolean
 
 The following table displays the counts for each combination of these variables:
 
-![Dependence Table](/images/Dependence.png)
+![Dependence Table](./images/Dependence.png)
 
 *Dependence for exercise*
 
@@ -800,7 +800,7 @@ We are given a Bayesian Network that predicts whether a user will buy a product,
 
 #### Network Structure
 
-![Bayesian Network Diagram](/images/2024-bn.png)
+![Bayesian Network Diagram](./images/2024-bn.png)
 
 - Q → S, Q → P, Q → B
 - S → P, S → B
@@ -1193,7 +1193,7 @@ This is the "naive" assumption that makes computation tractable.
 ## K-Nearest Neighbour (k-NN) Classification
 
 We are applying classification using the nearest neighbour method (K-NN) using Euclidean distance. We have the following dataset: 
-![K_NN](/images/2024-nearest-neighbours.png)
+![K_NN](./images/2024-nearest-neighbours.png)
 
 We're provided a new data point (size=2,weight=2), which we want to classify. Indicate the class for several values of K: 
 
@@ -3182,7 +3182,7 @@ This is the true optimal cost to reach the goal.
 
 Given the following game tree:
 
-![Minimax Tree](/images/2024-minmax.png)
+![Minimax Tree](./images/2024-minmax.png)
 
 We have the following evaluation function. In terminal nodes, the evaluation function is the same as the utility function. In non-terminal nodes, the evaluation function is computed in some other way (e.g., has been learned with a neural network).
 
@@ -3327,7 +3327,7 @@ b. **Compute Value at Root (Max node A):**
 We perform Min-Max search on the following tree. Annotate each internal node with the corresponding value.
 
 **Min-Max Tree**  
-![Minmax](/images/minmax.png)
+![Minmax](./images/minmax.png)
 
 
 | Node | Value (Blank)         |
@@ -3605,7 +3605,7 @@ With perfect play, the outcome is the minimax value: **0**
 
 Consider the following MDP graph, where the student wants to get the solutions to the exercise section, but the teacher won't let the student have the solutions (the teacher is standing at $(3, 2)$):
 
-![MarkovChains2](/images/MarkovChains2.drawio.png)
+![MarkovChains2](./images/MarkovChains2.drawio.png)
 
 Here, the reward structure is as follows:
 
@@ -3617,7 +3617,7 @@ The student is hesitant when moving, so there is a 30% chance he won't move, a 2
 
 The MDP will initialize with the following values:
 
-![MDP](/images/MDP-Initial.png)
+![MDP](./images/MDP-Initial.png)
 
 ### Initial Value Table
 
