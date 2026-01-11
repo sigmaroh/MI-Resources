@@ -1080,122 +1080,120 @@ The network structure is:
 
 The activation function used for all neurons is the **Rectified Linear Unit (ReLU)**:
 
-\[
-\text{ReLU}(x) = \max(0, x)
-\]
+```
+ReLU(x) = max(0, x)
+```
 
 Given the input values:
-\[
-I_1 = 3,\quad I_2 = 1
-\]
+
+```
+I₁ = 3,    I₂ = 1
+```
 
 **Tasks:**
-1. Compute, for each neuron \(A, B, C, D\), the value **before** applying the activation function.
-2. Compute the value **after** applying the ReLU activation function.
-3. When training this network using gradient descent, state:
-   - what is updated,
-   - the gradient of what,
-   - with respect to what.
+1. Compute, for each neuron **A, B, C, D**, the value *before* applying the activation function.
+2. Compute the value *after* applying the ReLU activation function.
+3. For gradient descent training, state:
+   - What gets updated,
+   - The gradient of what,
+   - With respect to what.
 
 ---
 
 ### Solution
 
 #### Activation Function
-\[
-\text{ReLU}(x) = \max(0, x)
-\]
+
+```
+ReLU(x) = max(0, x)
+```
 
 ---
 
 #### Neuron A
 
-##### Before activation
-\[
-z_A = I_1 \cdot w_{I_1A} + I_2 \cdot w_{I_2A} + b_A
-\]
-\[
-z_A = (3 \cdot 2) + (1 \cdot -3) + (-1)
-\]
-\[
-z_A = 6 - 3 - 1 = 2
-\]
+**Before activation:**
 
-##### After activation
-\[
-A = \max(0, 2) = 2
-\]
+```
+z_A = I₁ × w_{I₁A} + I₂ × w_{I₂A} + b_A
+    = (3 × 2) + (1 × -3) + (-1)
+    = 6 - 3 - 1
+    = 2
+```
+
+**After activation:**
+
+```
+A = max(0, 2) = 2
+```
 
 ---
 
 #### Neuron B
 
-##### Before activation
-\[
-z_B = A \cdot w_{AB} + b_B
-\]
-\[
-z_B = (2 \cdot 1) + (-5)
-\]
-\[
-z_B = -3
-\]
+**Before activation:**
 
-##### After activation
-\[
-B = \max(0, -3) = 0
-\]
+```
+z_B = A × w_{AB} + b_B
+    = (2 × 1) + (-5)
+    = 2 - 5
+    = -3
+```
+
+**After activation:**
+
+```
+B = max(0, -3) = 0
+```
 
 ---
 
 #### Neuron C
 
-##### Before activation
-\[
-z_C = A \cdot w_{AC} + b_C
-\]
-\[
-z_C = (2 \cdot 3) + (-3)
-\]
-\[
-z_C = 3
-\]
+**Before activation:**
 
-##### After activation
-\[
-C = \max(0, 3) = 3
-\]
+```
+z_C = A × w_{AC} + b_C
+    = (2 × 3) + (-3)
+    = 6 - 3
+    = 3
+```
+
+**After activation:**
+
+```
+C = max(0, 3) = 3
+```
 
 ---
 
 #### Neuron D
 
-##### Before activation
-\[
-z_D = B \cdot w_{BD} + C \cdot w_{CD} + b_D
-\]
-\[
-z_D = (0 \cdot 4) + (3 \cdot -1) + 10
-\]
-\[
-z_D = 7
-\]
+**Before activation:**
 
-##### After activation
-\[
-D = \max(0, 7) = 7
-\]
+```
+z_D = B × w_{BD} + C × w_{CD} + b_D
+    = (0 × 4) + (3 × -1) + 10
+    = 0 - 3 + 10
+    = 7
+```
+
+**After activation:**
+
+```
+D = max(0, 7) = 7
+```
 
 ---
 
 #### Final Results
 
 | Neuron | Value before activation | Value after ReLU |
-|------|-------------------------|------------------|
-| A | 2 | 2 |
-| B | -3 | 0 |
-| C | 3 | 3 |
-| D | 7 | 7 |
+|--------|------------------------|------------------|
+|   A    |          2             |        2         |
+|   B    |         -3             |        0         |
+|   C    |          3             |        3         |
+|   D    |          7             |        7         |
 
 ---
 
@@ -1271,31 +1269,30 @@ Where:
 
 ##### Neural Network A
 
-| Example | Calculation | Absolute Error |
-|--------|-------------|----------------|
-| ex1 | \(|5 - 10|\) | 5 |
-| ex2 | \(|6 - 6|\) | 0 |
-| ex3 | \(|0 - 0|\) | 0 |
-| ex4 | \(|1 - 1|\) | 0 |
+##### Neural Network A
 
-\[
-\textbf{Sum of absolute error (A)} = 5
-\]
+| Example | Target (y) | Prediction (\hat{y}) | \|y - \hat{y}\| |
+|---------|------------|----------------------|-----------------|
+| ex1     |     5      |         10           |        5        |
+| ex2     |     6      |         6            |        0        |
+| ex3     |     0      |         0            |        0        |
+| ex4     |     1      |         1            |        0        |
+
+**Sum of absolute error (A): 5**
 
 ---
 
 ##### Neural Network B
 
-| Example | Calculation | Absolute Error |
-|--------|-------------|----------------|
-| ex1 | \(|5 - 7|\) | 2 |
-| ex2 | \(|6 - 4|\) | 2 |
-| ex3 | \(|0 - 2|\) | 2 |
-| ex4 | \(|1 - 0|\) | 1 |
+| Example | Target (y) | Prediction (\hat{y}) | \|y - \hat{y}\| |
+|---------|------------|----------------------|-----------------|
+| ex1     |     5      |         7            |        2        |
+| ex2     |     6      |         4            |        2        |
+| ex3     |     0      |         2            |        2        |
+| ex4     |     1      |         0            |        1        |
 
-\[
-\textbf{Sum of absolute error (B)} = 7
-\]
+**Sum of absolute error (B): 7**
+
 
 ---
 
@@ -1303,57 +1300,48 @@ Where:
 
 ##### Neural Network A
 
-| Example | Calculation | Squared Error |
-|--------|-------------|---------------|
-| ex1 | \((5 - 10)^2\) | 25 |
-| ex2 | \((6 - 6)^2\) | 0 |
-| ex3 | \((0 - 0)^2\) | 0 |
-| ex4 | \((1 - 1)^2\) | 0 |
+| Example | Calculation         | Squared Error |
+|---------|---------------------|---------------|
+| ex1     | $(5 - 10)^2$        | 25            |
+| ex2     | $(6 - 6)^2$         | 0             |
+| ex3     | $(0 - 0)^2$         | 0             |
+| ex4     | $(1 - 1)^2$         | 0             |
 
-\[
-\textbf{Sum of squared error (A)} = 25
-\]
+**Sum of squared error (A):** $\boxed{25}$
 
 ---
 
 ##### Neural Network B
 
-| Example | Calculation | Squared Error |
-|--------|-------------|---------------|
-| ex1 | \((5 - 7)^2\) | 4 |
-| ex2 | \((6 - 4)^2\) | 4 |
-| ex3 | \((0 - 2)^2\) | 4 |
-| ex4 | \((1 - 0)^2\) | 1 |
+| Example | Calculation         | Squared Error |
+|---------|---------------------|---------------|
+| ex1     | $(5 - 7)^2$         | 4             |
+| ex2     | $(6 - 4)^2$         | 4             |
+| ex3     | $(0 - 2)^2$         | 4             |
+| ex4     | $(1 - 0)^2$         | 1             |
 
-\[
-\textbf{Sum of squared error (B)} = 13
-\]
+**Sum of squared error (B):** $\boxed{13}$
 
 ---
 
 #### 3. Best Neural Network
 
 - Squared error penalizes **large deviations** more strongly.
-- Neural Network A has one very large error (25).
+- Neural Network A has one very large error ($25$).
 - Neural Network B has smaller, more evenly distributed errors.
 
-### ✅ Best choice:
-\[
-\boxed{\text{Neural Network B}}
-\]
-
+**✅ Best choice:**  
+$\boxed{\text{Neural Network B}}$  
 Because it avoids large deviations in any single example.
 
 ---
 
-#### Final Answers Summary
+### Final Answers Summary
 
-- **Sum of absolute error (A):** 5  
-- **Sum of absolute error (B):** 7  
-
-- **Sum of squared error (A):** 25  
-- **Sum of squared error (B):** 13  
-
+- **Sum of absolute error (A):** $5$  
+- **Sum of absolute error (B):** $7$  
+- **Sum of squared error (A):** $25$  
+- **Sum of squared error (B):** $13$  
 - **Best neural network:** **Neural Network B**
 
 ---
@@ -1364,97 +1352,97 @@ Because it avoids large deviations in any single example.
 
 ---
 
-### **Backpropagation in Neural Networks**
+### Backpropagation in Neural Networks
 
 **Q18. Which statements are correct about how a weight (link from neuron A to neuron B) is updated during backpropagation? Select one or more:**
 
-- a. The error term for neuron B
-- b. The error term for neuron A
-- c. The input to neuron B through other links during the forward propagation phase
-- d. The input to neuron B through *that* link during the forward propagation phase
-- e. The overall error of the entire neural network
+- a. The error term for neuron B  
+- b. The error term for neuron A  
+- c. The input to neuron B through other links during the forward propagation phase  
+- d. The input to neuron B through *that* link during the forward propagation phase  
+- e. The overall error of the entire neural network  
 - f. The type of activation function
 
-**Answer:** **a, d, f**
+**Answer:** a, d, f
 
 ---
 
-### **Decision Trees: Model Selection**
+### Decision Trees: Model Selection
 
 **Q19. When training two decision trees for a classification task, how should we choose the best model?**
 
-- a. Depends on the application.
-- b. The one that has highest accuracy.
-- c. The one that has highest precision.
+- a. Depends on the application.  
+- b. The one that has highest accuracy.  
+- c. The one that has highest precision.  
 - d. The one that has highest recall.
 
-**Answer:** **a. Depends on the application**
+**Answer:** a. Depends on the application
 
 ---
 
-### **Backpropagation & Learning Rate**
+### Backpropagation & Learning Rate
 
 **Q20. If we perform backpropagation, which statements are true about the learning rate? Select one or more:**
 
-- a. The learning rate determines how many times we update the weights based on each example.
-- b. The learning rate determines how much we update each of the weights in the neural network.
-- c. The learning rate determines how many examples we use from the training data in each batch.
+- a. The learning rate determines how many times we update the weights based on each example.  
+- b. The learning rate determines how much we update each of the weights in the neural network.  
+- c. The learning rate determines how many examples we use from the training data in each batch.  
 - d. The learning rate controls how many weights we update in the neural network.
 
-**Answer:** **b**
+**Answer:** b
 
 ---
 
-### **Gradient Descent: Learning Rate α**
+### Gradient Descent: Learning Rate $\alpha$
 
-**Q21. Which statement is true about the learning rate α in gradient descent?**
+**Q21. Which statement is true about the learning rate $\alpha$ in gradient descent?**
 
-- a. If the learning rate is very small, gradient descent will be fast to converge. If the learning rate is too large, gradient descent will be slow.
-- b. If the learning rate is very small, gradient descent can be slow to converge. If the learning rate is too large, gradient descent can be slow too.
-- c. If the learning rate is very small, gradient descent will be fast to converge. If the learning rate is too large, gradient descent will overshoot.
+- a. If the learning rate is very small, gradient descent will be fast to converge. If the learning rate is too large, gradient descent will be slow.  
+- b. If the learning rate is very small, gradient descent can be slow to converge. If the learning rate is too large, gradient descent can be slow too.  
+- c. If the learning rate is very small, gradient descent will be fast to converge. If the learning rate is too large, gradient descent will overshoot.  
 - d. If the learning rate is very small, gradient descent can be slow to converge. If the learning rate is too large, gradient descent will overshoot.
 
-**Answer:** **d**
+**Answer:** d
 
 ---
 
-### **Overfitting in Machine Learning**
+### Overfitting in Machine Learning
 
 **Q22. When is a model said to be overfitting?**
 
-- a. Both the train and test errors are high.
-- b. Train error is low but test error is high.
-- c. Train error is high but the test error is low.
+- a. Both the train and test errors are high.  
+- b. Train error is low but test error is high.  
+- c. Train error is high but the test error is low.  
 - d. Both train and test errors are low.
 
-**Answer:** **b**
+**Answer:** b
 
 ---
 
-### **Unsupervised Learning**
+### Unsupervised Learning
 
 **Q23. In unsupervised learning:**
 
-- a. The training dataset is not labelled with a target feature
-- b. There is no training dataset
-- c. The training dataset is labelled with a target feature, but the testing dataset is not labelled.
+- a. The training dataset is not labelled with a target feature  
+- b. There is no training dataset  
+- c. The training dataset is labelled with a target feature, but the testing dataset is not labelled.  
 - d. The training dataset is labelled with a target feature but there is no testing dataset
 
-**Answer:** **a**
+**Answer:** a
 
 ---
 
-### **Gradient Descent Applicability**
+### Gradient Descent Applicability
 
 **Q24. Which of the following ML methods can use gradient descent for learning? (Select one or more):**
 
-- a. Decision Trees
-- b. Linear Regression
-- c. K-means
-- d. K-nearest neighbors
+- a. Decision Trees  
+- b. Linear Regression  
+- c. K-means  
+- d. K-nearest neighbors  
 - e. Neural Networks
 
-**Answer:** **b, e**
+**Answer:** b, e
 
 ---
 
@@ -1482,9 +1470,9 @@ We have the following evaluation function. In terminal nodes, the evaluation fun
 
 **Compute the minimax value for these nodes:**
 
-| Node |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
-|------|-----|-----|-----|-----|-----|-----|-----|-----|
-| Value|     |     |     |     |     |     |     |     |
+| Node | A | B | C | D | E | F | G | H |
+|------|---|---|---|---|---|---|---|---|
+| Value|   |   |   |   |   |   |   |   |
 
 **_Question:_** What move is best for the Max player in the starting position?    
 
@@ -1494,9 +1482,9 @@ We have the following evaluation function. In terminal nodes, the evaluation fun
 
 **Compute the minimax value for these nodes:**
 
-| Node |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
-|------|-----|-----|-----|-----|-----|-----|-----|-----|
-| Value|     |     |     |     |     |     |     |     |
+| Node | A | B | C | D | E | F | G | H |
+|------|---|---|---|---|---|---|---|---|
+| Value|   |   |   |   |   |   |   |   |
 
 **_Question:_** What move will the Max player using depth=2 make in the starting position? 
 
@@ -1506,18 +1494,19 @@ We have the following evaluation function. In terminal nodes, the evaluation fun
 
 We are given a game tree with **Max** and **Min** nodes at alternating depths, along with an evaluation function that provides heuristic values for non-terminal nodes. The task is to compute node values for two scenarios:
 
-1. **Full-depth minimax**: Expand to terminal leaves.
+1. **Full-depth minimax**: Expand to terminal leaves.  
 2. **Depth-limited minimax**: Nodes at depth 2 are considered terminal.
 
 Tree structure:
+
 - **A** (Max, depth 0) → children: **B**, **C**, **D** (Min, depth 1)
-  - **B** → children: **e**, **f** (Max, depth 2)
-  - **C** → children: **g**, **h** (Max, depth 2)
-  - **D** → leaf node
-  - **e** → children: **I**, **J**
-  - **f** → children: **i = I**, **j = J**
-  - **g** → children: **K**, **L**
-  - **h** → children: **M**, **N**
+    - **B** → children: **e**, **f** (Max, depth 2)
+    - **C** → children: **g**, **h** (Max, depth 2)
+    - **D** → leaf node
+    - **e** → children: **I**, **J**
+    - **f** → children: **i = I**, **j = J**
+    - **g** → children: **K**, **L**
+    - **h** → children: **M**, **N**
 
 > **Note**: Capital E, F, G, H in tables correspond to e, f, g, h in the tree.
 
@@ -1533,51 +1522,55 @@ Tree structure:
 
 ## 1️⃣ Full-Depth Minimax Solution
 
-### a. Compute Values at Leaf Nodes (Depth 2, Max nodes):
-- **e** = max(I, J) = max(-3, -9) = **-3**
-- **f** = max(i, j) = max(-3, -9) = **-3**
-- **g** = max(K, L) = max(4, -3) = **4**
-- **h** = max(M, N) = max(3, 10) = **10**
+a. **Compute Values at Leaf Nodes (Depth 2, Max nodes):**
 
-### b. Compute Values at Min Nodes:
-- **B** = min(e, f) = min(-3, -3) = **-3**
-- **C** = min(g, h) = min(4, 10) = **4**
+- **e** = $\max$(I, J) = $\max$(-3, -9) = **-3**
+- **f** = $\max$(i, j) = $\max$(-3, -9) = **-3**
+- **g** = $\max$(K, L) = $\max$(4, -3) = **4**
+- **h** = $\max$(M, N) = $\max$(3, 10) = **10**
+
+b. **Compute Values at Min Nodes:**
+
+- **B** = $\min$(e, f) = $\min$(-3, -3) = **-3**
+- **C** = $\min$(g, h) = $\min$(4, 10) = **4**
 - **D** = -7 (already a leaf)
 
-### c. Compute Value at Root (Max node A):
-- **A** = max(B, C, D) = max(-3, 4, -7) = **4**
+c. **Compute Value at Root (Max node A):**
+- **A** = $\max$(B, C, D) = $\max$(-3, 4, -7) = **4**
 
-### Full-depth Results:
+**Full-depth Results:**
 
-| Node |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
-|------|-----|-----|-----|-----|-----|-----|-----|-----|
-| Value|  4  | -3  |  4  | -7  | -3  | -3  |  4  | 10  |
+| Node | A | B  | C  | D  | E  | F  | G | H  |
+|------|---|----|----|----|----|----|---|----|
+| Value| 4 | -3 | 4  | -7 | -3 | -3 | 4 | 10 |
 
 - **Best move for Max player at start (full-depth):**  
-  ▶️ **Choose C** (value 4)
+  **Choose C** (value 4)
 
 ---
 
 ## 2️⃣ Depth-Limited Minimax (Depth 2 Terminal) Solution
 
-In this case, use the given evaluation function values for nodes **E**, **F**, **G**, **H** ("e", "f", "g", "h") as the leaves.
+For depth-limited search, use the given evaluation values for nodes **E**, **F**, **G**, **H** ("e", "f", "g", "h") as the leaves.
 
-### a. Compute Values at Min Nodes:
-- **B** = min(E, F) = min(-6, 3) = **-6**
-- **C** = min(G, H) = min(-8, -7) = **-8**
+a. **Compute Values at Min Nodes:**
+
+- **B** = $\min$(E, F) = $\min$(-6, 3) = **-6**
+- **C** = $\min$(G, H) = $\min$(-8, -7) = **-8**
 - **D** = -7
 
-### b. Compute Value at Root (Max node A):
-- **A** = max(B, C, D) = max(-6, -8, -7) = **-6**
+b. **Compute Value at Root (Max node A):**
 
-### Depth=2 Results:
+- **A** = $\max$(B, C, D) = $\max$(-6, -8, -7) = **-6**
 
-| Node |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
-|------|-----|-----|-----|-----|-----|-----|-----|-----|
-| Value| -6  | -6  | -8  | -7  | -6  |  3  | -8  | -7  |
+**Depth=2 Results:**
+
+| Node | A  | B  | C  | D  | E  | F  | G  | H  |
+|------|----|----|----|----|----|----|----|----|
+| Value| -6 | -6 | -8 | -7 | -6 | 3  | -8 | -7 |
 
 - **Best move for Max player at start (depth=2):**  
-  ▶️ **Choose B** (value -6)
+  **Choose B** (value -6)
 
 ---
 
@@ -1588,7 +1581,7 @@ In this case, use the given evaluation function values for nodes **E**, **F**, *
 | Full-depth            |     4     |     C     |
 | Depth-limited (d=2)   |    -6     |     B     |
 
-> **Note:** The **best move changes** from C to B when using a depth-limited search, due to the heuristic values at depth 2 differing from the true minimax values.
+> **Note:** The best move changes from C to B when using a depth-limited search, due to the heuristic values at depth 2 differing from the true minimax values.
 
 ---
 
@@ -1596,7 +1589,7 @@ In this case, use the given evaluation function values for nodes **E**, **F**, *
 
 We perform Min-Max search on the following tree. Annotate each internal node with the corresponding value.
 
-**Min-Max Tree**
+**Min-Max Tree**  
 ![Minmax](/images/minmax.png)
 
 | Node | Value (Blank)         |
@@ -1611,17 +1604,15 @@ We perform Min-Max search on the following tree. Annotate each internal node wit
 
 ---
 
-**What move should the MAX player choose?**
-
-- **Blank 8 (Question 17)**
+**What move should the MAX player choose?**  
+**Blank 8 (Question 17)**
 
 ---
 
 ### Solution
 
-Based on the minmax tree shown in the image:
+**Tree Structure:**
 
-#### Tree Structure:
 - **A** (MAX, root) → children: **B**, **C**, **D** (MIN layer)
   - **B** (MIN) → children: **2** (terminal), **E** (MAX)
   - **C** (MIN) → children: **F** (MAX), **1** (terminal), **9** (terminal)
@@ -1630,22 +1621,22 @@ Based on the minmax tree shown in the image:
 - **F** (MAX) → children: **-1**, **6** (terminals)
 - **G** (MAX) → children: **10**, **4**, **-8** (terminals)
 
-#### Minimax Computation (Bottom-Up):
+**Minimax Computation (Bottom-Up):**
 
-##### Step 1: Compute MAX nodes (E, F, G)
-- **E** = max(3, -7) = **3**
-- **F** = max(-1, 6) = **6**
-- **G** = max(10, 4, -8) = **10**
+1. **Compute MAX nodes (E, F, G)**
+    - **E** = $\max(3, -7) = 3$
+    - **F** = $\max(-1, 6) = 6$
+    - **G** = $\max(10, 4, -8) = 10$
 
-##### Step 2: Compute MIN nodes (B, C, D)
-- **B** = min(2, E) = min(2, 3) = **2**
-- **C** = min(F, 1, 9) = min(6, 1, 9) = **1**
-- **D** = min(G, -2, 5) = min(10, -2, 5) = **-2**
+2. **Compute MIN nodes (B, C, D)**
+    - **B** = $\min(2, E) = \min(2, 3) = 2$
+    - **C** = $\min(F, 1, 9) = \min(6, 1, 9) = 1$
+    - **D** = $\min(G, -2, 5) = \min(10, -2, 5) = -2$
 
-##### Step 3: Compute root MAX node (A)
-- **A** = max(B, C, D) = max(2, 1, -2) = **2**
+3. **Compute root MAX node (A)**
+    - **A** = $\max(B, C, D) = \max(2, 1, -2) = 2$
 
-#### Final Values:
+**Final Values:**
 
 | Node | Value |
 |------|-------|
@@ -1657,17 +1648,14 @@ Based on the minmax tree shown in the image:
 | F    | 6     |
 | G    | 10    |
 
-#### Answer:
-
-**Blank 1 (A):** 2  
-**Blank 2 (B):** 2  
-**Blank 3 (C):** 1  
-**Blank 4 (D):** -2  
-**Blank 5 (E):** 3  
-**Blank 6 (F):** 6  
-**Blank 7 (G):** 10  
-
-**Blank 8 (Best move for MAX player):** **B** (or "move to B", since B has value 2, which is the maximum among all children of A)
+- **Blank 1 (A):** 2  
+- **Blank 2 (B):** 2  
+- **Blank 3 (C):** 1  
+- **Blank 4 (D):** -2  
+- **Blank 5 (E):** 3  
+- **Blank 6 (F):** 6  
+- **Blank 7 (G):** 10  
+- **Blank 8 (Best move for MAX player):** **B** (since B has the highest value among A's children)
 
 ---
 
@@ -1675,76 +1663,23 @@ Based on the minmax tree shown in the image:
 
 ## MDP Value Iteration — Full Solution
 
-Consider the following MDP graph, where the student wants to get the solutions to the exercise section, but the teacher won't let the student have the solutions (the teacher is standing at (3; 2)):
+Consider the following MDP graph, where the student wants to get the solutions to the exercise section, but the teacher won't let the student have the solutions (the teacher is standing at $(3, 2)$):
+
 ![MarkovChains2](/images/MarkovChains2.drawio.png)
 
-Planning Under Uncertainty exercise
-
 Here, the reward structure is as follows:
-- Getting the solutions: +5
-- Getting caught by the teacher: -10
-- Moving elsewhere: -0.3
 
-The student is hesitant when moving, so there is a 30% chance he won't move, a 20% chance he will take a wrong turn and move to the right, and a 50% chance he will move in the desired direction. The discounting factor is 0.6.
+- **Getting the solutions:** $+5$
+- **Getting caught by the teacher:** $-10$
+- **Moving elsewhere:** $-0.3$
+
+The student is hesitant when moving, so there is a 30% chance he won't move, a 20% chance he will take a wrong turn and move to the right, and a 50% chance he will move in the desired direction. The discounting factor is $\gamma = 0.6$.
 
 The MDP will initialize with the following values:
 
-![MDP]](/images/MDP-Initial.png)
+![MDP](/images/MDP-Initial.png)
 
-Initial MDP for exercise
-
-After one iteration of value iteration, what is the value inside (1 decimal):
-- (3; 2): 
-
-- (1; 3): 
-
-- (3; 3): 
-
-Now, after 2 iterations of value iteration, what is the value inside (3 decimals):
-- (2; 3): 
-
-- (3; 2): 
-
-- (2; 2): 
-
-A high discounting factor:
- 
-
-Values future rewards more
-Values immediate results more
-Encourages long-term planning
-Discourages long-term planning
-Encourages exploration
-Discourages exploration
-
----
-
-### Problem Statement
-
-We have a **3×3 grid MDP** where a student tries to get exercise solutions while avoiding the teacher.  
-
-#### **States**
-Grid coordinates `(x, y)` with:
-- `x = 1..3` (horizontal)
-- `y = 1..3` (vertical, y=3 top row, y=1 bottom row)
-
-#### **Special States & Rewards**
-- **Solution states** (reward +5, terminal): `(1, 3)` and `(3, 3)`
-- **Teacher state** (reward -10, terminal): `(3, 2)`
-- **All other moves**: reward -0.3 per step
-
-#### **Transition Model**
-When trying to move in a chosen direction:
-- 50% chance moves as intended
-- 30% chance stays in place
-- 20% chance moves to the **right** relative to intended direction  
-  *(e.g., if intended North, right = East)*
-
-#### **Discount Factor**
-γ = 0.6
-
-#### **Initial Value Function V₀**
-From given table:
+### Initial Value Table
 
 ```
 (1,3) = -2   (2,3) = 3    (3,3) = 6
@@ -1754,86 +1689,81 @@ From given table:
 
 ---
 
-## **Part 1 — One Iteration of Value Iteration**
+## Part 1 — One Iteration of Value Iteration
 
 **Value Iteration Update:**
-\[
-V_{k+1}(s) = \max_a \left[ R(s, a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \right]
-\]
+$$
+V_{k+1}(s) = \max_{a} \Big[ R(s, a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \Big]
+$$
 
 **Terminal states** keep their reward value (no action):
-- `(3, 3)` → +5
-- `(3, 2)` → -10
-- `(1, 3)` → +5 (may be non-terminal in initial table)
+- $(3, 3) \to +5$
+- $(3, 2) \to -10$
+- $(1, 3)$: If considered terminal, also $+5$ (but problem assumes non-terminal in initial run).
 
-### **(3,2) — Teacher state**
-Terminal → V₁ = -10.
+#### $(3,2)$ — Teacher state  
+Terminal $\Rightarrow V_1 = -10.$
 
-### **(3,3) — Solution state**
-Terminal → V₁ = +5.
+#### $(3,3)$ — Solution state  
+Terminal $\Rightarrow V_1 = +5.$
 
-### **(1,3) — Non-terminal state**
-We compute best action from `(1,3)`.  
-Allowed moves: E, S, W? (N would go out of bounds y=3 top).
+#### $(1,3)$ — Non-terminal state  
+Possible moves: E, S, W
 
-Try **action E** (intend East → `(2,3)`):
-- P(`(2,3)`) = 0.5
-- P(stay at `(1,3)`) = 0.3
-- P(right of East = South) → `(1,2)` = 0.2
+- Try **East** (to $(2,3)$):  
+  - $P((2,3)) = 0.5$
+  - $P(\text{stay } (1,3)) = 0.3$
+  - $P(\text{right of East} = (1,2)) = 0.2$
+- Immediate reward $R = -0.3$
 
-Immediate reward R = -0.3 (moving cost)
+Calculation:
+- $= -0.3 + 0.6 \times [ 0.5 \times 3 + 0.3 \times (-2) + 0.2 \times 6 ] $
+- $= -0.3 + 0.6 \times (1.5 - 0.6 + 1.2)$
+- $= -0.3 + 0.6 \times 2.1$
+- $= -0.3 + 1.26$
+- $= 0.96 \approx 1.0$
 
-Value_E = -0.3 + 0.6 × [0.5×V₀(2,3) + 0.3×V₀(1,3) + 0.2×V₀(1,2)]  
-= -0.3 + 0.6 × [0.5×3 + 0.3×(-2) + 0.2×6]  
-= -0.3 + 0.6 × [1.5 − 0.6 + 1.2]  
-= -0.3 + 0.6 × [2.1]  
-= -0.3 + 1.26  
-= **0.96**
-
-Best action is **E** with value 0.96 → V₁(1,3) ≈ **1.0** (to 1 decimal).
+Best action is **E** with value $1.0$.
 
 ---
 
-**After 1 iteration (1 decimal):**
-- (3, 2) = -10.0
-- (1, 3) = 1.0
-- (3, 3) = 5.0
+**After 1 iteration (rounded to 1 decimal):**
+
+- $(3, 2) = -10.0$
+- $(1, 3) = 1.0$
+- $(3, 3) = 5.0$
 
 ---
 
-## **Part 2 — Two Iterations of Value Iteration**
+## Part 2 — Two Iterations of Value Iteration
 
-Now compute V₂ for the requested states.
+Now compute $V_2$ for the requested states.
 
-### **(3,2)**
-Terminal → stays -10.
+- $(3,2)$: Terminal $\to$ stays at $-10.000$
 
-### **(2,3)**  
-Possible moves from `(2,3)` (non-terminal):
+#### $(2,3)$:
 
-Try **E** (to `(3,3)` terminal +5):
-- P(`(3,3)`) = 0.5
-- P(stay `(2,3)`) = 0.3
-- P(right of E = S) → `(2,2)` = 0.2
+- Try **East** (to $(3,3)$ terminal $+5$):
+  - $P((3,3)) = 0.5$
+  - $P((2,3)) = 0.3$
+  - $P((2,2)) = 0.2$
+- $R = -0.3$
+- $Value_E = -0.3 + 0.6 \times [0.5 \times 5 + 0.3 \times V_1(2,3) + 0.2 \times V_1(2,2)]$
 
-R = -0.3
+(Requires intermediate computation...)
 
-Value_E = -0.3 + 0.6 × [0.5×5 + 0.3×V₁(2,3) + 0.2×V₁(2,2)]
+**After 2 iterations (rounded to 3 decimals):**
 
-We need V₁(2,3) and V₁(2,2) first.
-
-(After computing intermediate values...)
-
-**After 2 iterations (3 decimals):**
-- (2, 3) = 1.618
-- (3, 2) = -10.000
-- (2, 2) = 0.812
+- $(2, 3) = 1.618$
+- $(3, 2) = -10.000$
+- $(2, 2) = 0.812$
 
 ---
 
-## **Part 3 — High Discount Factor**
+## Part 3 — High Discount Factor
 
-A high discount factor γ:
+A **high discount factor** $\gamma$:
+
 - [x] Values future rewards more  
 - [ ] Values immediate results more  
 - [x] Encourages long-term planning  
@@ -1843,20 +1773,21 @@ A high discount factor γ:
 
 ---
 
-## **Final Answers**
+## Final Answers
 
 **1 iteration (1 decimal):**
-- (3, 2) = -10.0
-- (1, 3) = 1.0
-- (3, 3) = 5.0
+
+- (3, 2) = **-10.0**
+- (1, 3) = **1.0**
+- (3, 3) = **5.0**
 
 **2 iterations (3 decimals):**
-- (2, 3) = 1.618
-- (3, 2) = -10.000
-- (2, 2) = 0.812
+- (2, 3) = **1.618**
+- (3, 2) = **-10.000**
+- (2, 2) = **0.812**
 
 **High discount factor effects:**  
-Values future rewards more, Encourages long-term planning
+Values future rewards more; encourages long-term planning.
 
 ---
 
@@ -1870,31 +1801,31 @@ An agent operates on an MDP with 3 states (**S**, **W**, **L**) and 5 possible a
 | **W** | 12 |  0 |  0 |  6 | 15 |
 | **L** |  0 |  2 |  5 |  2 |  0 |
 
-### 1. **What is the value for each state?**
+### 1. What is the value for each state?
 
-Recall for each state, **V(s) = maxₐ Q(s, a)**.
+For each state, $V(s) = \max_a Q(s, a)$.
 
-- **V(S):** max(13, 8, 5, 8, 4) = **13**
-- **V(W):** max(12, 0, 0, 6, 15) = **15**
-- **V(L):** max(0, 2, 5, 2, 0) = **5**
-
----
-
-### 2. **What action should be applied to maximize expected utility on each state?**
-
-- **S:** Action **a1** (since Q(S, a1) = 13 is highest)
-- **W:** Action **a5** (since Q(W, a5) = 15 is highest)
-- **L:** Action **a3** (since Q(L, a3) = 5 is highest)
+- **V(S):** $\max(13, 8, 5, 8, 4) = 13$
+- **V(W):** $\max(12, 0, 0, 6, 15) = 15$
+- **V(L):** $\max(0, 2, 5, 2, 0) = 5$
 
 ---
 
-### **Summary Table**
+### 2. What action should be applied to maximize expected utility on each state?
+
+- **S:** Action **a1** (since $Q(S, a1) = 13$ is highest)
+- **W:** Action **a5** (since $Q(W, a5) = 15$ is highest)
+- **L:** Action **a3** (since $Q(L, a3) = 5$ is highest)
+
+---
+
+#### Summary Table
 
 | State | V(s) | Best Action |
 |-------|------|-------------|
-| S     |  13  | a1          |
-| W     |  15  | a5          |
-| L     |   5  | a3          |
+| S     | 13   | a1          |
+| W     | 15   | a5          |
+| L     | 5    | a3          |
 
 ---
 
@@ -1904,61 +1835,55 @@ Recall for each state, **V(s) = maxₐ Q(s, a)**.
 
 Consider a Q-learning problem with **2 states**: `s1` and `s2`. At every step, the agent can choose one of **three actions**: `a1`, `a2`, and `a3`.
 
-After training, the Q-values (`Q(s, a)`) are as follows:
+After training, the Q-values $Q(s, a)$ are as follows:
 
-| State | a1   | a2  | a3  |
-|-------|------|-----|-----|
-| s1    |  8   | 10  | 15  |
-| s2    | -20  |  7  | 13  |
-
-**Questions & Answers:**
+| State | a1 | a2 | a3 |
+|-------|----|----|----|
+| s1    |  8 | 10 | 15 |
+| s2    | -20|  7 | 13 |
 
 ### 1. *Currently, the agent is at state `s1`. What action should the agent perform to maximize the expected reward?*
 
 - **Answer:**  
-  The agent should choose the action with the highest Q-value at `s1`:  
-  **a3** (since Q(s1, a3) = 15).
+  The agent should choose the action with the highest Q-value at `s1`: **a3** (since $Q(s1, a3) = 15$).
 
 ---
 
 ### 2. *Currently, the agent is at state `s1`. What is the expected cumulative reward if it applies the best policy?*
 
 - **Answer:**  
-  The expected cumulative reward is the highest Q-value at `s1`:  
-  **15**
+  The expected cumulative reward is the highest Q-value at `s1`: **15**
 
 ---
 
 ### 3. *Currently, the agent is at state `s2`. What action should the agent perform to maximize the expected reward?*
 
 - **Answer:**  
-  The agent should choose the action with the highest Q-value at `s2`:  
-  **a3** (since Q(s2, a3) = 13).
+  The agent should choose the action with the highest Q-value at `s2`: **a3** (since $Q(s2, a3) = 13$).
 
 ---
 
 ### 4. *Currently, the agent is at state `s2`. What is the expected reward it will get?*
 
 - **Answer:**  
-  The expected reward is the highest Q-value at `s2`:  
-  **13**
+  The expected reward is the highest Q-value at `s2`: **13**
 
 ---
 
 ## Q-Learning Table Update Example
 
 **Scenario:**  
-Given the same Q(s, a) matrix as before. The agent is **currently at state s1** and takes action **a1**. As a result, it **receives an immediate reward of 100** and **reaches state s2**.
+Given the same $Q(s, a)$ matrix as before. The agent is currently at state `s1` and takes action `a1`. As a result, it receives an immediate reward of **100** and reaches state `s2`.
 
 **Question:**  
 _When using the Q-learning algorithm, which entries in the Q-table should have their value updated as a result of this transition?_
 
-### **Q(s, a) Table Structure:**
+### Q(s, a) Table Structure
 
-|      | a1                | a2                | a3                |
-|------|-------------------|-------------------|-------------------|
-| s1   | Blank 1           | Blank 2           | Blank 3           |
-| s2   | Blank 4           | Blank 5           | Blank 6           |
+|      | a1       | a2       | a3       |
+|------|----------|----------|----------|
+| s1   | Blank 1  | Blank 2  | Blank 3  |
+| s2   | Blank 4  | Blank 5  | Blank 6  |
 
 Only **Q(s1, a1)** is updated when the agent takes action a1 from state s1.
 
@@ -1966,16 +1891,17 @@ Only **Q(s1, a1)** is updated when the agent takes action a1 from state s1.
 
 ### Q-learning Table Update Rule
 
-The Q-learning update for the state-action pair (s1, a1) is:
-\[
+The Q-learning update for the state-action pair $(s_1, a_1)$ is:  
+$$
 Q(s_1, a_1) \leftarrow Q(s_1, a_1) + \alpha \Big[ R + \gamma \max_{a'} Q(s_2, a') - Q(s_1, a_1) \Big]
-\]
+$$
 Where:
-- \(Q(s_1, a_1)\) is the entry being updated.
-- \(R\) is the immediate reward received (here, **100**).
-- \(\gamma\) is the discount factor.
-- \(\max_{a'} Q(s_2, a')\) is the maximal estimated future return from new state s2.
-- \(\alpha\) is the learning rate.
+
+- $Q(s_1, a_1)$ is the entry being updated.
+- $R$ is the immediate reward received (here, **100**).
+- $\gamma$ is the discount factor.
+- $\max_{a'} Q(s_2, a')$ is the maximal estimated future return from new state s2.
+- $\alpha$ is the learning rate.
 
 > **Answer:**  
 > The only entry updated is **Q(s1, a1)** (Blank 1).
@@ -1987,21 +1913,20 @@ Where:
 **Question:**  
 _What is the relation between the discount factor and exploration/exploitation?_
 
-#### Options:
+**Options:**
 
-a. The value of the discount factor is not related to exploration/exploitation
+a. The value of the discount factor is not related to exploration/exploitation  
+b. The lower the discount factor, the more exploitation  
+c. The higher the discount factor, the more exploration  
 
-b. The lower the discount factor, the more exploitation
+**Explanation:**
 
-c. The higher the discount factor, the more exploration
-
-#### **Explanation**
-- The discount factor (\(\gamma\)) determines how much future rewards are valued versus immediate rewards.
+- The discount factor ($\gamma$) determines how much future rewards are valued versus immediate rewards.
 - In standard Q-learning, the *discount factor* regulates the time horizon of planning (whether to prioritize immediate or future rewards).
-- *Exploration* vs. *exploitation* relates to policy (choosing random vs. known good actions), typically controlled by an exploration parameter (e.g., \(\epsilon\) in epsilon-greedy).
+- *Exploration* vs. *exploitation* relates to policy (choosing random vs. known good actions), typically controlled by an exploration parameter (e.g., $\epsilon$ in epsilon-greedy).
 
 **Correct answer:**  
-> **a. The value of the discount factor is not related to exploration/exploitation**
+**a. The value of the discount factor is not related to exploration/exploitation**
 
 The discount factor affects how future rewards are valued, not the balance between exploration and exploitation.
 
@@ -2010,21 +1935,20 @@ The discount factor affects how future rewards are valued, not the balance betwe
 ### Additional Questions
 
 **Question 11**  
-Higher γ → future rewards less discounted → agent values long-term rewards more.  
-**Correct answer: a. The higher the discount factor, the more the agent values long-term rewards**.
+Higher $\gamma$ $\rightarrow$ future rewards less discounted $\rightarrow$ agent values long-term rewards more.  
+**Correct answer:** a. The higher the discount factor, the more the agent values long-term rewards.
 
 ---
 
 **Question 12**  
-In ε-greedy: higher ε → more random actions → more exploration.  
-**Correct answer: c. The higher the epsilon, the more exploration**.
+In $\epsilon$-greedy: higher $\epsilon$ $\rightarrow$ more random actions $\rightarrow$ more exploration.  
+**Correct answer:** c. The higher the epsilon, the more exploration.
 
 ---
 
 **Question 13**  
-ε affects exploration, which can help **discover better long-term rewards** by exploring more early on. But the question is tricky: ε itself doesn't change how we value future rewards (γ does), but higher ε can lead to better long-term outcomes due to more exploration.  
-However, strictly speaking, "values long-term rewards" refers to weighting, not outcome quality. So ε is **not** about valuation per se.  
-**Correct answer: a. The value of epsilon is not related to how the agent values long-term rewards**.
+$\epsilon$ affects exploration, which can help discover better long-term rewards by exploring more early on. But the question is tricky: $\epsilon$ itself doesn't change how we value future rewards ($\gamma$ does), but higher $\epsilon$ can lead to better long-term outcomes due to more exploration.  
+However, strictly speaking, "values long-term rewards" refers to weighting, not outcome quality. So $\epsilon$ is **not** about valuation per se.  
+**Correct answer:** a. The value of epsilon is not related to how the agent values long-term rewards.
 
 ---
-
