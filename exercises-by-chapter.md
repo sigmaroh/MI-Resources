@@ -60,6 +60,7 @@ Classify the following domains according to their environment properties:
 
 **Domain 1: Poker (Group playing poker)**
 
+
 | Property | Answer | Reasoning |
 |----------|--------|-----------|
 | Observable | **No** (Partial) | Cannot see other players' cards - hidden information |
@@ -70,6 +71,7 @@ Classify the following domains according to their environment properties:
 | Single-agent | **No** (Multi-agent) | Multiple players competing against each other |
 
 **Domain 2: Car Driving (Person driving a car)**
+
 
 | Property | Answer | Reasoning |
 |----------|--------|-----------|
@@ -82,6 +84,7 @@ Classify the following domains according to their environment properties:
 
 **Domain 3: Machine Detecting Underweight Chocolate Bars**
 
+
 | Property | Answer | Reasoning |
 |----------|--------|-----------|
 | Observable | **Yes** (Fully) | Can measure weight directly with sensor |
@@ -93,6 +96,7 @@ Classify the following domains according to their environment properties:
 
 **Domain 4: Doctor Performing Medical Diagnosis**
 
+
 | Property | Answer | Reasoning |
 |----------|--------|-----------|
 | Observable | **No** (Partial) | Cannot directly observe internal conditions, relies on symptoms/tests |
@@ -103,6 +107,7 @@ Classify the following domains according to their environment properties:
 | Single-agent | **Yes/No** | Usually single doctor making decisions (yes), but could involve patient cooperation |
 
 **Note:** Some classifications can be debated depending on assumptions. The chocolate machine's "Deterministic" depends on sensor quality - perfect sensor = deterministic, noisy sensor = stochastic. Doctor's "Single-agent" depends on whether you consider the patient as another agent.
+
 
 ---
 
@@ -395,6 +400,7 @@ b must be less than at least one value of d. So possible b ∈ {1,2,3,4,5}
 
 ### Summary Table
 
+
 | Variable | Final Domain       |
 |----------|-------------------|
 |   a      | 3, 4, 5, 6        |
@@ -592,6 +598,7 @@ State your reasoning and show your calculations or explanation.
 ### 📊 Data Summary  
 From a dataset of **10,000 restaurant reviews**, we have three boolean variables:  
 
+
 | Variable  | Description                          |
 |-----------|--------------------------------------|
 | `Positive`| Whether the review is positive       |
@@ -599,6 +606,7 @@ From a dataset of **10,000 restaurant reviews**, we have three boolean variables
 | `Long`    | Whether the review is long           |
 
 **Data Table:**  
+
 
 |            | Discount = yes       | Discount = no        |
 |------------|----------------------|----------------------|
@@ -631,6 +639,7 @@ We sum over `Long` to get joint counts of `(Positive, Discount)`.
 ### 📈 Step 2 – Joint & Marginal Probabilities  
 
 **Joint distribution \(P(Positive, Discount)\)** (divide by 10000):
+
 
 | \(P\)           | Discount = yes | Discount = no | **Marginal \(P(Positive)\)** |
 |-----------------|----------------|---------------|------------------------------|
@@ -669,6 +678,7 @@ All match exactly.
 
 ### 📌 Summary Table (Joint Distribution)
 
+
 | \(P(Positive, Discount)\) | Discount = yes | Discount = no |
 |---------------------------|----------------|---------------|
 | **Positive = yes**        | 0.0300         | 0.2700        |
@@ -688,10 +698,11 @@ Marginals:
 
 **Question:** Given joint distribution:
 
-|| P(X,Y) | Y=0 | Y=1 |
-||--------|-----|-----|
-|| X=0    | 0.2 | 0.3 |
-|| X=1    | 0.1 | 0.4 |
+
+| P(X,Y)| Y=0  | Y=1  |
+|-------|------|------|
+| X=0   | 0.2  | 0.3  |
+| X=1   | 0.1  | 0.4  |
 
 Are X and Y independent?
 
@@ -704,7 +715,7 @@ Are X and Y independent?
 - P(Y=1) = 0.3 + 0.4 = 0.7
 
 **Check independence:**
-- P(X=0,Y=0) = 0.2, P(X=0)×P(Y=0) = 0.5×0.3 = 0.15 ❌
+- \(P(X=0,Y=0) = 0.2\), \(P(X=0) \times P(Y=0) = 0.5 \times 0.3 = 0.15\) ❌
 - 0.2 ≠ 0.15
 
 **Answer: NOT independent** (first check fails)
@@ -775,15 +786,16 @@ P(Disease|Positive) = P(Positive|Disease)×P(Disease) / P(Positive)
 
 We are given a Bayesian Network that predicts whether a user will buy a product, based on several product characteristics.
 
-#### Variables and their Domains
+#### Variables and Their Domains
 
-|| Variable | Values (Domain)                   | Meaning                           |
-||----------|----------------------------------|-----------------------------------|
-|| Q        | very poor, poor, average, good, very good | Quality of the product         |
-|| S        | small, medium, big               | Size of the product                |
-|| C        | red, blue, green, yellow         | Color of the product               |
-|| P        | cheap, expensive, luxury         | Price of the product               |
-|| B        | yes, no                          | Whether the user will buy the product |
+
+| Variable | Values (Domain)                                 | Meaning                                 |
+|----------|------------------------------------------------|-----------------------------------------|
+| Q        | very poor, poor, average, good, very good       | Quality of the product                  |
+| S        | small, medium, big                              | Size of the product                     |
+| C        | red, blue, green, yellow                        | Color of the product                    |
+| P        | cheap, expensive, luxury                        | Price of the product                    |
+| B        | yes, no                                         | Whether the user will buy the product   |
 
 #### Network Structure
 
@@ -849,13 +861,14 @@ Count *all* rows (even if some can be derived from others).
 
 #### Step 3: Final Answer Table
 
-|| Variable | CPT Meaning       | # Entries |
-||----------|------------------|-----------|
-|| Q        | P(Q)             | 5         |
-|| C        | P(C)             | 4         |
-|| S        | P(S\|Q,C)        | 60        |
-|| P        | P(P\|Q,S)        | 45        |
-|| B        | P(B\|Q,S,C,P)    | 360       |
+
+| Variable | CPT Meaning       | # Entries |
+|----------|------------------|-----------|
+| Q        | P(Q)             | 5         |
+| C        | P(C)             | 4         |
+| S        | P(S\|Q,C)    | 60        |
+| P        | P(P\|Q,S)    | 45        |
+| B        | P(B\|Q,S,C,P)| 360       |
 
 ---
 
@@ -904,12 +917,13 @@ Network:
 
 **Solution:**
 
-|| Node | Parents | Calculation | CPT Size |
-||------|---------|-------------|----------|
-|| A    | none    | 3           | **3**    |
-|| B    | A       | 2 × 3       | **6**    |
-|| C    | A, B    | 4 × 3 × 2   | **24**   |
-|| D    | C       | 2 × 4       | **8**    |
+
+| Node | Parents | Calculation | CPT Size |
+|------|---------|-------------|----------|
+| A    | none    | 3           | **3**    |
+| B    | A       | 2 × 3       | **6**    |
+| C    | A, B    | 4 × 3 × 2   | **24**   |
+| D    | C       | 2 × 4       | **8**    |
 
 **Total parameters:** 3 + 6 + 24 + 8 = 41
 
@@ -1040,102 +1054,120 @@ Where:
 - P(w|u,¬v) = 2/5 = 0.4
 
 **Factorization:**
+
 \[
-P(s, u, \neg v, w) = P(s) \times P(u|s) \times P(\neg v|s) \times P(w|u,\neg v)
+P(s, u, \neg v, w) = P(s) \times P(u|s) \times P(\neg v|s) \times P(w|u, \neg v)
 \]
 
-**Calculate:**
-- P(s) = 0.2
-- P(u|s) = 0.6
-- P(¬v|s) = 1 - P(v|s) = 1 - 0.7 = 0.3
-- P(w|u,¬v) = 0.4
+**Calculation:**
+
+- \(P(s) = 0.2\)
+- \(P(u|s) = 0.6\)
+- \(P(\neg v|s) = 1 - P(v|s) = 1 - 0.7 = 0.3\)
+- \(P(w|u, \neg v) = 0.4\)
 
 \[
-P(u, \neg v, w, s) = 0.2 \times 0.6 \times 0.3 \times 0.4 = \boxed{0.0144}
+P(u, \neg v, w, s) = 0.2 \times 0.6 \times 0.3 \times 0.4 = 0.0144
 \]
 
 ---
 
 **Part (iii): Calculate P(¬u | s)**
 
+
 Directly from the CPT:
+
 \[
-P(\neg u|s) = 1 - P(u|s) = 1 - \frac{3}{5} = \frac{2}{5} = \boxed{0.4}
+P(\neg u | s) = 1 - P(u | s) = 1 - \frac{3}{5} = \frac{2}{5} = 0.4
 \]
 
 ---
 
-**Part (iv): Calculate P(s | u, w)**
+**Part (iv): Calculate \(P(s | u, w)\)**
 
 Using Bayes' Theorem:
+
 \[
-P(s|u,w) = \frac{P(u,w|s)P(s)}{P(u,w)}
+P(s | u, w) = \frac{P(u, w | s) \cdot P(s)}{P(u, w)}
 \]
 
-**Step 1: Calculate P(u,w|s)**
+---
+
+**Step 1: Calculate \(P(u, w | s)\)**
 
 \[
-P(u,w|s) = P(u|s) \times P(w|u,s)
+P(u, w | s) = P(u | s) \cdot P(w | u, s)
 \]
 
-Marginalize over v:
+To get \(P(w | u, s)\), marginalize over \(v\):
+
 \[
-P(w|u,s) = P(w|u,v)P(v|s) + P(w|u,\neg v)P(\neg v|s)
+P(w | u, s) = P(w | u, v) \cdot P(v | s) + P(w | u, \neg v) \cdot P(\neg v | s)
 \]
 
 Given:
-- P(w|u,v) = 5/8 = 0.625
-- P(w|u,¬v) = 2/5 = 0.4
-- P(v|s) = 7/10 = 0.7
-- P(¬v|s) = 3/10 = 0.3
+
+- \(P(w | u, v) = \frac{5}{8} = 0.625\)
+- \(P(w | u, \neg v) = \frac{2}{5} = 0.4\)
+- \(P(v | s) = \frac{7}{10} = 0.7\)
+- \(P(\neg v | s) = \frac{3}{10} = 0.3\)
+
+So:
 
 \[
-P(w|u,s) = (0.625 \times 0.7) + (0.4 \times 0.3) = 0.4375 + 0.12 = 0.5575
+P(w | u, s) = (0.625 \times 0.7) + (0.4 \times 0.3) = 0.4375 + 0.12 = 0.5575
 \]
 
 Therefore:
+
 \[
-P(u,w|s) = 0.6 \times 0.5575 = 0.3345
+P(u, w | s) = 0.6 \times 0.5575 = 0.3345
 \]
 
-**Step 2: Calculate P(u,w)**
+---
 
-Need to marginalize over s:
+**Step 2: Calculate \(P(u, w)\)** (marginalize over \(s\)):
+
 \[
-P(u,w) = P(u,w|s)P(s) + P(u,w|\neg s)P(\neg s)
+P(u, w) = P(u, w | s) \cdot P(s) + P(u, w | \neg s) \cdot P(\neg s)
 \]
 
-Calculate P(u,w|¬s):
-- P(u|¬s) = 3/4 = 0.75
-- P(v|¬s) = 1/5 = 0.2
-- P(¬v|¬s) = 4/5 = 0.8
+First, \(P(u, w | \neg s)\):
+
+- \(P(u | \neg s) = \frac{3}{4} = 0.75\)
+- \(P(v | \neg s) = \frac{1}{5} = 0.2\)
+- \(P(\neg v | \neg s) = \frac{4}{5} = 0.8\)
+
+Now,
 
 \[
-P(w|u,\neg s) = P(w|u,v)P(v|\neg s) + P(w|u,\neg v)P(\neg v|\neg s)
+P(w | u, \neg s) = P(w | u, v) \cdot P(v | \neg s) + P(w | u, \neg v) \cdot P(\neg v | \neg s)
 \]
 
 \[
 = (0.625 \times 0.2) + (0.4 \times 0.8) = 0.125 + 0.32 = 0.445
 \]
 
-\[
-P(u,w|\neg s) = 0.75 \times 0.445 = 0.33375
-\]
-
-Now:
-\[
-P(u,w) = (0.3345 \times 0.2) + (0.33375 \times 0.8)
-\]
+So,
 
 \[
-= 0.0669 + 0.267 = 0.3339
+P(u, w | \neg s) = 0.75 \times 0.445 = 0.33375
 \]
+
+Now with \(P(s) = 0.2\) and \(P(\neg s) = 0.8\):
+
+\[
+P(u, w) = (0.3345 \times 0.2) + (0.33375 \times 0.8) = 0.0669 + 0.267 = 0.3339
+\]
+
+---
 
 **Step 3: Final calculation**
 
 \[
-P(s|u,w) = \frac{0.3345 \times 0.2}{0.3339} = \frac{0.0669}{0.3339} ≈ \boxed{0.200}
+P(s | u, w) = \frac{0.3345 \times 0.2}{0.3339} = \frac{0.0669}{0.3339} \approx 0.200
 \]
+
 
 ---
 
@@ -1171,7 +1203,6 @@ If we use K=7: ?? [bad,ok,great, none]
  
 
 
-
 We're provided a new data point (size=4,weight=9), which we want to classify. Indicate the class for several values of K: 
 
 If we use K=3: ?? [bad,ok,great, none]
@@ -1199,10 +1230,9 @@ Classification is done by **majority voting among the k nearest neighbors**, wit
 
 ### Euclidean Distance Formula
 
-For two points  
-\[
-(x_1, y_1), (x_2, y_2)
-\]
+For two points: \((x_1, y_1)\) and \((x_2, y_2)\)
+
+The Euclidean distance is given by:
 
 \[
 d = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}
@@ -1215,6 +1245,7 @@ To compare distances, we use **squared distances**, since the square root preser
 ### 1. Classifying Point (2, 2)
 
 #### Distance Table
+
 
 | Data point | Class | Distance formula | Distance² |
 |-----------|-------|------------------|-----------|
@@ -1253,6 +1284,7 @@ Votes:
 
 #### Distance Table
 
+
 | Data point | Class | Distance² |
 |-----------|-------|-----------|
 | (3,9) | Great | **1** |
@@ -1290,6 +1322,7 @@ Votes:
 ### 3. Classifying Point (10, 9)
 
 #### Distance Table
+
 
 | Data point | Class | Distance² |
 |-----------|-------|-----------|
@@ -1340,6 +1373,7 @@ K = 1
 
 ### Final Answers Summary
 
+
 | Question | Answer |
 |--------|-------|
 | (2,2), K=3 | Bad |
@@ -1362,6 +1396,7 @@ We are given the following setup:
 
 ### Distance Table for Feature 1 (Categorical):
 
+
 |         | **1** | **2** | **3** |
 |---------|-------|-------|-------|
 | **1**   | 0     | 20    | 60    |
@@ -1369,6 +1404,7 @@ We are given the following setup:
 | **3**   | 60    | 35    | 0     |
 
 ### Dataset:
+
 
 | Index | Feature 1 | Feature 2 | Class |
 |-------|-----------|-----------|-------|
@@ -1418,6 +1454,7 @@ We have a **new observation**:
 We have **Feature 1** (categorical with values 1, 2, 3) and **Feature 2** (numerical).  
 There's also a given **dissimilarity table for Feature 1** (like a distance matrix between categories):
 
+
 | F1(a) \ F1(b) | 1   | 2   | 3   |
 |---|---|---|---|
 | 1             | 0   | 20  | 60  |
@@ -1428,6 +1465,7 @@ So if Feature 1 is 1 and Feature 1 is 2 → distance = 20.
 This is *categorical distance*.
 
 **Dataset:**
+
 | ID | Feature 1 | Feature 2 | Class |
 |----|-----------|-----------|-------|
 | 1  | 2         | 88        | A     |
@@ -1442,7 +1480,7 @@ New observation: Feature 1 = 2, Feature 2 = 67.
 
 #### **2. Manhattan distance**
 
-For Manhattan distance between (F1_new, F2_new) and (F1_i, F2_i):
+For Manhattan distance between \((F1_{new}, F2_{new})\) and \((F1_i, F2_i)\):
 
 \[
 d_{\text{manhattan}} = \text{DistTable}(F1_{\text{new}}, F1_i) + |F2_{\text{new}} - F2_i|
@@ -1489,8 +1527,9 @@ Order by Manhattan distance:
 #### **3. Euclidean distance**
 
 Euclidean distance:
+
 \[
-d_{\text{euclidean}} = \sqrt{ \text{DistTable}(F1_{\text{new}}, F1_i)^2 + (F2_{\text{new}} - F2_i)^2 }
+d_{\text{euclidean}} = \sqrt{\text{DistTable}(F1_{\text{new}}, F1_i)^2 + (F2_{\text{new}} - F2_i)^2}
 \]
 
 Compute squares:
@@ -1555,17 +1594,19 @@ So **3-NN Euclidean** → class **B**.
 ### Formula
 Mean Squared Error (MSE) is calculated as:
 
-MSE = (1/n) × Σ(yᵢ - ŷᵢ)²
+\[
+\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+\]
 
 Where:
-- n = number of data points
-- yᵢ = actual value for the i-th data point
-- ŷᵢ = predicted value for the i-th data point
+- \(n\) = number of data points
+- \(y_i\) = actual value for the i-th data point
+- \(\hat{y}_i\) = predicted value for the i-th data point
 
 ### Calculation Steps
 1. **Compute predictions** using your model
-2. **Calculate errors**: eᵢ = yᵢ - ŷᵢ
-3. **Square each error**: (eᵢ)²
+2. **Calculate errors**: \(e_i = y_i - \hat{y}_i\)
+3. **Square each error**: \((e_i)^2\)
 4. **Sum all squared errors**
 5. **Divide by n** to get the average
 
@@ -1606,7 +1647,8 @@ Given the following data points, calculate the predictions and Mean Squared Erro
 
 #### Data
 
-| x₁ | x₂ | y  | ŷ  |
+
+| \(x_1\) | \(x_2\) | y  | ŷ  |
 |----|----|----|----|
 | 3  | 2  | 4  | ?  |
 | 1  | 4  | 2  | ?  |
@@ -1616,24 +1658,24 @@ Given the following data points, calculate the predictions and Mean Squared Erro
 
 #### Model parameters
 
-- **w₀** = 1  
-- **w₁** = 2  
-- **w₂** = -1  
+- **\(w_0\)** = 1  
+- **\(w_1\)** = 2  
+- **\(w_2\)** = -1  
 
 The linear regression model is:
 
-```
-ŷ = w₀ + w₁·x₁ + w₂·x₂
-```
+\[
+\hat{y} = w_0 + w_1 \cdot x_1 + w_2 \cdot x_2
+\]
 
 Calculate:
 
-- The predicted value (ŷ) for each row:
-    - **Row 1:** ŷ = ?
-    - **Row 2:** ŷ = ?
-    - **Row 3:** ŷ = ?
-    - **Row 4:** ŷ = ?
-    - **Row 5:** ŷ = ?
+- The predicted value (\hat{y}) for each row:
+    - **Row 1:** \(\hat{y}\) = ?
+    - **Row 2:** \(\hat{y}\) = ?
+    - **Row 3:** \(\hat{y}\) = ?
+    - **Row 4:** \(\hat{y}\) = ?
+    - **Row 5:** \(\hat{y}\) = ?
 - The Mean Squared Error (MSE) for the model using these predictions.
 
 ---
@@ -1642,7 +1684,8 @@ Calculate:
 
 #### 📊 Data and Parameters
 **Given data points:**
-| x₁ | x₂ | y  |
+
+| \(x_1\) | \(x_2\) | y  |
 |----|----|----|
 | 3  | 2  | 4  |
 | 1  | 4  | 2  |
@@ -1651,21 +1694,30 @@ Calculate:
 | 0  | 4  | -1 |
 
 **Model parameters:**
-- w₀ = 1 (bias/intercept)
-- w₁ = 2 (coefficient for x₁)
-- w₂ = -1 (coefficient for x₂)
+- \(w_0 = 1\) (bias/intercept)
+- \(w_1 = 2\) (coefficient for \(x_1\))
+- \(w_2 = -1\) (coefficient for \(x_2\))
 
 **Regression model:**
-ŷ = w₀ + w₁·x₁ + w₂·x₂
 
-#### 🔢 Predicted Values (ŷ)
-**Row 1:** ŷ = 1 + 2(3) + (-1)(2) = 1 + 6 - 2 = **5**  
-**Row 2:** ŷ = 1 + 2(1) + (-1)(4) = 1 + 2 - 4 = **-1**  
-**Row 3:** ŷ = 1 + 2(2) + (-1)(0) = 1 + 4 + 0 = **5**  
-**Row 4:** ŷ = 1 + 2(1) + (-1)(1) = 1 + 2 - 1 = **2**  
-**Row 5:** ŷ = 1 + 2(0) + (-1)(4) = 1 - 4 = **-3**
+\[
+\hat{y} = w_0 + w_1 \cdot x_1 + w_2 \cdot x_2
+\]
+
+#### 🔢 Predicted Values (\(\hat{y}\))
+
+**Row 1:** \(\hat{y} = 1 + 2(3) + (-1)(2) = 1 + 6 - 2 = 5\)
+
+**Row 2:** \(\hat{y} = 1 + 2(1) + (-1)(4) = 1 + 2 - 4 = -1\)
+
+**Row 3:** \(\hat{y} = 1 + 2(2) + (-1)(0) = 1 + 4 + 0 = 5\)
+
+**Row 4:** \(\hat{y} = 1 + 2(1) + (-1)(1) = 1 + 2 - 1 = 2\)
+
+**Row 5:** \(\hat{y} = 1 + 2(0) + (-1)(4) = 1 - 4 = -3\)
 
 **Complete table:**
+
 | x₁ | x₂ | y  | ŷ  |
 |----|----|----|----|
 | 3  | 2  | 4  | 5  |
@@ -1675,7 +1727,7 @@ Calculate:
 | 0  | 4  | -1 | -3 |
 
 #### 📈 Error Calculation
-**Errors (y - ŷ):**
+**Errors \((y - \hat{y})\):**
 1. 4 - 5 = -1
 2. 2 - (-1) = 3
 3. 1 - 5 = -4
@@ -1683,18 +1735,20 @@ Calculate:
 5. -1 - (-3) = 2
 
 **Squared errors:**
-1. (-1)² = 1
-2. 3² = 9
-3. (-4)² = 16
-4. 1² = 1
-5. 2² = 4
+1. \((-1)^2 = 1\)
+2. \(3^2 = 9\)
+3. \((-4)^2 = 16\)
+4. \(1^2 = 1\)
+5. \(2^2 = 4\)
 
-| x₁ | x₂ |  y  | ŷ  | e = y - ŷ | e² = (y - ŷ)² |
+
+| \(x_1\) | \(x_2\) |  y  | ŷ  | e = y - ŷ | e² = \((y - ŷ)^2\) |
 |----|----|-----|----|-----------|---------------|
 |  3 |  2 |  4  |  5 |    -1     |       1       |
 |  1 |  4 |  2  | -1 |     3     |       9       |
 |  2 |  0 |  1  |  5 |    -4     |      16       |
 |  1 |  1 |  3  |  2 |     1     |       1       |
+
 |  0 |  4 | -1  | -3 |     2     |       4       |
 |----|----|-----|----|-----------|---------------|
 |**Sum of squared errors**       |   **31**      |
@@ -1702,16 +1756,19 @@ Calculate:
 #### 🧮 MSE Calculation
 **Sum of squared errors:** 1 + 9 + 16 + 1 + 4 = 31
 
-**MSE formula:**  
-MSE = (1/n) × Σ(y - ŷ)²  
-MSE = 31 ÷ 5 = **6.2**
+**MSE formula:**
+
+\[
+\text{MSE} = \frac{1}{n} \sum (y - \hat{y})^2 = \frac{31}{5} = 6.2
+\]
 
 #### 📋 Final Results
-ŷ of first row: **5**  
-ŷ of second row: **-1**  
-ŷ of third row: **5**  
-ŷ of fourth row: **2**  
-ŷ of fifth row: **-3**  
+
+- \(\hat{y}\) of first row: **5**
+- \(\hat{y}\) of second row: **-1**
+- \(\hat{y}\) of third row: **5**
+- \(\hat{y}\) of fourth row: **2**
+- \(\hat{y}\) of fifth row: **-3**
 
 **Mean Squared Error (MSE) for the model: 6.2**
 
@@ -1723,24 +1780,25 @@ MSE = 31 ÷ 5 = **6.2**
 
 **Question:** Given training data:
 
-|| Point | x | y | Class |
-||-------|---|---|-------|
-|| A     | 1 | 2 | Red   |
-|| B     | 2 | 3 | Red   |
-|| C     | 3 | 1 | Blue  |
-|| D     | 5 | 4 | Blue  |
-|| E     | 6 | 2 | Blue  |
+
+| Point | x | y | Class |
+|-------|---|---|-------|
+| A     | 1 | 2 | Red   |
+| B     | 2 | 3 | Red   |
+| C     | 3 | 1 | Blue  |
+| D     | 5 | 4 | Blue  |
+| E     | 6 | 2 | Blue  |
 
 Classify new point P(3, 3) using K=3 and Euclidean distance.
 
 **Solution:**
 
 **Step 1: Calculate distances**
-- A to P: √[(3-1)² + (3-2)²] = √(4+1) = √5 ≈ 2.24
-- B to P: √[(3-2)² + (3-3)²] = √(1+0) = 1.00
-- C to P: √[(3-3)² + (3-1)²] = √(0+4) = 2.00
-- D to P: √[(5-3)² + (4-3)²] = √(4+1) = √5 ≈ 2.24
-- E to P: √[(6-3)² + (2-3)²] = √(9+1) = √10 ≈ 3.16
+- A to P: \(\sqrt{(3-1)^2 + (3-2)^2} = \sqrt{4+1} = \sqrt{5} \approx 2.24\)
+- B to P: \(\sqrt{(3-2)^2 + (3-3)^2} = \sqrt{1+0} = 1.00\)
+- C to P: \(\sqrt{(3-3)^2 + (3-1)^2} = \sqrt{0+4} = 2.00\)
+- D to P: \(\sqrt{(5-3)^2 + (4-3)^2} = \sqrt{4+1} = \sqrt{5} \approx 2.24\)
+- E to P: \(\sqrt{(6-3)^2 + (2-3)^2} = \sqrt{9+1} = \sqrt{10} \approx 3.16\)
 
 **Step 2: Sort by distance**
 1. B (1.00) - Red
@@ -1775,17 +1833,17 @@ Red: 2, Blue: 1
 
 ### Problem 5.6: Prediction
 
-**Question:** Given model: ŷ = 3 + 2x₁ - x₂
+**Question:** Given model: \(\hat{y}\) = 3 + 2\(x_1\) - \(x_2\)
 
 Predict for:
-a) x₁=5, x₂=2  
-b) x₁=0, x₂=10  
-c) x₁=3, x₂=3
+a) \(x_1\)=5, \(x_2\)=2  
+b) \(x_1\)=0, \(x_2\)=10  
+c) \(x_1\)=3, \(x_2\)=3
 
 **Solution:**
-- a) ŷ = 3 + 2(5) - 2 = 3 + 10 - 2 = **11**
-- b) ŷ = 3 + 2(0) - 10 = 3 - 10 = **-7**
-- c) ŷ = 3 + 2(3) - 3 = 3 + 6 - 3 = **6**
+- a) \(\hat{y}\) = 3 + 2(5) - 2 = 3 + 10 - 2 = **11**
+- b) \(\hat{y}\) = 3 + 2(0) - 10 = 3 - 10 = **-7**
+- c) \(\hat{y}\) = 3 + 2(3) - 3 = 3 + 6 - 3 = **6**
 
 ---
 
@@ -1793,21 +1851,23 @@ c) x₁=3, x₂=3
 
 **Question:** Calculate MSE for predictions:
 
-|| Actual | Predicted |
-||--------|-----------|
-|| 10     | 12        |
-|| 15     | 13        |
-|| 8      | 8         |
-|| 20     | 18        |
+
+| Actual | Predicted |
+|--------|-----------|
+| 10     | 12        |
+| 15     | 13        |
+| 8      | 8         |
+| 20     | 18        |
 
 **Solution:**
 
-|| y | ŷ | Error | Squared Error |
-||---|---|-------|---------------|
-|| 10| 12| -2    | 4             |
-|| 15| 13| 2     | 4             |
-|| 8 | 8 | 0     | 0             |
-|| 20| 18| 2     | 4             |
+
+| y | ŷ | Error | Squared Error |
+|---|---|-------|---------------|
+| 10| 12| -2    | 4             |
+| 15| 13| 2     | 4             |
+| 8 | 8 | 0     | 0             |
+| 20| 18| 2     | 4             |
 
 MSE = (4 + 4 + 0 + 4) / 4 = 12 / 4 = **3.0**
 
@@ -1841,6 +1901,7 @@ The network structure is:
 
 #### Weights
 
+
 | Edge | Weight |
 |----|----|
 | \(I_1 \to A\) | 2 |
@@ -1851,6 +1912,7 @@ The network structure is:
 | \(C \to D\) | -1 |
 
 #### Biases
+
 
 | Node | Bias |
 |----|----|
@@ -1969,6 +2031,7 @@ D = max(0, 7) = 7
 
 #### Final Results
 
+
 | Neuron | Value before activation | Value after ReLU |
 |--------|------------------------|------------------|
 |   A    |          2             |        2         |
@@ -2000,6 +2063,7 @@ We have the following data set with **3 input attributes** (`i1`, `i2`, `i3`) an
 
 #### Testing Set
 
+
 | Example | i1 | i2 | i3 | Target |
 |--------|----|----|----|--------|
 | ex1 | 3 | 4 | 1 | 5 |
@@ -2010,6 +2074,7 @@ We have the following data set with **3 input attributes** (`i1`, `i2`, `i3`) an
 We have the outputs of **two neural networks** on the testing set.
 
 #### Neural Network Outputs
+
 
 | Example | Neural Network A | Neural Network B |
 |--------|------------------|------------------|
@@ -2052,6 +2117,7 @@ Where:
 
 ##### Neural Network A
 
+
 | Example | Target (y) | Prediction (\hat{y}) | \|y - \hat{y}\| |
 |---------|------------|----------------------|-----------------|
 | ex1     |     5      |         10           |        5        |
@@ -2064,6 +2130,7 @@ Where:
 ---
 
 ##### Neural Network B
+
 
 | Example | Target (y) | Prediction (\hat{y}) | \|y - \hat{y}\| |
 |---------|------------|----------------------|-----------------|
@@ -2081,6 +2148,7 @@ Where:
 
 ##### Neural Network A
 
+
 | Example | Calculation         | Squared Error |
 |---------|---------------------|---------------|
 | ex1     | $(5 - 10)^2$        | 25            |
@@ -2093,6 +2161,7 @@ Where:
 ---
 
 ##### Neural Network B
+
 
 | Example | Calculation         | Squared Error |
 |---------|---------------------|---------------|
@@ -2310,11 +2379,12 @@ e) Finding topics in a collection of documents (no labels)
 
 **Question:** You train a neural network and get these results:
 
-|| Model | Train Accuracy | Test Accuracy |
-||-------|----------------|---------------|
-|| A     | 99%            | 60%           |
-|| B     | 75%            | 73%           |
-|| C     | 65%            | 64%           |
+
+| Model | Train Accuracy | Test Accuracy |
+|-------|----------------|---------------|
+| A     | 99%            | 60%           |
+| B     | 75%            | 73%           |
+| C     | 65%            | 64%           |
 
 Which model is:
 - Overfitting?
@@ -2377,16 +2447,17 @@ Root: Cooked?
 
 **Solution:**
 
-|| Item | Classification Path | Result |
-||------|-------------------|--------|
-|| Banana | No cooked → Long shape | **Vegetable** |
-|| Lettuce | No cooked → Round shape | **Fruit** |
-|| Aubergine | Yes cooked → Purple (other) → High density | **Fruit** |
-|| Carrot | Yes cooked → Orange (other) → High density | **Fruit** |
-|| Green peas | Yes cooked → Green | **Vegetable** |
-|| Grapes | No cooked → Round | **Fruit** |
-|| Apple | No cooked → Round | **Fruit** |
-|| Zucchini | Yes cooked → Green | **Vegetable** |
+
+| Item | Classification Path | Result |
+|------|-------------------|--------|
+| Banana | No cooked → Long shape | **Vegetable** |
+| Lettuce | No cooked → Round shape | **Fruit** |
+| Aubergine | Yes cooked → Purple (other) → High density | **Fruit** |
+| Carrot | Yes cooked → Orange (other) → High density | **Fruit** |
+| Green peas | Yes cooked → Green | **Vegetable** |
+| Grapes | No cooked → Round | **Fruit** |
+| Apple | No cooked → Round | **Fruit** |
+| Zucchini | Yes cooked → Green | **Vegetable** |
 
 ---
 
@@ -2398,10 +2469,11 @@ Root: Cooked?
 
 **Confusion Matrix:**
 
-|| Predicted Fruit | Predicted Vegetable |
-||----------------|---------------------|
-|| **Actual Fruit** | TP = 2 (Grapes, Apple) | FN = 1 (Banana) |
-|| **Actual Vegetable** | FP = 1 (Lettuce) | TN = 4 (Aubergine, Carrot, Green peas, Zucchini) |
+
+| Predicted Fruit | Predicted Vegetable |
+|----------------|---------------------|
+| **Actual Fruit** | TP = 2 (Grapes, Apple) | FN = 1 (Banana) |
+| **Actual Vegetable** | FP = 1 (Lettuce) | TN = 4 (Aubergine, Carrot, Green peas, Zucchini) |
 
 **Metrics:**
 
@@ -2462,7 +2534,7 @@ H(S|Shape) = (4/8) × 0.811 + (4/8) × 1.0 = 0.9055
 **Step 4: Calculate Information Gain**
 
 \[
-IG(Shape) = H(S) - H(S|Shape) = 0.955 - 0.9055 = \boxed{0.0495}
+IG(\text{Shape}) = H(S) - H(S|\text{Shape}) = 0.955 - 0.9055 = 0.0495
 \]
 
 ---
@@ -2491,7 +2563,7 @@ H(S|Cooked) = (4/8) × 0 + (4/8) × 0.811 = 0.4055
 **Information Gain:**
 
 \[
-IG(Cooked) = H(S) - H(S|Cooked) = 0.955 - 0.4055 = \boxed{0.5495}
+IG(\text{Cooked}) = H(S) - H(S|\text{Cooked}) = 0.955 - 0.4055 = 0.5495
 \]
 
 ---
@@ -2585,12 +2657,14 @@ K-means minimizes WCSS
 - Look for "elbow" where improvement slows
 
 **Silhouette Score:**
+
 \[
 s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
 \]
-- a(i) = avg distance within cluster
-- b(i) = avg distance to nearest other cluster
-- s(i) ∈ [-1,1], higher is better
+
+- \(a(i)\) = avg distance within cluster
+- \(b(i)\) = avg distance to nearest other cluster
+- \(s(i) \in [-1,1]\), higher is better
 
 ---
 
@@ -2605,12 +2679,13 @@ s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
 
 **Linkage Methods:**
 
-|| Method | Distance | Property |
-||--------|----------|----------|
-|| Single | min(d(a,b)) | Long chains |
-|| Complete | max(d(a,b)) | Compact clusters |
-|| Average | avg(d(a,b)) | Compromise |
-|| Ward | Minimizes variance | Best for spherical |
+
+| Method | Distance | Property |
+|--------|----------|----------|
+| Single | min(d(a,b)) | Long chains |
+| Complete | max(d(a,b)) | Compact clusters |
+| Average | avg(d(a,b)) | Compromise |
+| Ward | Minimizes variance | Best for spherical |
 
 **Output:** Dendrogram (tree)
 
@@ -2634,14 +2709,15 @@ s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
 
 **Dataset:** 6 game characters with attributes (HP, STR, SPD)
 
-|| # | HP | STR | SPD |
-||---|----|----|-----|
-|| 1 | 25 | 2  | 9   |
-|| 2 | 45 | 4  | 4   |
-|| 3 | 70 | 8  | 7   |
-|| 4 | 40 | 3  | 10  |
-|| 5 | 30 | 5  | 9   |
-|| 6 | 80 | 8  | 8   |
+
+| # | HP | STR | SPD |
+|---|----|----|-----|
+| 1 | 25 | 2  | 9   |
+| 2 | 45 | 4  | 4   |
+| 3 | 70 | 8  | 7   |
+| 4 | 40 | 3  | 10  |
+| 5 | 30 | 5  | 9   |
+| 6 | 80 | 8  | 8   |
 
 **Initial centroids:** C1 = (20, 1, 1), C2 = (80, 10, 10)
 
@@ -2742,14 +2818,16 @@ Since centroids moved significantly, the algorithm continues to the next iterati
 **Normalize the data** before applying K-means. Common normalization methods:
 
 1. **Min-Max Scaling:** Scale to [0, 1]
-   \[
-   x' = \frac{x - \min(x)}{\max(x) - \min(x)}
-   \]
+
+\[
+x' = \frac{x - \min(x)}{\max(x) - \min(x)}
+\]
 
 2. **Z-Score Normalization (Standardization):** Mean = 0, Std = 1
-   \[
-   x' = \frac{x - \mu}{\sigma}
-   \]
+
+\[
+x' = \frac{x - \mu}{\sigma}
+\]
 
 This ensures all attributes contribute equally to the distance calculation.
 
@@ -2761,12 +2839,13 @@ This ensures all attributes contribute equally to the distance calculation.
 
 ### Uninformed Search
 
-|| Algorithm | Complete | Optimal | Time | Space | Notes |
-||-----------|----------|---------|------|-------|-------|
-|| **BFS** | Yes | Yes* | O(b^d) | O(b^d) | *If uniform cost |
-|| **DFS** | No** | No | O(b^m) | O(bd) | **Finite spaces only |
-|| **UCS** | Yes | Yes | O(b^d) | O(b^d) | Uniform Cost Search |
-|| **IDS** | Yes | Yes* | O(b^d) | O(bd) | Best of BFS+DFS |
+
+| Algorithm | Complete | Optimal | Time | Space | Notes |
+|-----------|----------|---------|------|-------|-------|
+| **BFS** | Yes | Yes* | O(b^d) | O(b^d) | *If uniform cost |
+| **DFS** | No** | No | O(b^m) | O(bd) | **Finite spaces only |
+| **UCS** | Yes | Yes | O(b^d) | O(b^d) | Uniform Cost Search |
+| **IDS** | Yes | Yes* | O(b^d) | O(bd) | Best of BFS+DFS |
 
 Where: b=branching factor, d=depth of solution, m=max depth
 
@@ -2775,13 +2854,14 @@ Where: b=branching factor, d=depth of solution, m=max depth
 ### Informed Search: A* Algorithm
 
 **Formula:**
+
 \[
 f(n) = g(n) + h(n)
 \]
 
-- \( g(n) \) = actual cost from start to n
-- \( h(n) \) = heuristic estimate from n to goal
-- \( f(n) \) = estimated total cost
+- \(g(n)\) = actual cost from start to n
+- \(h(n)\) = heuristic estimate from n to goal
+- \(f(n)\) = estimated total cost
 
 **Properties:**
 - **Complete:** Yes (with admissible h)
@@ -2792,15 +2872,19 @@ f(n) = g(n) + h(n)
 ### Heuristic Properties
 
 **Admissible Heuristic:**
+
 \[
 h(n) \leq h^*(n)
 \]
+
 (never overestimates true cost to goal)
 
 **Consistent Heuristic:**
+
 \[
-h(n) \leq cost(n,n') + h(n')
+h(n) \leq \text{cost}(n,n') + h(n')
 \]
+
 (triangle inequality)
 
 **Common Heuristics:**
@@ -2815,21 +2899,23 @@ h(n) \leq cost(n,n') + h(n')
 
 Fill in the table:
 
-|| Algorithm | Complete? | Optimal? | Space Complexity |
-||-----------|-----------|----------|------------------|
-|| DFS       | ?         | ?        | ?                |
-|| BFS       | ?         | ?        | ?                |
-|| A*        | ?         | ?        | ?                |
+
+| Algorithm | Complete? | Optimal? | Space Complexity |
+|-----------|-----------|----------|------------------|
+| DFS       | ?         | ?        | ?                |
+| BFS       | ?         | ?        | ?                |
+| A*        | ?         | ?        | ?                |
 
 ---
 
 ### Solution
 
-|| Algorithm | Complete? | Optimal? | Space Complexity |
-||-----------|----------|----------|------------------|
-|| DFS       | No*       | No       | O(bm)            |
-|| BFS       | Yes       | Yes**    | O(b^d)           |
-|| A*        | Yes***    | Yes***   | O(b^d)           |
+
+| Algorithm | Complete? | Optimal? | Space Complexity |
+|-----------|----------|----------|------------------|
+| DFS       | No*       | No       | O(bm)            |
+| BFS       | Yes       | Yes**    | O(b^d)           |
+| A*        | Yes***    | Yes***   | O(b^d)           |
 
 *Complete in finite spaces  
 **If step costs equal  
@@ -3056,18 +3142,19 @@ This is the true optimal cost to reach the goal.
 
 **Given states in fringe:**
 
-|| State | g | h | f = g+h |
-||-------|---|---|---------|
-|| s₁    | 2 | 2 | 4       |
-|| s₂    | 3 | 3 | 6       |
-|| s₃    | 5 | 1 | 6       |
-|| s₄    | 2 | 3 | 5       |
-|| s₅    | 7 | 2 | 9       |
-|| s₆    | 1 | 5 | 6       |
+
+| State | g | h | f = g+h |
+|-------|---|---|---------|
+| \(s_1\)    | 2 | 2 | 4       |
+| \(s_2\)    | 3 | 3 | 6       |
+| s₃    | 5 | 1 | 6       |
+| s₄    | 2 | 3 | 5       |
+| s₅    | 7 | 2 | 9       |
+| s₆    | 1 | 5 | 6       |
 
 **A*** selects state with lowest **f = g + h**:
-- s₁ has f = 4 (lowest)
-- **A* selects: s₁**
+- \(s_1\) has f = 4 (lowest)
+- **A* selects: \(s_1\)**
 
 **GBFS (Greedy Best-First Search)** selects state with lowest **h only**:
 - s₃ has h = 1 (lowest)
@@ -3101,6 +3188,7 @@ We have the following evaluation function. In terminal nodes, the evaluation fun
 
 ### Node Values
 
+
 | Node |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |  K  |  L  |  M  |  N  |
 |------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
 | Value| -2  |  3  | 10  | -7  | -6  |  3  | -8  | -7  | -3  | -9  |  4  | -3  |  3  | 10  |
@@ -3113,6 +3201,7 @@ We have the following evaluation function. In terminal nodes, the evaluation fun
 
 **Compute the minimax value for these nodes:**
 
+
 | Node | A | B | C | D | E | F | G | H |
 |------|---|---|---|---|---|---|---|---|
 | Value|   |   |   |   |   |   |   |   |
@@ -3124,6 +3213,7 @@ We have the following evaluation function. In terminal nodes, the evaluation fun
 ### 2. Depth-2 Minimax (Depth 2 = Terminal)
 
 **Compute the minimax value for these nodes:**
+
 
 | Node | A | B | C | D | E | F | G | H |
 |------|---|---|---|---|---|---|---|---|
@@ -3157,6 +3247,7 @@ Tree structure:
 
 ### Given Evaluation Function Values
 
+
 | Node | A  | B  | C  | D  | E  | F  | G  | H  | I  | J  | K  | L  | M  | N  |
 |------|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
 | Value| -2 |  3 | 10 | -7 | -6 |  3 | -8 | -7 | -3 | -9 |  4 | -3 |  3 | 10 |
@@ -3167,21 +3258,22 @@ Tree structure:
 
 a. **Compute Values at Leaf Nodes (Depth 2, Max nodes):**
 
-- **e** = $\max$(I, J) = $\max$(-3, -9) = **-3**
-- **f** = $\max$(i, j) = $\max$(-3, -9) = **-3**
-- **g** = $\max$(K, L) = $\max$(4, -3) = **4**
-- **h** = $\max$(M, N) = $\max$(3, 10) = **10**
+- **e** = \(\max(I, J) = \max(-3, -9) = -3\)
+- **f** = \(\max(i, j) = \max(-3, -9) = -3\)
+- **g** = \(\max(K, L) = \max(4, -3) = 4\)
+- **h** = \(\max(M, N) = \max(3, 10) = 10\)
 
 b. **Compute Values at Min Nodes:**
 
-- **B** = $\min$(e, f) = $\min$(-3, -3) = **-3**
-- **C** = $\min$(g, h) = $\min$(4, 10) = **4**
+- **B** = \(\min(e, f) = \min(-3, -3) = -3\)
+- **C** = \(\min(g, h) = \min(4, 10) = 4\)
 - **D** = -7 (already a leaf)
 
 c. **Compute Value at Root (Max node A):**
-- **A** = $\max$(B, C, D) = $\max$(-3, 4, -7) = **4**
+- **A** = \(\max(B, C, D) = \max(-3, 4, -7) = 4\)
 
 **Full-depth Results:**
+
 
 | Node | A | B  | C  | D  | E  | F  | G | H  |
 |------|---|----|----|----|----|----|---|----|
@@ -3198,15 +3290,16 @@ For depth-limited search, use the given evaluation values for nodes **E**, **F**
 
 a. **Compute Values at Min Nodes:**
 
-- **B** = $\min$(E, F) = $\min$(-6, 3) = **-6**
-- **C** = $\min$(G, H) = $\min$(-8, -7) = **-8**
+- **B** = \(\min(E, F) = \min(-6, 3) = -6\)
+- **C** = \(\min(G, H) = \min(-8, -7) = -8\)
 - **D** = -7
 
 b. **Compute Value at Root (Max node A):**
 
-- **A** = $\max$(B, C, D) = $\max$(-6, -8, -7) = **-6**
+- **A** = \(\max(B, C, D) = \max(-6, -8, -7) = -6\)
 
 **Depth=2 Results:**
+
 
 | Node | A  | B  | C  | D  | E  | F  | G  | H  |
 |------|----|----|----|----|----|----|----|----|
@@ -3218,6 +3311,7 @@ b. **Compute Value at Root (Max node A):**
 ---
 
 ## 📌 Summary Table
+
 
 | Scenario              | A's Value | Best Move |
 |-----------------------|-----------|-----------|
@@ -3234,6 +3328,7 @@ We perform Min-Max search on the following tree. Annotate each internal node wit
 
 **Min-Max Tree**  
 ![Minmax](/images/minmax.png)
+
 
 | Node | Value (Blank)         |
 |------|-----------------------|
@@ -3267,19 +3362,20 @@ We perform Min-Max search on the following tree. Annotate each internal node wit
 **Minimax Computation (Bottom-Up):**
 
 1. **Compute MAX nodes (E, F, G)**
-    - **E** = $\max(3, -7) = 3$
-    - **F** = $\max(-1, 6) = 6$
-    - **G** = $\max(10, 4, -8) = 10$
+    - **E** = \(\max(3, -7) = 3\)
+    - **F** = \(\max(-1, 6) = 6\)
+    - **G** = \(\max(10, 4, -8) = 10\)
 
 2. **Compute MIN nodes (B, C, D)**
-    - **B** = $\min(2, E) = \min(2, 3) = 2$
-    - **C** = $\min(F, 1, 9) = \min(6, 1, 9) = 1$
-    - **D** = $\min(G, -2, 5) = \min(10, -2, 5) = -2$
+    - **B** = \(\min(2, E) = \min(2, 3) = 2\)
+    - **C** = \(\min(F, 1, 9) = \min(6, 1, 9) = 1\)
+    - **D** = \(\min(G, -2, 5) = \min(10, -2, 5) = -2\)
 
 3. **Compute root MAX node (A)**
-    - **A** = $\max(B, C, D) = \max(2, 1, -2) = 2$
+    - **A** = \(\max(B, C, D) = \max(2, 1, -2) = 2\)
 
 **Final Values:**
+
 
 | Node | Value |
 |------|-------|
@@ -3319,11 +3415,11 @@ We perform Min-Max search on the following tree. Annotate each internal node wit
 **Solution:**
 
 **MIN layer:**
-- A = min(3, 5) = 3
-- B = min(2, 6) = 2
+- \(A = \min(3, 5) = 3\)
+- \(B = \min(2, 6) = 2\)
 
 **MAX layer:**
-- Root = max(3, 2) = 3
+- \(\text{Root} = \max(3, 2) = 3\)
 
 **Best move: Choose A** (value 3)
 
@@ -3348,12 +3444,12 @@ Calculate root value and best move.
 **Solution:**
 
 **MIN layer:**
-- Under A: min(2,3,5) = 2
-- Under B: min(4,6,1) = 1
-- Under C: min(7,8,9) = 7
+- Under A: \(\min(2,3,5) = 2\)
+- Under B: \(\min(4,6,1) = 1\)
+- Under C: \(\min(7,8,9) = 7\)
 
 **MAX layer:**
-- Root: max(2, 1, 7) = 7
+- Root: \(\max(2, 1, 7) = 7\)
 
 **Best move: Choose C** (value 7)
 
@@ -3388,11 +3484,12 @@ Calculate root value and best move.
 
 **Given Payoff Matrix:**
 
-||       | Bob: E | Bob: F |
-||-------|--------|--------|
-|| **Alice: A** | (2, -4) | (2, -4) |
-|| **Alice: B** | (5, -1) | (-2, 2) |
-|| **Alice: C** | (0, 0) | (-2, 2) |
+
+|       | Bob: E | Bob: F |
+|-------|--------|--------|
+| **Alice: A** | (2, -4) | (2, -4) |
+| **Alice: B** | (5, -1) | (-2, 2) |
+| **Alice: C** | (0, 0) | (-2, 2) |
 
 Format: (Alice's utility, Bob's utility)
 
@@ -3477,12 +3574,12 @@ Based on exam solution: **Nash Equilibria: (A,E) and (B,E)**
 **Bottom-up evaluation:**
 
 **MIN layer:**
-- Left: min(0, 8) = **0**
-- Center: min(-5, -2) = **-5**
-- Right: min(0, 1, -1) = **-1**
+- Left: \(\min(0, 8) = 0\)
+- Center: \(\min(-5, -2) = -5\)
+- Right: \(\min(0, 1, -1) = -1\)
 
 **MAX layer (root):**
-- max(0, -5, -1) = **0**
+- \(\max(0, -5, -1) = 0\)
 
 **Root value: 0**
 
@@ -3535,9 +3632,10 @@ The MDP will initialize with the following values:
 ## Part 1 — One Iteration of Value Iteration
 
 **Value Iteration Update:**
-$$
-V_{k+1}(s) = \max_{a} \Big[ R(s, a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \Big]
-$$
+
+\[
+V_{k+1}(s) = \max_{a} \left[ R(s, a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \right]
+\]
 
 **Terminal states** keep their reward value (no action):
 - $(3, 3) \to +5$
@@ -3638,6 +3736,7 @@ Values future rewards more; encourages long-term planning.
 
 An agent operates on an MDP with 3 states (**S**, **W**, **L**) and 5 possible actions (**a1**–**a5**). The transition and reward functions are unknown, but the Q-value table below gives the expected utility for each (state, action) pair:
 
+
 | State | a1 | a2 | a3 | a4 | a5 |
 |-------|----|----|----|----|----|
 | **S** | 13 |  8 |  5 |  8 |  4 |
@@ -3663,6 +3762,7 @@ For each state, $V(s) = \max_a Q(s, a)$.
 ---
 
 #### Summary Table
+
 
 | State | V(s) | Best Action |
 |-------|------|-------------|
@@ -3723,12 +3823,12 @@ b) γ = 0.1
 
 **a) γ = 0.9:**
 - A: 10
-- B: 5 + 0.9×10 = 5 + 9 = 14
+- B: \(5 + 0.9 \times 10 = 5 + 9 = 14\)
 - **Choose B** (values future)
 
 **b) γ = 0.1:**
 - A: 10
-- B: 5 + 0.1×10 = 5 + 1 = 6
+- B: \(5 + 0.1 \times 10 = 5 + 1 = 6\)
 - **Choose A** (prioritizes immediate)
 
 ---
@@ -3750,9 +3850,9 @@ What's the optimal action?
 **Solution:**
 
 **Expected values:**
-- a1: 1 + 1.0×10 = 11
-- a2: 0 + 1.0×15 = 15
-- a3: 5 + 1.0×8 = 13
+- a1: \(1 + 1.0 \times 10 = 11\)
+- a2: \(0 + 1.0 \times 15 = 15\)
+- a3: \(5 + 1.0 \times 8 = 13\)
 
 **Optimal action: a2** (value 15)
 
@@ -3763,8 +3863,8 @@ What's the optimal action?
 ### Problem 12.5: MDP Analysis (Exam 2022, Exercise 6)
 
 **MDP States:**
-- s₁: Fresh state
-- s₂: Tired state
+- \(s_1\): Fresh state
+- \(s_2\): Tired state
 - s_inj: Injured state (absorbing)
 
 **Actions:**
@@ -3775,17 +3875,17 @@ What's the optimal action?
 **Discount factor:** γ = 0.9
 
 **Initial value function V₀:**
-- V₀(s₁) = 0
-- V₀(s₂) = -1
+- V₀(\(s_1\)) = 0
+- V₀(\(s_2\)) = -1
 - V₀(s_inj) = -2
 
 ---
 
 **Part (i): Discounted Reward Calculation**
 
-**Given sequence:** s₁ → s₂ → s₂ → s₁
+**Given sequence:** \(s_1\) → \(s_2\) → \(s_2\) → \(s_1\)
 
-**Rewards received:** R(s₁,a₁)=0, R(s₂,a₂)=1, R(s₂,a₃)=1, R(s₁,a₄)=0
+**Rewards received:** R(\(s_1\),a₁)=0, R(\(s_2\),a₂)=1, R(\(s_2\),a₃)=1, R(\(s_1\),a₄)=0
 
 **Discounted reward:**
 
@@ -3794,24 +3894,16 @@ R = r_0 + \gamma r_1 + \gamma^2 r_2 + \gamma^3 r_3
 \]
 
 \[
-= 0 + 0.9 \times 1 + 0.9^2 \times 1 + 0.9^3 \times 0
-\]
-
-\[
-= 0 + 0.9 + 0.81 + 0
-\]
-
-\[
-= \boxed{1.71}
+= 0 + 0.9 \times 1 + 0.9^2 \times 1 + 0.9^3 \times 0 = 0 + 0.9 + 0.81 + 0 = 1.71
 \]
 
 **Probability:** Would need transition probabilities P(s'|s,a) which aren't fully specified in the problem statement.
 
 ---
 
-**Part (ii): Best Action from s₁ Using V₀**
+**Part (ii): Best Action from \(s_1\) Using V₀**
 
-**Q-value calculation:** For each action a from s₁:
+**Q-value calculation:** For each action a from \(s_1\):
 
 \[
 Q(s_1, a) = R(s_1, a) + \gamma \sum_{s'} P(s'|s_1,a) \cdot V_0(s')
@@ -3824,11 +3916,11 @@ Q(s_1, a) = R(s_1, a) + \gamma \sum_{s'} P(s'|s_1,a) \cdot V_0(s')
 
 **Example structure** (with hypothetical transitions):
 
-If work-light from s₁:
-- Might stay in s₁ with prob 0.8: contributes 0.8 × 0 = 0
-- Might go to s₂ with prob 0.2: contributes 0.2 × (-1) = -0.2
-- Reward: R(s₁, work-light) = 1 (hypothetical)
-- Q(s₁, work-light) = 1 + 0.9 × (-0.2) = 1 - 0.18 = 0.82
+If work-light from \(s_1\):
+- Might stay in \(s_1\) with prob 0.8: contributes 0.8 × 0 = 0
+- Might go to \(s_2\) with prob 0.2: contributes 0.2 × (-1) = -0.2
+- Reward: R(\(s_1\), work-light) = 1 (hypothetical)
+- Q(\(s_1\), work-light) = 1 + 0.9 × (-0.2) = 1 - 0.18 = 0.82
 
 **Choose action with highest Q-value** after calculating all three.
 
@@ -3864,37 +3956,29 @@ V_1(s_{inj}) = -10 + 0.9 \times 1 \times (-2)
 
 ---
 
-**Part (iv): Value Iteration - Update V(s₁)**
+**Part (iv): Value Iteration - Update V(\(s_1\))**
 
-**For state s₁:**
+**For state \(s_1\):**
 
 \[
-V_1(s_1) = \max_a [R(s_1, a) + \gamma \sum_{s'} P(s'|s_1, a) V_0(s')]
+V_1(s_1) = \max_a \left[R(s_1, a) + \gamma \sum_{s'} P(s'|s_1, a) V_0(s')\right]
 \]
 
 **For each action, calculate Q-value and take maximum.**
 
 Example with work-light:
-- R(s₁, work-light) = 1
-- Transitions: 0.7 to s₁, 0.2 to s₂, 0.1 to s_inj (hypothetical)
+- \(R(s_1, \text{work-light}) = 1\)
+- Transitions: 0.7 to \(s_1\), 0.2 to \(s_2\), 0.1 to s_inj (hypothetical)
 
 \[
-Q(s_1, work\text{-}light) = 1 + 0.9 \times [0.7 \times 0 + 0.2 \times (-1) + 0.1 \times (-2)]
+Q(s_1, \text{work-light}) = 1 + 0.9 \times [0.7 \times 0 + 0.2 \times (-1) + 0.1 \times (-2)]
 \]
 
 \[
-= 1 + 0.9 \times [0 - 0.2 - 0.2]
+= 1 + 0.9 \times [0 - 0.2 - 0.2] = 1 + 0.9 \times (-0.4) = 1 - 0.36 = 0.64
 \]
 
-\[
-= 1 + 0.9 \times (-0.4)
-\]
-
-\[
-= 1 - 0.36 = 0.64
-\]
-
-**Repeat for all actions and take maximum** to get V₁(s₁).
+**Repeat for all actions and take maximum** to get V₁(\(s_1\)).
 
 ---
 
@@ -3908,7 +3992,7 @@ Q(s_1, work\text{-}light) = 1 + 0.9 \times [0.7 \times 0 + 0.2 \times (-1) + 0.1
 **Value Iteration Update Rule:**
 
 \[
-V_{k+1}(s) = \max_a \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \right]
+V_{k+1}(s) = \max_a \left[R(s,a) + \gamma \sum_{s'} P(s'|s,a) V_k(s')\right]
 \]
 
 ---
@@ -3920,6 +4004,7 @@ V_{k+1}(s) = \max_a \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V_k(s') \right]
 Consider a Q-learning problem with **2 states**: `s1` and `s2`. At every step, the agent can choose one of **three actions**: `a1`, `a2`, and `a3`.
 
 After training, the Q-values $Q(s, a)$ are as follows:
+
 
 | State | a1 | a2 | a3 |
 |-------|----|----|----|
@@ -3964,6 +4049,7 @@ _When using the Q-learning algorithm, which entries in the Q-table should have t
 
 ### Q(s, a) Table Structure
 
+
 |      | a1       | a2       | a3       |
 |------|----------|----------|----------|
 | s1   | Blank 1  | Blank 2  | Blank 3  |
@@ -3975,17 +4061,19 @@ Only **Q(s1, a1)** is updated when the agent takes action a1 from state s1.
 
 ### Q-learning Table Update Rule
 
-The Q-learning update for the state-action pair $(s_1, a_1)$ is:  
-$$
-Q(s_1, a_1) \leftarrow Q(s_1, a_1) + \alpha \Big[ R + \gamma \max_{a'} Q(s_2, a') - Q(s_1, a_1) \Big]
-$$
+The Q-learning update for the state-action pair \((s_1, a_1)\) is:
+
+\[
+Q(s_1, a_1) \leftarrow Q(s_1, a_1) + \alpha \left[ R + \gamma \max_{a'} Q(s_2, a') - Q(s_1, a_1) \right]
+\]
+
 Where:
 
-- $Q(s_1, a_1)$ is the entry being updated.
-- $R$ is the immediate reward received (here, **100**).
-- $\gamma$ is the discount factor.
-- $\max_{a'} Q(s_2, a')$ is the maximal estimated future return from new state s2.
-- $\alpha$ is the learning rate.
+- \(Q(s_1, a_1)\) is the entry being updated
+- \(R\) is the immediate reward received (here, **100**)
+- \(\gamma\) is the discount factor
+- \(\max_{a'} Q(s_2, a')\) is the maximal estimated future return from new state s2
+- \(\alpha\) is the learning rate
 
 > **Answer:**  
 > The only entry updated is **Q(s1, a1)** (Blank 1).
@@ -4043,11 +4131,12 @@ However, strictly speaking, "values long-term rewards" refers to weighting, not 
 
 **Question:** Given Q-table:
 
-|| State | Left | Right | Up |
-||-------|------|-------|----|
-|| s1    | 5    | 12    | 8  |
-|| s2    | -3   | 2     | 10 |
-|| s3    | 7    | 7     | 4  |
+
+| State | Left | Right | Up |
+|-------|------|-------|----|
+| s1    | 5    | 12    | 8  |
+| s2    | -3   | 2     | 10 |
+| s3    | 7    | 7     | 4  |
 
 For each state, what action should agent take?
 
@@ -4072,14 +4161,17 @@ Update with α=0.2, γ=0.8
 
 **Solution:**
 
-```
-Q(s,a) ← Q(s,a) + α[R + γ max Q(s',a') - Q(s,a)]
-      = 20 + 0.2[10 + 0.8×30 - 20]
-      = 20 + 0.2[10 + 24 - 20]
-      = 20 + 0.2[14]
-      = 20 + 2.8
-      = 22.8
-```
+\[
+Q(s,a) \leftarrow Q(s,a) + \alpha[R + \gamma \max Q(s',a') - Q(s,a)]
+\]
+
+\[
+= 20 + 0.2[10 + 0.8 \times 30 - 20]
+\]
+
+\[
+= 20 + 0.2[10 + 24 - 20] = 20 + 0.2[14] = 20 + 2.8 = 22.8
+\]
 
 ---
 
