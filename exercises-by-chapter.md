@@ -2109,7 +2109,7 @@ $$
 
 Where:
 - y  is the true target
-- ŷ $ is the predicted value
+- ŷ  is the predicted value
 
 ---
 
@@ -2134,7 +2134,7 @@ Where:
 ##### Neural Network B
 
 
-| Example | Target (y) | Prediction (\hat{y}) | \|y - \hat{y}\| |
+| Example | Target (y) | Prediction (ŷ) | \|y - ŷ\| |
 |---------|------------|----------------------|-----------------|
 | ex1     |     5      |         7            |        2        |
 | ex2     |     6      |         4            |        2        |
