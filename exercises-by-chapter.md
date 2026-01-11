@@ -60,53 +60,49 @@ Classify the following domains according to their environment properties:
 
 **Domain 1: Poker (Group playing poker)**
 
-|| Property | Answer | Reasoning |
-||----------|--------|-----------|
-|| Observable | **No** (Partial) | Cannot see other players' cards - hidden information |
-|| Deterministic | **No** (Stochastic) | Card shuffling is random, outcomes uncertain |
-|| Episodic | **No** (Sequential) | Betting decisions affect future rounds, bluffing has consequences |
-|| Static | **Yes** | Game state doesn't change while you're thinking about your move |
-|| Discrete | **Yes** | Finite number of cards, finite betting amounts (usually) |
-|| Single-agent | **No** (Multi-agent) | Multiple players competing against each other |
-
----
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **No** (Partial) | Cannot see other players' cards - hidden information |
+| Deterministic | **No** (Stochastic) | Card shuffling is random, outcomes uncertain |
+| Episodic | **No** (Sequential) | Betting decisions affect future rounds, bluffing has consequences |
+| Static | **Yes** | Game state doesn't change while you're thinking about your move |
+| Discrete | **Yes** | Finite number of cards, finite betting amounts (usually) |
+| Single-agent | **No** (Multi-agent) | Multiple players competing against each other |
 
 **Domain 2: Car Driving (Person driving a car)**
 
-|| Property | Answer | Reasoning |
-||----------|--------|-----------|
-|| Observable | **No** (Partial) | Can't see around corners, behind obstacles, other drivers' intentions |
-|| Deterministic | **No** (Stochastic) | Other drivers unpredictable, road conditions vary, mechanical uncertainty |
-|| Episodic | **No** (Sequential) | Current driving decisions affect future position and safety |
-|| Static | **No** (Dynamic) | Traffic, pedestrians, signals change while you're driving |
-|| Discrete | **No** (Continuous) | Speed, steering angle, position are continuous values |
-|| Single-agent | **No** (Multi-agent) | Many other drivers on the road |
-
----
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **No** (Partial) | Can't see around corners, behind obstacles, other drivers' intentions |
+| Deterministic | **No** (Stochastic) | Other drivers unpredictable, road conditions vary, mechanical uncertainty |
+| Episodic | **No** (Sequential) | Current driving decisions affect future position and safety |
+| Static | **No** (Dynamic) | Traffic, pedestrians, signals change while you're driving |
+| Discrete | **No** (Continuous) | Speed, steering angle, position are continuous values |
+| Single-agent | **No** (Multi-agent) | Many other drivers on the road |
 
 **Domain 3: Machine Detecting Underweight Chocolate Bars**
 
-|| Property | Answer | Reasoning |
-||----------|--------|-----------|
-|| Observable | **Yes** (Fully) | Can measure weight directly with sensor |
-|| Deterministic | **Yes** | Ideal sensor gives consistent measurements |
-|| Episodic | **Yes** | Each chocolate bar measurement is independent |
-|| Static | **Yes** | Chocolate bar doesn't change while being weighed |
-|| Discrete | **No** (Continuous) | Weight is a continuous measurement |
-|| Single-agent | **Yes** | Only one machine, no other agents involved |
-
----
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **Yes** (Fully) | Can measure weight directly with sensor |
+| Deterministic | **Yes/No** | Depends on sensor reliability. Often considered deterministic for ideal sensor |
+| Episodic | **Yes** | Each chocolate bar measurement is independent |
+| Static | **Yes** | Chocolate bar doesn't change while being weighed |
+| Discrete | **No** (Continuous) | Weight is a continuous measurement |
+| Single-agent | **Yes** | Only one machine, no other agents involved |
 
 **Domain 4: Doctor Performing Medical Diagnosis**
 
-|| Property | Answer | Reasoning |
-||----------|--------|-----------|
-|| Observable | **No** (Partial) | Cannot directly observe internal conditions, relies on symptoms/tests |
-|| Deterministic | **No** (Stochastic) | Same symptoms can indicate different diseases, test results have uncertainty |
-|| Episodic | **No** (Sequential) | Treatment decisions affect patient's future state and health |
-|| Static | **No** (Dynamic) | Patient's condition can change during diagnosis/treatment |
-|| Discrete | **No** (Continuous) | Many measurements are continuous (temperature, blood pressure, etc.) |
-|| Single-agent | **Yes** | Doctor making decisions (primary agent) |
+| Property | Answer | Reasoning |
+|----------|--------|-----------|
+| Observable | **No** (Partial) | Cannot directly observe internal conditions, relies on symptoms/tests |
+| Deterministic | **No** (Stochastic) | Same symptoms can indicate different diseases, test results have uncertainty |
+| Episodic | **No** (Sequential) | Treatment decisions affect patient's future state and health |
+| Static | **No** (Dynamic) | Patient's condition can change during diagnosis/treatment |
+| Discrete | **No** (Continuous) | Many measurements are continuous (temperature, blood pressure, etc.) |
+| Single-agent | **Yes/No** | Usually single doctor making decisions (yes), but could involve patient cooperation |
+
+**Note:** Some classifications can be debated depending on assumptions. The chocolate machine's "Deterministic" depends on sensor quality - perfect sensor = deterministic, noisy sensor = stochastic. Doctor's "Single-agent" depends on whether you consider the patient as another agent.
 
 ---
 
