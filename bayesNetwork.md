@@ -78,25 +78,26 @@ Count *all* rows (even if some can be derived from others).
 
 #### Step 3: Tabulate Meanings and Entries
 
-| Variable | Probability Table        | Number of Entries |
-|----------|-------------------------|------------------|
-| Q        | P(Q)                    | 5                |
-| C        | P(C)                    | 4                |
-| S        | P(S|Q,C)                | 60               |
-| P        | P(P|Q,S)                | 45               |
-| B        | P(B|Q,S,C,P)            | 360              |
+| Variable | Probability Table          | Number of Entries |
+|----------|---------------------------|------------------|
+| Q        | `P(Q)`                    | 5                |
+| C        | `P(C)`                    | 4                |
+| S        | `P(S|Q,C)`                | 60               |
+| P        | `P(P|Q,S)`                | 45               |
+| B        | `P(B|Q,S,C,P)`            | 360              |
 
 ---
 
-## Final Answer Table
+**Final Answer Table**
 
-| Variable | CPT Meaning     | # Entries |
-|----------|----------------|-----------|
-| Q        | P(Q)           | 5         |
-| S        | P(S|Q,C)       | 60        |
-| C        | P(C)           | 4         |
-| P        | P(P|Q,S)       | 45        |
-| B        | P(B|Q,S,C,P)   | 360       |
+| Variable | CPT Meaning        | # Entries |
+|----------|-------------------|-----------|
+| Q        | `P(Q)`            | 5         |
+| S        | `P(S|Q,C)`        | 60        |
+| C        | `P(C)`            | 4         |
+| P        | `P(P|Q,S)`        | 45        |
+| B        | `P(B|Q,S,C,P)`    | 360       |
+
 
 ---
 
