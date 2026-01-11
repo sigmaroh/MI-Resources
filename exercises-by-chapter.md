@@ -1670,7 +1670,7 @@ $$
 
 Calculate:
 
-- The predicted value (\hat{y}) for each row:
+- The predicted value ($\hat{y}$) for each row:
     - **Row 1:** $\hat{y}$ = ?
     - **Row 2:** $\hat{y}$ = ?
     - **Row 3:** $\hat{y}$ = ?
@@ -1833,7 +1833,7 @@ Red: 2, Blue: 1
 
 ### Problem 5.6: Prediction
 
-**Question:** Given model: $\hat{y}$ = 3 + 2$x_1$ - $x_2$
+**Question:** Given model: $\hat{y}$ = 3 + 2 $x_1$ - $x_2$
 
 Predict for:
 a) $x_1$=5, $x_2$=2  
@@ -2108,8 +2108,8 @@ $$
 $$
 
 Where:
-- $ y $ is the true target
-- $ \hat{y} $ is the predicted value
+- y  is the true target
+- ŷ $ is the predicted value
 
 ---
 
@@ -2120,7 +2120,7 @@ Where:
 ##### Neural Network A
 
 
-| Example | Target (y) | Prediction (\hat{y}) | \|y - \hat{y}\| |
+| Example | Target (y) | Prediction (ŷ) | \|y - ŷ\| |
 |---------|------------|----------------------|-----------------|
 | ex1     |     5      |         10           |        5        |
 | ex2     |     6      |         6            |        0        |
