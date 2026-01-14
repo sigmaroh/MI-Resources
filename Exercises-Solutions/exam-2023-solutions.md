@@ -60,9 +60,9 @@
 - **TN** (True Negatives): 4 (Aubergine, Carrot, Green peas, Zucchini)  
 - **FN** (False Negatives): 1 (Banana)
 
-- **Accuracy**: \[(TP + TN) / Total = (2 + 4) / 8 = 0.75\]
-- **Precision**: \[TP / (TP + FP) = 2 / (2 + 1) ≈ 0.67\]
-- **Recall**: \[TP / (TP + FN) = 2 / (2 + 1) ≈ 0.67\]
+- **Accuracy**: $(TP + TN) / Total = (2 + 4) / 8 = 0.75$
+- **Precision**: $TP / (TP + FP) = 2 / (2 + 1) ≈ 0.67$
+- **Recall**: $TP / (TP + FN) = 2 / (2 + 1) ≈ 0.67$
 
 ---
 
@@ -254,7 +254,7 @@ K-means continues until centroids stabilize (no/minimal change).
 
 - Factorization: $P(s) \times P(u|s) \times P(\lnot v|s) \times P(w|u, \lnot v)$
 
-\[
+$$
 \begin{align*}
 P(s) &= 2/10 = 0.2 \\
 P(u|s) &= 3/5 = 0.6 \\
@@ -262,15 +262,15 @@ P(\lnot v|s) &= 1 - P(v|s) = 1 - 7/10 = 0.3 \\
 P(w|u, \lnot v) &= 2/5 = 0.4 \\
 \text{Product: } \quad 0.2 \times 0.6 \times 0.3 \times 0.4 = 0.0144
 \end{align*}
-\]
+$$
 
 ---
 
 ### Part (iii): $P(\lnot u \mid s)$
 
-\[
+$$
 P(\lnot u|s) = 1 - P(u|s) = 1 - 3/5 = 0.4
-\]
+$$
 
 ---
 
@@ -278,9 +278,9 @@ P(\lnot u|s) = 1 - P(u|s) = 1 - 3/5 = 0.4
 
 Apply Bayes:
 
-\[
+$$
 P(s|u,w) = \frac{P(u,w|s)P(s)}{P(u,w)}
-\]
+$$
 
 Compute:
 
@@ -288,7 +288,7 @@ Compute:
 
 But $P(w|u,s) = \sum_v P(w|u,v)P(v|s)$
 
-\[
+$$
 \begin{align*}
 P(w|u,s) &= P(w|u,v)P(v|s) + P(w|u,\lnot v)P(\lnot v|s) \\
         &= (5/8)\times(7/10) + (2/5)\times(3/10) \\
@@ -306,7 +306,7 @@ P(u,w) &= P(u,w|s)P(s) + P(u,w|{\lnot s})P({\lnot s}) \\
 \\
 P(s|u,w) &= 0.0669 / 0.3339 \approx 0.2004
 \end{align*}
-\]
+$$
 
 ---
 
@@ -482,9 +482,9 @@ Sequence: $s_1 \rightarrow s_2 \rightarrow s_2 \rightarrow s_1$
 Rewards: $0, 1, 1, 0$  
 Discounted sum ($\gamma = 0.9$):
 
-\[
+$$
 R = 0 + 0.9 \times 1 + 0.9^2 \times 1 + 0.9^3 \times 0 = 0 + 0.9 + 0.81 + 0 = 1.71
-\]
+$$
 
 (Transition probabilities needed for full expected value calculation.)
 
@@ -504,9 +504,10 @@ R = 0 + 0.9 \times 1 + 0.9^2 \times 1 + 0.9^3 \times 0 = 0 + 0.9 + 0.81 + 0 = 1.
 ### Parts (iii)-(iv): Value Iteration
 
 Update rule:
-\[
+
+$$
 V_{k+1}(s) = \max_a \left[R(s,a) + \gamma \sum_{s'}P(s'|s,a)V_k(s')\right]
-\]
+$$
 
 - For $s_\mathrm{inj}$: $V_{new}(s_\mathrm{inj}) = -10 + 0.9 \times V_0(s_\mathrm{inj}) = -10 -1.8 = -11.8 $
 

@@ -693,25 +693,28 @@ What are the domains of the variables after enforcing GAC?**
 ## Problem
 
 Consider the constraint network  
-\[
+
+$$
 \gamma = (V, D, C)
-\]
+$$
 
 ### Variables
-\[
+
+$$
 V = \{a, b, c, d\}
-\]
+$$
 
 ### Domains
-For all \( v \in V \):
-\[
+For all $v \in V$:
+
+$$
 D_v = \{1, 2, 3, 4, 5\}
-\]
+$$
 
 ### Constraints
-1. \( a + 2 < d \)
-2. \( b \times d < 6 \)
-3. \( a + c < 6 \)
+1. $a + 2 < d$
+2. $b \times d < 6$
+3. $a + c < 6$
 
 Run the **Generalized Arc Consistency (GAC)** algorithm and determine the final domain of each variable.
 
@@ -719,42 +722,42 @@ Run the **Generalized Arc Consistency (GAC)** algorithm and determine the final 
 
 ## Constraint Analysis
 
-### Constraint 1: \( a + 2 < d \)
+### Constraint 1: $a + 2 < d$
 
-Valid pairs \((a,d)\):
+Valid pairs $(a,d)$:
 
-- If \(a=1\), then \(d \ge 4\)
-- If \(a=2\), then \(d \ge 5\)
-- If \(a \ge 3\), then \(d > 5\) (impossible)
+- If $a=1$, then $d \ge 4$
+- If $a=2$, then $d \ge 5$
+- If $a \ge 3$, then $d > 5$ (impossible)
 
 ✅ Valid values:
-- \(a \in \{1,2\}\)
-- \(d \in \{4,5\}\)
+- $a \in \{1,2\}$
+- $d \in \{4,5\}$
 
 ---
 
-### Constraint 2: \( b \times d < 6 \)
+### Constraint 2: $b \times d < 6$
 
-With \(d \in \{4,5\}\):
+With $d \in \{4,5\}$:
 
-- If \(d=4\): \(b=1\) (since \(2\times4=8>6\))
-- If \(d=5\): \(b=1\) (since \(2\times5=10>6\))
+- If $d=4$: $b=1$ (since $2\times4=8>6$)
+- If $d=5$: $b=1$ (since $2\times5=10>6$)
 
 ✅ Valid values:
-- \(b \in \{1\}\)
-- \(d \in \{4,5\}\) (still valid)
+- $b \in \{1\}$
+- $d \in \{4,5\}$ (still valid)
 
 ---
 
-### Constraint 3: \( a + c < 6 \)
+### Constraint 3: $a + c < 6$
 
-With \(a \in \{1,2\}\):
+With $a \in \{1,2\}$:
 
-- If \(a=1\): \(c \le 4\)
-- If \(a=2\): \(c \le 3\)
+- If $a=1$: $c \le 4$
+- If $a=2$: $c \le 3$
 
 Union of supported values:
-- \(c \in \{1,2,3,4\}\)
+- $c \in \{1,2,3,4\}$
 
 ---
 
@@ -924,51 +927,52 @@ From a dataset of **10,000 restaurant reviews**, we have three boolean variables
 We sum over `Long` to get joint counts of `(Positive, Discount)`.
 
 - **Positive = yes, Discount = yes**  
-  \( 130 + 170 = 300 \)
+  $130 + 170 = 300$
 
 - **Positive = yes, Discount = no**  
-  \( 1000 + 1700 = 2700 \)
+  $1000 + 1700 = 2700$
 
 - **Positive = no, Discount = yes**  
-  \( 500 + 200 = 700 \)
+  $500 + 200 = 700$
 
 - **Positive = no, Discount = no**  
-  \( 4000 + 2300 = 6300 \)
+  $4000 + 2300 = 6300$
 
 **Check total:**  
-\( 300 + 2700 + 700 + 6300 = 10000 \) ✓
+$300 + 2700 + 700 + 6300 = 10000$ ✓
 
 ---
 
 ### 📈 Step 2 – Joint & Marginal Probabilities  
 
-**Joint distribution \(P(Positive, Discount)\)** (divide by 10000):
+**Joint distribution $P(Positive, Discount)$** (divide by 10000):
 
-| \(P\)           | Discount = yes | Discount = no | **Marginal \(P(Positive)\)** |
+| $P$           | Discount = yes | Discount = no | **Marginal $P(Positive)$** |
 |-----------------|----------------|---------------|------------------------------|
 | Positive = yes  | 0.0300         | 0.2700        | **0.3000**                   |
 | Positive = no   | 0.0700         | 0.6300        | **0.7000**                   |
-| **Marginal \(P(Discount)\)** | **0.1000**     | **0.9000**    |                              |
+| **Marginal $P(Discount)$** | **0.1000**     | **0.9000**    |                              |
 
 ---
 
 ### ✅ Step 3 – Test for Independence  
 Two variables are independent if:  
-\[
+
+$$
 P(Positive, Discount) = P(Positive) \times P(Discount)
-\]
+$$
 
-- \(P(Positive=yes) \times P(Discount=yes) = 0.3 \times 0.1 = 0.03\)  
-  → Matches joint \(0.03\) ✓
+- $P(Positive=yes) \times P(Discount=yes) = 0.3 \times 0.1 = 0.03$  
+  → Matches joint $0.03$ ✓
 
-- \(P(Positive=yes) \times P(Discount=no) = 0.3 \times 0.9 = 0.27\)  
-  → Matches joint \(0.27\) ✓
+- $P(Positive=yes) \times P(Discount=no) = 0.3 \times 0.9 = 0.27$  
+  → Matches joint $0.27$ ✓
 
-- \(P(Positive=no) \times P(Discount=yes) = 0.7 \times 0.1 = 0.07\)  
-  → Matches joint \(0.07\) ✓
+- $P(Positive=no) \times P(Discount=yes) = 0.7 \times 0.1 = 0.07$  
+  → Matches joint $0.07$ ✓
 
-- \(P(Positive=no) \times P(Discount=no) = 0.7 \times 0.9 = 0.63\)  
-  → Matches joint \(0.63\) ✓
+- $P(Positive=no) \times P(Discount=no) = 0.7 \times 0.9 = 0.63$  
+  → Matches joint $0.63$ ✓
 
 All match exactly.
 
@@ -981,13 +985,13 @@ All match exactly.
 
 ### 📌 Summary Table (Joint Distribution)
 
-| \(P(Positive, Discount)\) | Discount = yes | Discount = no |
+| $P(Positive, Discount)$ | Discount = yes | Discount = no |
 |---------------------------|----------------|---------------|
 | **Positive = yes**        | 0.0300         | 0.2700        |
 | **Positive = no**         | 0.0700         | 0.6300        |
 
 Marginals:  
-- \(P(Positive=yes) = 0.3000\)  
-- \(P(Positive=no) = 0.7000\)  
-- \(P(Discount=yes) = 0.1000\)  
-- \(P(Discount=no) = 0.9000\)
+- $P(Positive=yes) = 0.3000$  
+- $P(Positive=no) = 0.7000$  
+- $P(Discount=yes) = 0.1000$  
+- $P(Discount=no) = 0.9000$
