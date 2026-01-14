@@ -23,9 +23,9 @@
 ## 📘 2. What is Clustering?
 
 ### Definition
-A clustering of examples \( E = e_1, \dots, e_N \) is:
-- A set of cluster labels \( C = \{ c_1, \dots, c_k \} \)
-- A cluster assignment function \( ca : E \to C \)
+A clustering of examples $E = e_1, \dots, e_N$ is:
+- A set of cluster labels $C = \{ c_1, \dots, c_k \}$
+- A cluster assignment function $ca : E \to C$
 
 ### Good Clustering Criterion
 - **Maximize** between-cluster distance
@@ -36,12 +36,12 @@ A clustering of examples \( E = e_1, \dots, e_N \) is:
 ## 📘 3. k-Means Clustering Algorithm
 
 ### Assumptions
-- Number of clusters \( k \) is known.
-- Distance measure \( d(x_i, x_j) \) (e.g., Euclidean).
+- Number of clusters $k$ is known.
+- Distance measure $d(x_i, x_j)$ (e.g., Euclidean).
 - Can compute centroid (mean) of points.
 
 ### Algorithm Steps
-1. **Initialize**: Randomly choose \( k \) points as centroids.
+1. **Initialize**: Randomly choose $k$ points as centroids.
 2. **Repeat**:
    - **Assignment**: Assign each point to nearest centroid.
    - **Update**: Recompute centroids as mean of assigned points.
@@ -80,8 +80,8 @@ A clustering of examples \( E = e_1, \dots, e_N \) is:
 ### Normalization
 - Needed when features have different scales.
 - **Methods**:
-  - **Min-Max**: \( A' = \frac{A - \min(A)}{\max(A) - \min(A)} \)
-  - **Z-score**: \( A' = \frac{A - \text{mean}(A)}{\text{std}(A)} \)
+  - **Min-Max**: $A' = \frac{A - \min(A)}{\max(A) - \min(A)}$
+  - **Z-score**: $A' = \frac{A - \text{mean}(A)}{\text{std}(A)}$
 
 ---
 
@@ -92,19 +92,19 @@ A clustering of examples \( E = e_1, \dots, e_N \) is:
 - **Soft**: Each point has probabilities of belonging to each cluster.
 
 ### Model: Naive Bayes with Hidden Cluster Variable
-- Use Naive Bayes to model \( P(C | F_1, F_2, F_3) \).
-- Cluster variable \( C \) is hidden.
+- Use Naive Bayes to model $P(C | F_1, F_2, F_3)$.
+- Cluster variable $C$ is hidden.
 
 ### Expectation-Maximization (EM) Steps
 1. **Initialize** probabilities randomly.
-2. **E-step**: Compute \( P(C | \text{data}) \) using current probabilities.
+2. **E-step**: Compute $P(C | \text{data})$ using current probabilities.
 3. **M-step**: Update probabilities using weighted counts.
 4. **Repeat** until convergence.
 
 ### Example with Discrete Features
 Given:
-- \( P(C) = (0.6, 0.4) \)
-- Conditional probability tables for \( F_1, F_2, F_3 \)
+- $P(C) = (0.6, 0.4)$
+- Conditional probability tables for $F_1, F_2, F_3$
 - Compute posteriors and update probabilities.
 
 ---
@@ -175,22 +175,25 @@ Given:
 (F1,F2,F3): (t,t,t), (t,f,t), (t,f,f), (f,f,t)
 
 **Given**:
-- \( P(C=\oplus)=0.6, P(C=\ominus)=0.4 \)
-- \( P(F1=t|C=\oplus)=0.6 \), \( P(F1=t|C=\ominus)=0.4 \)
+- $P(C=\oplus)=0.6, P(C=\ominus)=0.4$
+- $P(F1=t|C=\oplus)=0.6$, $P(F1=t|C=\ominus)=0.4$
 - Similar for F2, F3.
 
-**Compute** \( P(C=\oplus | t,t,t) \):
+**Compute** $P(C=\oplus | t,t,t)$:
 
-\[
+$$
 P(C=\oplus|t,t,t) \propto 0.6 \times (0.6)^3 = 0.1296
-\]
-\[
+$$
+
+$$
 P(C=\ominus|t,t,t) \propto 0.4 \times (0.4)^3 = 0.0256
-\]
+$$
+
 Normalize:
-\[
+
+$$
 P(C=\oplus|t,t,t) = \frac{0.1296}{0.1296+0.0256} \approx 0.84
-\]
+$$
 
 ---
 

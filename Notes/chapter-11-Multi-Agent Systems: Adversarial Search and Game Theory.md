@@ -12,10 +12,10 @@
 ## 2. Definition of a Game
 
 A game is defined by:
-- **States** \(S\):  
-  - Terminal states (\(S^T\)): where the game ends.  
-  - Intermediate states (\(S^I\)): where players still move.
-- **Players** \(P\): Each has set of actions (\(A_p\)) and a utility function (\(u_p\)).
+- **States** $S$:  
+  - Terminal states ($S^T$): where the game ends.  
+  - Intermediate states ($S^I$): where players still move.
+- **Players** $P$: Each has set of actions ($A_p$) and a utility function ($u_p$).
 
 - **Utility function:** assigns a score to terminal states.
 - **Objective:** Each agent picks actions to maximize its own utility.
@@ -43,7 +43,7 @@ A game is defined by:
 4. At root, choose move leading to child with highest utility.
 
 **Example (Tic-Tac-Toe):**
-- Max (\(x\)) → Min (\(o\)) → Max (\(x\)) → Terminal states with utilities:
+- Max ($x$) → Min ($o$) → Max ($x$) → Terminal states with utilities:
     - Win: +100
     - Draw: 0
     - Loss: -100
@@ -91,28 +91,31 @@ In a game tree, if Min can force a value ≤ current alpha in a subtree, prune r
 **Purpose:** Estimate utility of non-terminal states when search depth is limited.
 
 **General Form:**
-\[
+
+$$
 h(s) = w_1 f_1(s) + \cdots + w_n f_n(s)
-\]
+$$
+
 where:
-- **Features \(f_i\):** e.g., material advantage, mobility, king safety (domain-specific).
-- **Weights \(w_i\):** set by experts or learned.
+- **Features $f_i$:** e.g., material advantage, mobility, king safety (domain-specific).
+- **Weights $w_i$:** set by experts or learned.
 
 **Example (Chess Evaluation):**
-\[
+
+$$
 h(s) = \Delta\text{pawn} + 3 \cdot \Delta\text{knight} + 3 \cdot \Delta\text{bishop} + 5 \cdot \Delta\text{rook} + 9 \cdot \Delta\text{queen} + w_{\text{king safety}} + w_{\text{pawn structure}}
-\]
+$$
 
 ---
 
 ## 6. Learning in Games
 
 ### Supervised Learning
-- Learn \( h(s) \) or policy \( p(s) \) from labeled expert data.
+- Learn $h(s)$ or policy $p(s)$ from labeled expert data.
 - Example: AlphaGo used 30 million expert moves from the KGS Go Server.
 
 ### Reinforcement Learning via Self-Play
-- Play games using current \( h \) or \( p \).
+- Play games using current $h$ or $p$.
 - Update parameters based on game outcomes.
 - Example: AlphaGo also used self-play to generate training data.
 
@@ -175,15 +178,15 @@ h(s) = \Delta\text{pawn} + 3 \cdot \Delta\text{knight} + 3 \cdot \Delta\text{bis
 
 ### Exercise 3: Evaluation Function
 
-**In chess position, compute \( h(s) \) given:**
+**In chess position, compute $h(s)$ given:**
 
 - White: 1 pawn, 1 knight, 1 rook.
 - Black: 2 pawns, 1 bishop.
 - Weights: pawn = 1, knight = 3, bishop = 3, rook = 5
 
-\[
+$$
 h(s) = (1-2) + 3(1-0) + 3(0-1) + 5(1-0) = -1 + 3 - 3 + 5 = 4
-\]
+$$
 
 ---
 

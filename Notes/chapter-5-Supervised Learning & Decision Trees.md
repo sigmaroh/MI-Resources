@@ -1,40 +1,40 @@
 # Chapter 5: Supervised Learning & Decision Trees – Study Notes
 
-*(Includes Key Concepts, Examples, Exercises & Solutions)*
+*(Key Concepts, Quick Formula Previews, and Exercises with Solutions)*
 
 ---
 
 ## 1. Introduction to Machine Learning
 
-**Deduction vs. Induction:**
-- **Deduction:** Derive conclusions from known facts (certain).
-- **Induction:** Generalize from examples (probable).
+- **Deduction:** Drawing certain conclusions from known facts.
+- **Induction:** Making generalizations from examples—uncertain but backed by data.
 
-**Goal of ML:** Automatically improve performance from experience.
-
----
-
-## 2. Types of Learning
-
-| Type         | Description                                   | Examples                           |
-|--------------|-----------------------------------------------|------------------------------------|
-| Supervised   | Learn from labeled examples (input-output pairs)| Regression, Classification         |
-| Unsupervised | Find patterns in unlabeled data                | Clustering, Dimensionality reduction|
-| Reinforcement| Learn actions to maximize cumulative reward    | MDPs, Q-learning                   |
+**Main goal:** Learn from experience/data to improve performance automatically.
 
 ---
 
-## 3. Supervised Learning
+## 2. Types of Machine Learning
 
-- **Labeled dataset:** Table with:
-    - **Features (predictors):** Input attributes.
-    - **Target (label):** Output to predict.
+- **Supervised Learning:** Learn using labeled examples (input-output pairs)  
+  *Examples: regression, classification*
+- **Unsupervised Learning:** Find structure in unlabeled data  
+  *Examples: clustering, dimensionality reduction*
+- **Reinforcement Learning:** Learn to act so as to maximize long-term reward  
+  *Examples: MDPs, Q-learning*
+
+---
+
+## 3. Supervised Learning Overview
+
+A typical **labeled dataset** includes:
+- **Features** (predictors): Input variables
+- **Target** (label): Output to be predicted
 
 **Tasks:**
-- **Classification:** Target is discrete (e.g., spam/not spam)
+- **Classification:** Target is discrete (e.g., spam vs not spam)
 - **Regression:** Target is continuous (e.g., temperature)
 
-**Example Dataset (Spam filter):**
+**Example dataset:**
 
 | SubAllCap | TrustSend | InvRet | ... | Spam |
 |-----------|-----------|--------|-----|------|
@@ -42,181 +42,183 @@
 | n         | n         | n      | ... | n    |
 | ...       | ...       | ...    | ... | ...  |
 
-- **Training set:** Used to learn model.
-- **Test set:** Used to evaluate model.
+- **Training Set:** Used to learn the model
+- **Test Set:** Used to evaluate its performance
 
 ---
 
 ## 4. Ingredients of a Learning Method
 
-- **Hypothesis Space:** Set of possible models.
-- **Parameters:** Chosen by algorithm.
-- **Hyperparameters:** Chosen by user.
-- **Evaluation Measure:** Error function.
-- **Search/Optimization:** Find best model.
+- **Hypothesis Space:** All possible models (e.g., all trees, all lines)
+- **Parameters:** Model-specific values learned from data
+- **Hyperparameters:** User-set values, not learned automatically
+- **Evaluation Measure:** Score function (e.g., squared error, accuracy)
+- **Search/Optimization:** The process or algorithm for finding the best hypothesis
 
 ---
 
 ## 5. Regression
 
-- **Predicts continuous target.**
+Used to predict a **continuous** quantity.
 
-**Linear Regression:**
+### Key Preview
 
-\[
-\hat{y} = w_0 + \sum_{i=1}^n w_i x_i
-\]
+$$
+\textbf{Linear Regression:}\\
+\hat{y} = w_0 + w_1x_1 + w_2x_2 + \ldots + w_nx_n
+$$
 
 **Error Functions:**
 
-- **Sum Squared Error (SSE):**
-    \[
-    SSE = \sum_e (Y(e) - \hat{Y}(e))^2
-    \]
-- **Sum Absolute Error (SAE):**
-    \[
-    SAE = \sum_e |Y(e) - \hat{Y}(e)|
-    \]
-- **0/1 Error:** Count of mispredictions.
-- **Worst-case Error:** Max absolute error.
+$$
+\begin{align*}
+\text{Sum of Squared Errors (SSE):}\qquad & SSE = \sum_e (Y(e) - \hat{Y}(e))^2 \\
+\text{Sum of Absolute Errors (SAE):}\qquad & SAE = \sum_e |Y(e) - \hat{Y}(e)| \\
+\text{0/1 Error:} \qquad & \text{(Count of mispredictions)} \\
+\text{Worst-case Error:} \qquad & \max\,|Y - \hat{Y}| \\
+\end{align*}
+$$
 
 ---
 
 ## 6. Decision Trees
 
 **Structure:**
-- Internal nodes: Test on attribute.
-- Branches: Outcome of test.
-- Leaves: Class label (or probability).
+- **Internal nodes:** Feature tests (e.g., "color=red?")
+- **Branches:** Outcomes of those tests
+- **Leaves:** Class label or prediction value
 
-- **Hypothesis Space:** All possible trees over features.
+**Hypothesis space:** Every possible tree given available features. For $n$ binary features, possible unique trees = $2^{2^n}$.
 
-For \( n \) binary features: \( 2^{2^n} \) possible trees.
+**Preview Example Table:**
 
-**Example: Book Recommendation**
+| Ex. | Author  | Thread    | Length | WhereRead | UserAction |
+|-----|---------|-----------|--------|-----------|------------|
+| e1  | known   | new       | long   | home      | skips      |
+| e2  | unknown | new       | short  | work      | reads      |
+| ... | ...     | ...       | ...    | ...       | ...        |
 
-| Example | Author  | Thread    | Length | WhereRead | UserAction |
-|---------|---------|-----------|--------|-----------|------------|
-| e1      | known   | new       | long   | home      | skips      |
-| e2      | unknown | new       | short  | work      | reads      |
-| ...     | ...     | ...       | ...    | ...       | ...        |
-
-- **Goal:** Predict UserAction for new examples.
+> **Goal:** Predict `UserAction` for a new book/email
 
 ---
 
 ## 7. Learning Decision Trees – ID3 Algorithm
 
-Top-down recursive splitting:
+**Process:** Top-down, recursively select the best feature for splitting.
 
-```plaintext
+**Preview (Pseudocode):**
+
+```
 DecisionTreeLearner(X, Y, E):
-  if stopping_criterion:
-    return leaf with majority class in E
-  else:
-    choose best feature Xi (max information gain)
-    for each value v of Xi:
-      Ev = {e in E: Xi(e) = v}
-      child = DecisionTreeLearner(X \ {Xi}, Y, Ev)
-    return node(Xi, children)
+    if stopping_criterion(E): return majority_class(E)
+    pick feature Xi with highest IG
+    for v in values(Xi):
+        Ev = subset of E with Xi = v
+        child[v] = DecisionTreeLearner(X \ {Xi}, Y, Ev)
+    return tree node (Xi, children)
 ```
 
 ---
 
 ## 8. Choosing the Best Feature – Information Gain
 
-**Entropy** (impurity measure):
+### Formula Preview
 
-For binary class with probabilities \( (p, 1-p) \):
-\[
-H(p) = -p \log_2 p - (1-p)\log_2(1-p)
-\]
+**Entropy** (for binary classes with $p$ and $1-p$):
 
-**Expected entropy after split on feature \( X \):**
+$$
+H(p) = -p \log_2 p - (1-p) \log_2 (1-p)
+$$
 
-\[
-H(Y|X) = \sum_v \frac{|E_v|}{|E|} \cdot H(Y|X=v)
-\]
+**Expected entropy after split:**
+
+$$
+H(Y|X) = \sum_v \frac{|E_v|}{|E|} H(Y|X=v)
+$$
 
 **Information Gain:**
 
-\[
+$$
 IG(X) = H(Y) - H(Y|X)
-\]
+$$
 
-Choose feature with highest IG.
+> *Always pick feature with largest $IG$ at each split!*
 
 ---
 
 ## 9. Example Calculation – Book Recommendation
 
-- **Root entropy:**  
-  Class distribution: (skips=9, reads=9) → \( H=1 \).
+Suppose at the root:
+- $(skips=9, reads=9) \implies H=1$
 
-| Feature   | Values     | Counts (skips, reads) | Entropy per branch | Weighted entropy                |
-|-----------|------------|----------------------|--------------------|---------------------------------|
-| Length    | long       | (7, 0) → H=0         | 7/18·0 + 11/18·H(2/11,9/11) ≈ 0.582 |
-|           | short      | (2, 9) → H≈0.684     |                                 |
-| Thread    | new        | (6, 2) → H≈0.811     | 8/18·0.811 + 10/18·H(3/10,7/10) ≈ 0.85 |
-|           | follow-up  | (3, 7) → H≈0.881     |                                 |
-| Author    | known      | (6, 6) → H=1         | 12/18·1 + 6/18·1 = 1            |
-|           | unknown    | (3, 3) → H=1         |                                 |
-| WhereRead | home       | (4, 4) → H=1         | 8/18·1 + 10/18·1 = 1            |
-|           | work       | (5, 5) → H=1         |                                 |
+| Feature   | Values     | (skips, reads) | Branch Entropy | Weighted Total                |
+|-----------|------------|----------------|----------------|-------------------------------|
+| Length    | long       | (7, 0)         | H=0            |                               |
+|           | short      | (2, 9)         | H ≈ 0.684      | $7/18 \cdot 0 + 11/18 \cdot 0.684 \approx 0.418$ |
+| Thread    | new        | (6, 2)         | H ≈ 0.811      |                               |
+|           | follow-up  | (3, 7)         | H ≈ 0.881      | $8/18 \cdot 0.811 + 10/18 \cdot 0.881 \approx 0.85$ |
+| Author    | known      | (6, 6)         | H=1            |                               |
+|           | unknown    | (3, 3)         | H=1            | $12/18 \cdot 1 + 6/18 \cdot 1 = 1$        |
+| WhereRead | home       | (4, 4)         | H=1            |                               |
+|           | work       | (5, 5)         | H=1            | $8/18 \cdot 1 + 10/18 \cdot 1 = 1$        |
 
-- \( IG(\text{Length}) = 1 - 0.582 = 0.418 \) (highest → choose Length first).
+Thus,  
+
+$$
+\text{Information Gain for Length} = 1 - 0.582 = 0.418 \;\; (\text{highest!})
+$$
+
+So the root splits on **Length**.
 
 ---
 
 ## 10. Handling Many-valued & Continuous Attributes
 
-- Many-valued attributes (e.g., Date) can artificially increase IG.
+- Features with many possible values (like Date) can distort IG.
 
-**Solution: Use Gain Ratio:**
+**Gain Ratio:**
 
-\[
-\text{GainRatio}(X) = \frac{IG(X)}{\text{SplitInfo}(X)}
-\]
+$$
+\text{Gain Ratio}(X) = \frac{IG(X)}{\text{SplitInfo}(X)}
+$$
 
-where
-
-\[
+$$
 \text{SplitInfo}(X) = -\sum_v \frac{|E_v|}{|E|} \log_2 \frac{|E_v|}{|E|}
-\]
+$$
 
-- **Continuous attributes:** Discretize by testing thresholds (e.g., midpoint between adjacent values), pick threshold with highest IG.
+- **Continuous features:** Try splitting at "between values with different labels" and pick the threshold with the highest IG.
 
 ---
 
 ## 11. Stopping Criteria
 
-- All examples in node belong to same class.
-- No features left.
-- Information gain below threshold.
-- Tree depth limit reached.
+- All examples in node are same class
+- No features left
+- Information gain below threshold
+- Tree depth limit reached
 
 ---
 
 ## 12. Exercises & Solutions
 
+---
+
 ### Exercise 1: Entropy Calculation
 
-**Given class distribution:** (yes=5, no=3)
+**Given:** (yes=5, no=3)  
+So $p_{yes} = 0.625$, $p_{no} = 0.375$
 
-**Calculate entropy:**
+Preview:
 
-\[
-p_{yes} = 5/8 = 0.625, \quad p_{no} = 3/8 = 0.375
-\]
-\[
-H = -0.625\log_2 0.625 - 0.375\log_2 0.375 \approx 0.954
-\]
+$$
+H = -0.625 \log_2 0.625 - 0.375 \log_2 0.375 \approx 0.954
+$$
 
 ---
 
 ### Exercise 2: Information Gain
 
-**Dataset:**
+**Toy data:**
 
 | Outlook   | Play? |
 |-----------|-------|
@@ -226,42 +228,38 @@ H = -0.625\log_2 0.625 - 0.375\log_2 0.375 \approx 0.954
 | Rainy     | Yes   |
 | Rainy     | Yes   |
 
-**Calculate:** \( IG(\text{Outlook}) \)
-
-**Solution:**
-
-- Root entropy: (Yes=3, No=2) → \( H = 0.971 \)
-- Outlook splits:
-    - Sunny: (Yes=0, No=2) → H=0
-    - Overcast: (Yes=1, No=0) → H=0
-    - Rainy: (Yes=2, No=0) → H=0
-
-\[
-H(Y|\text{Outlook}) = (2/5)\cdot0 + (1/5)\cdot0 + (2/5)\cdot0 = 0
-\]
-\[
+$$
+\begin{align*}
+\text{Root:}\;\; & (\text{Yes}=3, \text{No}=2): \\
+  & H = -\frac{3}{5}\log_2\frac{3}{5} - \frac{2}{5}\log_2\frac{2}{5} \approx 0.971 \\
+\text{Split Entropies:} \quad & H=0 \text{ for each branch (Sunny/Overcast/Rainy)} \\
+\text{Weighted Entropy after split: } & 0 \\
 IG = 0.971 - 0 = 0.971
-\]
+\end{align*}
+$$
 
 ---
 
 ### Exercise 3: Continuous Attribute Discretization
 
-**Temperatures:** [40, 48, 60, 72, 80, 90]  
-**Labels:** [Yes, Yes, No, No, No, Yes]  
-**Find best binary split.**
+**Data:**  
+Temps: 40, 48, 60, 72, 80, 90  
+Labels: Yes, Yes, No, No, No, Yes
 
-**Solution:**
+- Sort: 40Y, 48Y, 60N, 72N, 80N, 90Y
+- Try splits: (48+60)/2 = 54 and (80+90)/2 = 85
 
-1. Sort: (40Y, 48Y, 60N, 72N, 80N, 90Y)
-2. Candidate thresholds: midpoints between differing labels:
-    - \( (48+60)/2 = 54 \)
-    - \( (80+90)/2 = 85 \)
-3. Test threshold = 54:
-    - \( \leq 54: \) (40Y,48Y) → (Yes=2, No=0) \( H=0 \)
-    - \( >54: \) (60N,72N,80N,90Y) → (Yes=1, No=3) \( H=0.811 \)
-    - Weighted \( H = (2/6)\cdot 0 + (4/6)\cdot 0.811 \approx 0.541 \)
-    - \( IG = H_{root} - 0.541 \)
-4. Test threshold = 85 similarly, pick higher IG.
+Threshold $\leq 54$:
+
+$$
+\begin{align*}
+&(40Y, 48Y):\;\;\; \text{Yes}=2, \text{No}=0 \implies H=0 \\
+&(60N, 72N, 80N, 90Y):\; \text{Yes}=1, \text{No}=3 \\
+&H = -0.25\log_2 0.25 - 0.75\log_2 0.75 \approx 0.811 \\
+\text{Weighted entropy: } & \frac{2}{6} \times 0 + \frac{4}{6} \times 0.811 \approx 0.541 \\
+\end{align*}
+$$
+
+Compute $IG =$ (root entropy) $-$ (weighted entropy). Try all thresholds, pick largest IG.
 
 ---
