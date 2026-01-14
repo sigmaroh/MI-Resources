@@ -33,7 +33,7 @@
 
 # Part I: Core Topics
 
-x## 1. Agents
+## 1. Agents
 
 **Agent:** Entity that perceives environment through sensors and acts through actuators.
 
@@ -304,6 +304,7 @@ Where: b=branching factor, d=depth of solution, m=max depth
 **Example 1:**
 ```
 Variables: {a,b,c,d} ∈ {1,2,3,4,5}
+
 Constraints: a+2<d; b×d<6; a+c<6
 
 After GAC:
@@ -313,6 +314,7 @@ a ∈ {1,2}, b ∈ {1}, c ∈ {1,2,3,4}, d ∈ {4,5}
 **Example 2:**
 ```
 Variables: {a,b,c,d} ∈ {1,2,3}
+
 Constraints: b=a; b>c; a≠c; c≠d; d≤a
 
 After GAC:

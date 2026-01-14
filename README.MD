@@ -1,6 +1,5 @@
 # 📋 MI Quick Reference Guide - Exam Cheat Sheet
 
-> **Last-minute revision** - All formulas and key concepts at a glance
 
 ---
 
@@ -402,68 +401,6 @@ Parents: A (3 values), C (4 values)
 
 CPT Size = 2 × 3 × 4 = 24 entries
 ```
-
----
-
-## 📚 Topic Coverage Checklist
-
-### Before Exam:
-- [ ] Can calculate MSE from scratch
-- [ ] Know K-NN with mixed features (categorical + numerical)
-- [ ] Understand what causes overfitting
-- [ ] Can apply GAC algorithm
-- [ ] Can check independence from data
-- [ ] Can calculate CPT sizes
-- [ ] Can do minimax on game tree
-- [ ] Can perform Value Iteration step
-- [ ] Can update Q-table
-- [ ] Know difference between α, γ, ε
-- [ ] Know which ML methods use gradient descent
-- [ ] Understand supervised vs unsupervised
-- [ ] Can extract policy from Q-values
-
----
-
-## ⏰ Time Management
-
-**Typical Exam (90 minutes, 10 questions):**
-- Quick read-through: **5 min**
-- Per question: **8 min average**
-- Review: **5 min**
-
-**Strategy:**
-1. Answer easy questions first (build confidence)
-2. Skip and mark hard questions (come back later)
-3. Show work for partial credit
-4. Check arithmetic twice
-5. Verify independence for ALL cases
-6. Double-check which Q-values update
-
----
-
-## 🎓 Last-Minute Tips
-
-### The Night Before:
-- ✅ Review formulas
-- ✅ Practice 2-3 problems per topic
-- ✅ Get good sleep (seriously!)
-- ✅ Prepare materials (calculator, pens)
-
-### During Exam:
-- ✅ Read ALL instructions
-- ✅ Budget time per question
-- ✅ Show your work
-- ✅ Check units (probabilities sum to 1)
-- ✅ Verify arithmetic
-- ✅ Answer every question (no blank answers)
-
-### Common Traps:
-- ⚠️ NOT questions (read carefully!)
-- ⚠️ "Select all that apply" vs "Select one"
-- ⚠️ Independence requires checking ALL combinations
-- ⚠️ Q-learning only updates ONE entry
-- ⚠️ CPT size includes node's own domain
-- ⚠️ Minimax: MAX takes max, MIN takes min (don't mix up!)
 
 ---
 
