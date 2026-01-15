@@ -79,6 +79,444 @@ $$
 \end{align*}
 $$
 
+📌 Linear Regression Model
+𝑦
+^
+=
+𝑤
+0
++
+𝑤
+1
+𝑥
+1
++
+𝑤
+2
+𝑥
+2
++
+⋯
++
+𝑤
+𝑛
+𝑥
+𝑛
+y
+^
+	​
+
+=w
+0
+	​
+
++w
+1
+	​
+
+x
+1
+	​
+
++w
+2
+	​
+
+x
+2
+	​
+
++⋯+w
+n
+	​
+
+x
+n
+	​
+
+What each term means:
+
+𝑦
+^
+y
+^
+	​
+
+ → predicted value
+
+𝑤
+0
+w
+0
+	​
+
+ → bias (intercept)
+
+𝑤
+1
+,
+𝑤
+2
+,
+…
+w
+1
+	​
+
+,w
+2
+	​
+
+,… → weights (importance of each feature)
+
+𝑥
+1
+,
+𝑥
+2
+,
+…
+x
+1
+	​
+
+,x
+2
+	​
+
+,… → input features
+
+🔍 Example 1: Single feature
+
+Predict exam score from hours studied
+
+𝑦
+^
+=
+30
++
+5
+𝑥
+y
+^
+	​
+
+=30+5x
+
+If a student studies 6 hours:
+
+𝑦
+^
+=
+30
++
+5
+(
+6
+)
+=
+60
+y
+^
+	​
+
+=30+5(6)=60
+
+➡ Predicted score = 60
+
+🔍 Example 2: Multiple features
+
+Predict house price using size and number of rooms:
+
+𝑦
+^
+=
+50
++
+2
+𝑥
+1
++
+10
+𝑥
+2
+y
+^
+	​
+
+=50+2x
+1
+	​
+
++10x
+2
+	​
+
+
+Where:
+
+𝑥
+1
+x
+1
+	​
+
+ = size (in m²)
+
+𝑥
+2
+x
+2
+	​
+
+ = number of rooms
+
+For a house:
+
+size = 40
+
+rooms = 3
+
+𝑦
+^
+=
+50
++
+2
+(
+40
+)
++
+10
+(
+3
+)
+=
+160
+y
+^
+	​
+
+=50+2(40)+10(3)=160
+2️⃣ Error Functions
+
+Error functions measure how wrong our predictions are.
+
+Let:
+
+𝑌
+Y = true value
+
+𝑌
+^
+Y
+^
+ = predicted value
+
+Error = 
+𝑌
+−
+𝑌
+^
+Y−
+Y
+^
+
+2.1️⃣ Sum of Squared Errors (SSE)
+𝑆
+𝑆
+𝐸
+=
+∑
+𝑒
+(
+𝑌
+(
+𝑒
+)
+−
+𝑌
+^
+(
+𝑒
+)
+)
+2
+SSE=
+e
+∑
+	​
+
+(Y
+(e)
+−
+Y
+^
+(e)
+)
+2
+📌 Why squared?
+
+Makes all errors positive
+
+Penalizes large mistakes more
+
+🔍 Example:
+True Y	Predicted Ŷ	Error	Squared Error
+10	8	2	4
+15	12	3	9
+20	18	2	4
+𝑆
+𝑆
+𝐸
+=
+4
++
+9
++
+4
+=
+17
+SSE=4+9+4=
+17
+	​
+
+
+✔ Large errors matter a lot in SSE
+
+2.2️⃣ Sum of Absolute Errors (SAE)
+𝑆
+𝐴
+𝐸
+=
+∑
+𝑒
+∣
+𝑌
+(
+𝑒
+)
+−
+𝑌
+^
+(
+𝑒
+)
+∣
+SAE=
+e
+∑
+	​
+
+∣Y
+(e)
+−
+Y
+^
+(e)
+∣
+📌 Why absolute value?
+
+Treats all errors linearly
+
+Less sensitive to outliers
+
+🔍 Same example:
+Error	Absolute Error
+2	2
+3	3
+2	2
+𝑆
+𝐴
+𝐸
+=
+2
++
+3
++
+2
+=
+7
+SAE=2+3+2=
+7
+	​
+
+
+✔ Each mistake contributes equally
+
+🔁 SSE vs SAE (intuition)
+Measure	Punishes big errors more?
+SSE	✅ Yes
+SAE	❌ No
+2.3️⃣ 0/1 Error (Classification-style)
+0/1 Error
+=
+Number of wrong predictions
+0/1 Error=Number of wrong predictions
+
+Used mainly in classification
+
+For regression, used only after converting to categories
+
+🔍 Example:
+
+True values: [A, B, A, A]
+Predictions: [A, A, A, B]
+
+Wrong predictions = 2
+
+0/1 Error
+=
+2
+0/1 Error=
+2
+	​
+
+
+✔ Does not care how wrong, only if wrong
+
+2.4️⃣ Worst-case Error (Maximum Error)
+max
+⁡
+∣
+𝑌
+−
+𝑌
+^
+∣
+max∣Y−
+Y
+^
+∣
+📌 Meaning:
+
+Focuses on the single biggest mistake
+
+Important in safety-critical systems
+
+🔍 Example:
+True Y	Predicted Ŷ	Absolute Error
+10	9	1
+15	10	5
+20	14	6
+Worst-case Error
+=
+6
+Worst-case Error=
+6
+	​
+
+
+✔ Shows worst possible failure
+
+🔚 Summary Table
+Concept	What it measures
+Linear Regression	Predicts continuous values
+SSE	Overall squared error (big errors matter more)
+SAE	Overall absolute error
+0/1 Error	Number of wrong predictions
+Worst-case Error	Largest single error
+
 ---
 
 ## 6. Decision Trees
