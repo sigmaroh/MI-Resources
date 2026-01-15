@@ -113,6 +113,131 @@ Classify the following domains according to their environment properties:
 
 # Chapter 2: Constraint Satisfaction Problems (CSP)
 
+## Arc Consistency: Exercise 1
+
+### Problem Statement
+
+**Variables and domains**
+- **A ∈ {1, 2, 3}**
+- **B ∈ {2, 3, 4}**
+- **C ∈ {3, 4}**
+
+**Constraints**
+- **A < B**
+- **B < C**
+
+---
+
+### Solution
+
+#### Part 1: Which arcs are arc consistent?
+
+**Remember:**  
+For an arc **X → Y**, **every value in X** must have **at least one supporting value in Y** that satisfies the constraint.
+
+We must check **all four arcs**:
+1. A → B
+2. B → A
+3. B → C
+4. C → B
+
+**✅ Arc 1: A → B (constraint: A < B)**
+
+Check each value of **A**:
+- A = 1 → B = 2 ✔
+- A = 2 → B = 3 ✔
+- A = 3 → B = 4 ✔
+
+✅ All values of A have support  
+👉 **A → B is arc consistent**
+
+**✅ Arc 2: B → A (constraint still: A < B)**
+
+Check each value of **B**:
+- B = 2 → A = 1 ✔
+- B = 3 → A = 1 ✔
+- B = 4 → A = 1 ✔
+
+✅ All values of B have support  
+👉 **B → A is arc consistent**
+
+**❌ Arc 3: B → C (constraint: B < C)**
+
+Check each value of **B**:
+- B = 2 → C = 3 ✔
+- B = 3 → C = 4 ✔
+- B = 4 → 4 < 3 ✘, 4 < 4 ✘
+
+❌ **B = 4 has no supporting value in C**
+
+👉 **B → C is NOT arc consistent**
+
+**✅ Arc 4: C → B (constraint still: B < C)**
+
+Check each value of **C**:
+- C = 3 → B = 2 ✔
+- C = 4 → B = 2 ✔
+
+✅ All values of C have support  
+👉 **C → B is arc consistent**
+
+**✅ Answer to Part 1**
+
+**Arc-consistent arcs:**
+- A → B
+- B → A
+- C → B
+
+**Not arc-consistent:**
+- ❌ B → C
+
+---
+
+#### Part 2: Make the whole network arc consistent
+
+We now **remove only values that have no support**, without removing any valid solution.
+
+**Step 1: Fix B → C**
+
+We saw:
+- **B = 4** has no support in C
+
+👉 Remove **4 from B**
+
+Now:
+- **B ∈ {2, 3}**
+
+**Step 2: Re-check affected arcs (because B changed)**
+
+**Re-check A → B**
+- A = 1 → B = 2 ✔
+- A = 2 → B = 3 ✔
+- A = 3 → 3 < 2 ✘, 3 < 3 ✘
+
+❌ **A = 3 has no support**
+
+👉 Remove **3 from A**
+
+Now:
+- **A ∈ {1, 2}**
+
+**Step 3: Final consistency check**
+
+- A → B ✔
+- B → A ✔
+- B → C ✔
+- C → B ✔
+
+✅ All arcs are now arc consistent
+
+**✅ Final arc-consistent domains (ANSWER)**
+
+- **A ∈ {1, 2}**
+- **B ∈ {2, 3}**
+- **C ∈ {3, 4}**
+
+---
+
 ## Arc Consistency on a Constraint Network
 
 This task involves applying the Generalized Arc Consistency (GAC) algorithm to the constraint network γ = (V, D, C):
@@ -539,6 +664,272 @@ In the variable elimination algorithm for CSPs (Constraint Satisfaction Problems
 So the process is not about removing constraints, but about eliminating variables by combining the relevant constraint tables.
 
 **Answer: b**
+
+---
+
+## Variable Elimination Exercise
+
+### Problem Statement
+
+We have **Boolean variables**:
+
+A, B, C ∈ {t, f}
+
+We are given **extensional constraints** (tables of allowed combinations).
+
+**Constraint 1: (A, B)**
+
+
+| **A** | **B** |
+|-------|-------|
+| t     | f     |
+| t     | t     |
+| f     | t     |
+
+This means:
+- If A = t, B can be f or t
+- If A = f, B must be t
+
+**Constraint 2: (A, C)**
+
+
+| **A** | **C** |
+|-------|-------|
+| t     | f     |
+| f     | t     |
+
+This means:
+- A and C must be **different**
+
+**Constraint 3: (B, C)**
+
+
+| **B** | **C** |
+|-------|-------|
+| t     | f     |
+| f     | t     |
+
+This also means:
+- B and C must be **different**
+
+---
+
+### Solution
+
+**Goal of Variable Elimination:**
+
+Variable Elimination works like this:
+
+1. **Pick a variable to eliminate** (say B)
+2. **Join all tables containing that variable**
+3. **Remove (project out) that variable**
+4. Continue until only solutions remain
+
+**Step 1: Eliminate variable B**
+
+**Tables that contain B:**
+- (A, B)
+- (B, C)
+
+We **join** them on B.
+
+**Join (A,B) with (B,C)**
+
+We only keep rows where **B matches**.
+
+
+| **A** | **B** | **C** |
+|-------|-------|-------|
+| t     | f     | t     |
+| t     | t     | f     |
+| f     | t     | f     |
+
+**Now eliminate B (project on A, C)**
+
+We just **remove the B column**:
+
+
+| **A** | **C** |
+|-------|-------|
+| t     | t     |
+| t     | f     |
+| f     | f     |
+
+This is the **new constraint between A and C**.
+
+**Step 2: Eliminate variable C**
+
+Now we have **two constraints on (A, C)**:
+- The original (A, C)
+- The new one we just created
+
+We **join them**.
+
+**Original (A, C)**
+
+
+| **A** | **C** |
+|-------|-------|
+| t     | f     |
+| f     | t     |
+
+**New (A, C)**
+
+
+| **A** | **C** |
+|-------|-------|
+| t     | t     |
+| t     | f     |
+| f     | f     |
+
+**Join them (keep only common rows)**
+
+The **only common row** is:
+
+
+| **A** | **C** |
+|-------|-------|
+| t     | f     |
+
+**Now eliminate C**
+
+After removing C, we get:
+
+**A = t**
+
+So **A must be true**.
+
+**Step 3: Recover B and C**
+
+Now we **substitute A = t** back into the original tables.
+
+**From (A, C)**
+
+If A = t → C = f
+
+**From (B, C)**
+
+If C = f → B = t
+
+**✅ Final Answer**
+
+There is **exactly one solution**:
+
+**A = t, B = t, C = f**
+
+---
+
+## Constraint Graph Variable Elimination (Exercise 4.14)
+
+### Problem Statement
+
+**Given constraint graph (Figure 4.17)**
+
+**Variables:** A, B, C, D, E, F, G
+
+**Constraints:**
+- r1(A,B)
+- r2(A,C)
+- r3(B,D)
+- r4(B,E)
+- r5(D,F)
+- r6(C,E)
+- r7(E,F)
+- r8(C,G)
+- r9(E,G)
+- r10(F,G)
+
+---
+
+### Solution
+
+**(a) Eliminate variable A**
+
+**Step 1: Which constraints involve A?**
+
+A is connected to:
+- B via r1(A,B)
+- C via r2(A,C)
+
+So the constraints involving **A** are:
+- r1(A,B)
+- r2(A,C)
+
+**Step 2: Which constraints are removed?**
+
+When we eliminate A, **all constraints containing A are removed**:
+
+✅ **Removed constraints**:
+- r1(A,B)
+- r2(A,C)
+
+**Step 3: Which new constraint is created?**
+
+A had neighbors: B and C
+
+So after eliminating A, we must **connect its neighbors**.
+
+👉 A **new constraint is created between B and C**.
+
+We call it: **r11(B,C)**
+
+(This represents the result of joining r1 and r2 and projecting out A.)
+
+**✅ Answer for (a)**
+- **Removed constraints**: r1(A,B), r2(A,C)
+- **New constraint created**: r11(B,C)
+
+---
+
+**(b) Eliminate variable B (after eliminating A)**
+
+**Step 1: Which constraints involve B now?**
+
+After eliminating A, B is connected to:
+
+Original constraints:
+- r3(B,D)
+- r4(B,E)
+
+New constraint created in part (a):
+- r11(B,C)
+
+So constraints involving **B** are:
+- r11(B,C)
+- r3(B,D)
+- r4(B,E)
+
+**Step 2: Which constraints are removed?**
+
+When eliminating B, **all constraints containing B are removed**:
+
+✅ **Removed constraints**:
+- r11(B,C)
+- r3(B,D)
+- r4(B,E)
+
+**Step 3: Which new constraint is created?**
+
+B's neighbors are: C, D, E
+
+After eliminating B, we must **connect all its neighbors together**.
+
+👉 A **new constraint is created on variables**: **(C, D, E)**
+
+You can call it: **r12(C,D,E)**
+
+(This is now a **ternary constraint**, which is normal in variable elimination.)
+
+**✅ Answer for (b)**
+- **Removed constraints**: r11(B,C), r3(B,D), r4(B,E)
+- **New constraint created on variables**: (C, D, E)
+
+**🧠 Big picture intuition**
+
+- Eliminating a variable **removes it**
+- Its neighbors become **more tightly connected**
+- This may create **higher-arity constraints**
+- This is why elimination order matters
 
 ---
 
@@ -1885,6 +2276,103 @@ MSE = (4 + 4 + 0 + 4) / 4 = 12 / 4 = **3.0**
 
 ---
 
+### Problem 5.9: Linear Regression MSE Comparison
+
+**Given Dataset (4 data points)**
+
+
+| **x₁** | **x₂** | **y** |
+|--------|--------|-------|
+| 1      | 1      | 2     |
+| 0      | 0      | 0     |
+| 1      | 0      | 3     |
+| 2      | 1      | 2     |
+
+Number of data points: N = 4
+
+**Linear regression model:**
+
+$$
+\hat{y} = w_0 + w_1 x_1 + w_2 x_2
+$$
+
+**Mean Squared Error (MSE):**
+
+$$
+\text{MSE} = \frac{1}{N}\sum(y - \hat{y})^2
+$$
+
+---
+
+**Model (i)**
+
+**Parameters:** $w_0 = 0, w_1 = 1, w_2 = -1$
+
+**Prediction formula:** $\hat{y} = x_1 - x_2$
+
+**Step 1: Compute predictions and errors**
+
+
+| **x₁** | **x₂** | **y** | **ŷ = x₁ − x₂** | **y − ŷ** | **(y − ŷ)²** |
+|--------|--------|-------|-----------------|-----------|--------------|
+| 1      | 1      | 2     | 0               | 2         | 4            |
+| 0      | 0      | 0     | 0               | 0         | 0            |
+| 1      | 0      | 3     | 1               | 2         | 4            |
+| 2      | 1      | 2     | 1               | 1         | 1            |
+
+**Step 2: Compute MSE**
+
+Sum of squared errors: 4 + 0 + 4 + 1 = 9
+
+$$
+\text{MSE}_1 = \frac{9}{4} = 2.25
+$$
+
+---
+
+**Model (ii)**
+
+**Parameters:** $w_0 = 1, w_1 = 1, w_2 = 0$
+
+**Prediction formula:** $\hat{y} = 1 + x_1$
+
+**Step 1: Compute predictions and errors**
+
+
+| **x₁** | **x₂** | **y** | **ŷ = 1 + x₁** | **y − ŷ** | **(y − ŷ)²** |
+|--------|--------|-------|----------------|-----------|--------------|
+| 1      | 1      | 2     | 2              | 0         | 0            |
+| 0      | 0      | 0     | 1              | -1        | 1            |
+| 1      | 0      | 3     | 2              | 1         | 1            |
+| 2      | 1      | 2     | 3              | -1        | 1            |
+
+**Step 2: Compute MSE**
+
+Sum of squared errors: 0 + 1 + 1 + 1 = 3
+
+$$
+\text{MSE}_2 = \frac{3}{4} = 0.75
+$$
+
+---
+
+**Final Comparison**
+
+
+| **Model** | **MSE** |
+|-----------|---------|
+| (i)       | 2.25    |
+| (ii)      | 0.75    |
+
+**Final Answer**
+
+- **Model (i)** has MSE = **2.25**
+- **Model (ii)** has MSE = **0.75**
+
+**Preferred model:** **Model (ii)** is preferable because it has the **lower MSE**.
+
+---
+
 # Chapter 6: Neural Networks
 
 ## Neural Network Forward Pass with ReLU
@@ -2198,6 +2686,216 @@ Because it avoids large deviations in any single example.
 
 ---
 
+## Perceptron Training: Gradient Descent vs SGD
+
+### Problem Statement
+
+**Given (Exercise 3)**
+
+**Training examples**
+
+
+| **X₁** | **X₂** | **T** |
+|--------|--------|-------|
+| 1      | 1      | 1     |
+| −1     | 1      | −1    |
+| 1      | −1     | 1     |
+| −1     | −1     | −1    |
+
+**Perceptron model**
+
+- Threshold input = **1** → bias input $x_0 = 1$
+- Initial weights: $w_0 = 0, w_1 = 0, w_2 = 0$
+- Learning rate: $\alpha = 0.25$
+- Activation function: $\text{sign}(x)$ with $\text{sign}(0) = -1$
+
+**Perceptron forward propagation rule**
+
+$$
+z = w_0 x_0 + w_1 x_1 + w_2 x_2
+$$
+
+$$
+o = \text{sign}(z)
+$$
+
+**Weight update rule**
+
+For one example:
+
+$$
+\Delta w_i = \alpha(T - o)x_i
+$$
+
+---
+
+### Solution
+
+#### Part (i): Gradient Descent (batch learning)
+
+Uses **all training examples together**. We compute updates using the **sum over all examples**.
+
+**🔁 Iteration 1 (starting from w = 0,0,0)**
+
+**Step 1: Forward propagation for all examples**
+
+Since all weights are zero:
+
+$$
+z = 0 \Rightarrow o = \text{sign}(0) = -1
+$$
+
+So for all examples: $o = -1$
+
+**Step 2: Error term** $T - o$
+
+
+| **Example** | **T** | **o** | **T − o** |
+|-------------|-------|-------|-----------|
+| (1,1)       | 1     | −1    | 2         |
+| (−1,1)      | −1    | −1    | 0         |
+| (1,−1)      | 1     | −1    | 2         |
+| (−1,−1)     | −1    | −1    | 0         |
+
+**Step 3: Weight updates (sum over all examples)**
+
+**Bias** $w_0$
+
+$$
+\Delta w_0 = \alpha\sum(T - o)x_0 = 0.25(2 + 0 + 2 + 0) = 1
+$$
+
+**Weight** $w_1$
+
+$$
+\Delta w_1 = 0.25[(2 \cdot 1) + (0 \cdot -1) + (2 \cdot 1) + (0 \cdot -1)] = 1
+$$
+
+**Weight** $w_2$
+
+$$
+\Delta w_2 = 0.25[(2 \cdot 1) + (0 \cdot 1) + (2 \cdot -1) + (0 \cdot -1)] = 0
+$$
+
+**✅ Updated weights after Iteration 1**
+
+$$
+w_0 = 1, w_1 = 1, w_2 = 0
+$$
+
+**🔁 Iteration 2**
+
+**Step 1: Forward propagation**
+
+
+| **X₁** | **X₂** | **z** | **o** |
+|--------|--------|-------|-------|
+| 1      | 1      | 2     | 1     |
+| −1     | 1      | 0     | −1    |
+| 1      | −1     | 2     | 1     |
+| −1     | −1     | 0     | −1    |
+
+(All predictions are now correct)
+
+**Step 2: Error terms**
+
+All: $T - o = 0$
+
+**✅ No weight change**
+
+$$
+w_0 = 1, w_1 = 1, w_2 = 0
+$$
+
+**✔ Gradient Descent result after 2 iterations**
+
+$$
+\boxed{w = (1, 1, 0)}
+$$
+
+---
+
+#### Part (ii): Stochastic Gradient Descent (SGD)
+
+👉 Updates **after each example**  
+👉 Use examples **one by one in table order**
+
+**🔁 Iteration 1 -- Example 1: (1,1), T = 1**
+
+**Forward propagation**
+
+$$
+z = 0 \Rightarrow o = -1
+$$
+
+**Error**
+
+$$
+T - o = 2
+$$
+
+**Update**
+
+$$
+\Delta w_0 = 0.25 \cdot 2 \cdot 1 = 0.5
+$$
+
+$$
+\Delta w_1 = 0.25 \cdot 2 \cdot 1 = 0.5
+$$
+
+$$
+\Delta w_2 = 0.25 \cdot 2 \cdot 1 = 0.5
+$$
+
+**Updated weights**
+
+$$
+w = (0.5, 0.5, 0.5)
+$$
+
+**🔁 Iteration 2 -- Example 2: (−1,1), T = −1**
+
+**Forward propagation**
+
+$$
+z = 0.5 - 0.5 + 0.5 = 0.5 \Rightarrow o = 1
+$$
+
+**Error**
+
+$$
+T - o = -2
+$$
+
+**Update**
+
+$$
+\Delta w_0 = 0.25 \cdot (-2) \cdot 1 = -0.5
+$$
+
+$$
+\Delta w_1 = 0.25 \cdot (-2) \cdot (-1) = 0.5
+$$
+
+$$
+\Delta w_2 = 0.25 \cdot (-2) \cdot 1 = -0.5
+$$
+
+**Updated weights**
+
+$$
+w = (0, 1, 0)
+$$
+
+**✔ SGD result after first two updates**
+
+$$
+\boxed{w = (0, 1, 0)}
+$$
+
+---
+
 ## Additional Neural Network Practice Problems
 
 ### Problem 6.3: Backpropagation Concepts
@@ -2411,6 +3109,189 @@ c) You need balance between both
 - a) **Recall** - want to catch all diseases (minimize false negatives)
 - b) **Precision** - want to avoid false alarms (minimize false positives)
 - c) **F1-Score** - balances precision and recall
+
+---
+
+### Problem 7.3.1: Decision Tree with Information Gain
+
+**Given Dataset (5 training examples)**
+
+
+| **ID** | **Age** | **Make** | **#Owners** | **#Kilometers** | **#Doors** | **Acceptable** |
+|--------|---------|----------|-------------|-----------------|------------|----------------|
+| 1      | < 5     | Mazda    | 1           | >150k           | 3          | yes            |
+| 2      | ≥ 5     | Mazda    | 3           | >150k           | 3          | no             |
+| 3      | ≥ 5     | Toyota   | 1           | ≤150k           | 3          | no             |
+| 4      | ≥ 5     | Mazda    | 3           | >150k           | 5          | yes            |
+| 5      | ≥ 5     | Toyota   | 2           | ≤150k           | 5          | yes            |
+
+Target attribute: **Acceptable ∈ {yes, no}**
+
+**Tasks:**
+a) Calculate entropy for attribute #Owners  
+b) Construct decision tree using ID3  
+c) Calculate information gain for all attributes
+
+---
+
+**Solution:**
+
+**Step 0: Entropy of the target (root entropy)**
+
+Count labels:
+- yes = 3 (rows 1, 4, 5)
+- no = 2 (rows 2, 3)
+
+$$
+H(\text{Acceptable}) = -\frac{3}{5}\log_2\frac{3}{5} - \frac{2}{5}\log_2\frac{2}{5} \approx 0.971
+$$
+
+---
+
+**Part (a): Entropy for attribute #Owners**
+
+Values of **#Owners** = {1, 2, 3}
+
+**Branch: #Owners = 1**
+
+Rows: 1 (yes), 3 (no)
+- yes = 1, no = 1
+- $H = 1$
+
+**Branch: #Owners = 2**
+
+Row: 5 (yes)
+- pure → $H = 0$
+
+**Branch: #Owners = 3**
+
+Rows: 2 (no), 4 (yes)
+- yes = 1, no = 1
+- $H = 1$
+
+**Expected entropy for #Owners**
+
+$$
+H(\text{Acceptable} | \#Owners) = \frac{2}{5} \cdot 1 + \frac{1}{5} \cdot 0 + \frac{2}{5} \cdot 1 = 0.8
+$$
+
+**✅ Final answer (a):** $\text{Entropy}(\#Owners) = 0.8$
+
+---
+
+**Part (c): Information Gain at the ROOT**
+
+We compute IG for **all attributes**.
+
+**Attribute: Age**
+
+- <5: 1 yes → entropy = 0
+- ≥5: 2 yes, 2 no → entropy = 1
+
+$$
+H(\cdot | \text{Age}) = \frac{1}{5} \cdot 0 + \frac{4}{5} \cdot 1 = 0.8
+$$
+
+$$
+IG(\text{Age}) = 0.971 - 0.8 = 0.171
+$$
+
+**Attribute: Make**
+
+- Mazda: 2 yes, 1 no → entropy ≈ 0.918
+- Toyota: 1 yes, 1 no → entropy = 1
+
+$$
+H(\cdot | \text{Make}) = \frac{3}{5} \cdot 0.918 + \frac{2}{5} \cdot 1 = 0.951
+$$
+
+$$
+IG(\text{Make}) = 0.971 - 0.951 = 0.020
+$$
+
+**Attribute: #Owners** (from part a)
+
+$$
+IG(\#Owners) = 0.971 - 0.8 = 0.171
+$$
+
+**Attribute: #Kilometers**
+
+- >150k: yes=2, no=1 → entropy ≈ 0.918
+- ≤150k: yes=1, no=1 → entropy = 1
+
+$$
+H(\cdot | \#Kilometers) = \frac{3}{5} \cdot 0.918 + \frac{2}{5} \cdot 1 = 0.951
+$$
+
+$$
+IG(\#Kilometers) = 0.020
+$$
+
+**Attribute: #Doors**
+
+- 3 doors: yes=1, no=2 → entropy ≈ 0.918
+- 5 doors: yes=2, entropy = 0
+
+$$
+H(\cdot | \#Doors) = \frac{3}{5} \cdot 0.918 + \frac{2}{5} \cdot 0 = 0.551
+$$
+
+$$
+IG(\#Doors) = 0.971 - 0.551 = 0.420
+$$
+
+**✅ Best root attribute:** **#Doors** (highest information gain = 0.420)
+
+---
+
+**Part (b): Decision Tree Construction (ID3)**
+
+**Root split: #Doors**
+
+**Branch 1: #Doors = 5**
+
+Rows: 4, 5  
+Labels: yes, yes → **pure**
+
+➡ Leaf: **Acceptable = yes**
+
+**Branch 2: #Doors = 3**
+
+Rows: 1, 2, 3  
+Labels: yes, no, no
+
+Entropy: $H = 0.918$
+
+Remaining attributes: Age, Make, #Owners, #Kilometers
+
+**Next split (inside #Doors = 3):**
+
+Information Gain for remaining attributes:
+- **Age** → IG ≈ 0.251
+- **Make** → IG ≈ 0.251
+- **#Owners** → IG ≈ 0.918 (perfect split)
+- **#Kilometers** → IG = 0
+
+➡ Choose **#Owners**
+
+**Branches under #Owners:**
+
+- #Owners = 1 → yes → leaf
+- #Owners = 3 → no → leaf
+
+**Final Decision Tree:**
+
+```
+        #Doors
+         /   \
+        3     5
+        |     |
+     #Owners  yes
+      /   \
+     1     3
+    yes   no
+```
 
 ---
 
@@ -2830,6 +3711,169 @@ x' = \frac{x - \mu}{\sigma}
 $$
 
 This ensures all attributes contribute equally to the distance calculation.
+
+---
+
+## K-Means Clustering Exercise with SSE Calculation
+
+### Problem Statement
+
+**Given:**
+
+**Data points:**
+
+$$
+(2,6), (2,4), (3,7), (3,5), (5,4), (6,5), (6,7)
+$$
+
+**Number of clusters:** $k = 2$
+
+**Initial cluster centers:**
+
+$$
+C_1^{(0)} = (2,6), C_2^{(0)} = (3,5)
+$$
+
+**Distance metric:** Euclidean distance (squared):
+
+$$
+d^2 = (x - x_c)^2 + (y - y_c)^2
+$$
+
+---
+
+### Solution
+
+**🔁 ITERATION 1**
+
+**Step 1: Distance calculation & assignment**
+
+
+| **Point** | **d² to (2,6)** | **d² to (3,5)** | **Cluster** |
+|-----------|-----------------|-----------------|-------------|
+| (2,6)     | 0               | 2               | C₁          |
+| (2,4)     | 4               | 2               | C₂          |
+| (3,7)     | 2               | 4               | C₁          |
+| (3,5)     | 2               | 0               | C₂          |
+| (5,4)     | 13              | 5               | C₂          |
+| (6,5)     | 17              | 9               | C₂          |
+| (6,7)     | 17              | 13              | C₂          |
+
+**Step 2: Clusters after Iteration 1**
+
+- **Cluster C₁:** $(2,6), (3,7)$
+- **Cluster C₂:** $(2,4), (3,5), (5,4), (6,5), (6,7)$
+
+**Step 3: Update cluster centers**
+
+**New center of C₁**
+
+$$
+C_1^{(1)} = \left(\frac{2 + 3}{2}, \frac{6 + 7}{2}\right) = (2.5, 6.5)
+$$
+
+**New center of C₂**
+
+$$
+C_2^{(1)} = \left(\frac{2 + 3 + 5 + 6 + 6}{5}, \frac{4 + 5 + 4 + 5 + 7}{5}\right) = (4.4, 5)
+$$
+
+---
+
+**🔁 ITERATION 2**
+
+**Step 4: Distance calculation & assignment**
+
+(Current centers: $(2.5, 6.5)$ and $(4.4, 5)$)
+
+
+| **Point** | **d² to C₁** | **d² to C₂** | **Cluster** |
+|-----------|--------------|--------------|-------------|
+| (2,6)     | 0.5          | 6.76         | C₁          |
+| (2,4)     | 6.5          | 6.76         | C₁          |
+| (3,7)     | 0.5          | 5.96         | C₁          |
+| (3,5)     | 2.5          | 1.96         | C₂          |
+| (5,4)     | 12.5         | 1.36         | C₂          |
+| (6,5)     | 14.5         | 2.56         | C₂          |
+| (6,7)     | 12.5         | 6.56         | C₂          |
+
+**Step 5: Clusters after Iteration 2**
+
+- **Cluster C₁:** $(2,6), (2,4), (3,7)$
+- **Cluster C₂:** $(3,5), (5,4), (6,5), (6,7)$
+
+**Step 6: Update cluster centers (final)**
+
+**Final center of C₁**
+
+$$
+C_1^{(2)} = \left(\frac{2 + 2 + 3}{3}, \frac{6 + 4 + 7}{3}\right) = \left(\frac{7}{3}, \frac{17}{3}\right) \approx (2.33, 5.67)
+$$
+
+**Final center of C₂**
+
+$$
+C_2^{(2)} = \left(\frac{3 + 5 + 6 + 6}{4}, \frac{5 + 4 + 5 + 7}{4}\right) = (5, 5.25)
+$$
+
+---
+
+**📐 SSE CALCULATION**
+
+**SSE formula**
+
+$$
+\text{SSE} = \sum[(x - x_c)^2 + (y - y_c)^2]
+$$
+
+**SSE using initial centers**
+
+**Cluster C₁ (2,6)**
+
+$$
+0 + 2 = 2
+$$
+
+**Cluster C₂ (3,5)**
+
+$$
+2 + 0 + 5 + 9 + 13 = 29
+$$
+
+$$
+\boxed{\text{SSE}_{\text{initial}} = 31}
+$$
+
+---
+
+**SSE using final centers**
+
+**Cluster C₁ (2.33, 5.67)**
+
+$$
+0.22 + 2.89 + 2.22 = 5.33
+$$
+
+**Cluster C₂ (5, 5.25)**
+
+$$
+4.06 + 1.56 + 1.06 + 4.90 = 7.58
+$$
+
+$$
+\boxed{\text{SSE}_{\text{final}} = 12.91}
+$$
+
+---
+
+**✅ FINAL ANSWER**
+
+- **Iteration 1 centers:** (2.5, 6.5), (4.4, 5)
+- **Iteration 2 centers:** (2.33, 5.67), (5, 5.25)
+- **Initial SSE:** 31
+- **Final SSE:** **12.91**
+
+The SSE decreased from 31 to 12.91, showing that K-means successfully improved the clustering by minimizing within-cluster variance.
 
 ---
 
