@@ -62,7 +62,7 @@ $$
 
 Bayes’ Rule is used to invert conditional probabilities.
 
-- _Causal probabilities_ (e.g., $P(\text{symptom} \mid \text{cause})$) are often easier to assess than _diagnostic probabilities_ (e.g., $P(\text{cause} \mid \text{symptom})$).
+- Causal probabilities (e.g., $P(\text{symptom} \mid \text{cause})$) are often easier to assess than diagnostic probabilities (e.g., $P(\text{cause} \mid \text{symptom})$).
 
 **Example:**  
 Given:
@@ -98,7 +98,7 @@ Hair length and height are not independent, but they are conditionally independe
 A **Bayesian Network** is a directed acyclic graph (DAG) where:
 - **Nodes:** Random Variables (RVs)
 - **Edges:** Conditional dependencies
-- **Each node:** Conditional Probability Table (CPT), $P(X_i \mid \operatorname{Parents}(X_i))$
+- **Each node:** Conditional Probability Table (CPT), $P(X_i \mid \text{Parents}(X_i))$
 
 **Example BN: Alarm System**  
 Random Variables: Burglary, Earthquake, Alarm, JohnCalls, MaryCalls
