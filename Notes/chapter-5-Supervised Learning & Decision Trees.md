@@ -79,443 +79,191 @@ $$
 \end{align*}
 $$
 
-📌 Linear Regression Model
-𝑦
-^
-=
-𝑤
-0
-+
-𝑤
-1
-𝑥
-1
-+
-𝑤
-2
-𝑥
-2
-+
-⋯
-+
-𝑤
-𝑛
-𝑥
-𝑛
-y
-^
-	​
+### 📌 Linear Regression Model
 
-=w
-0
-	​
+A linear regression predicts values using the formula:
 
-+w
-1
-	​
+$$
+\hat{y} = w_0 + w_1x_1 + w_2x_2 + \cdots + w_nx_n
+$$
 
-x
-1
-	​
+**Where:**
+- $\hat{y}$ is the predicted value  
+- $w_0$ is the bias (intercept)  
+- $w_1, w_2, \ldots, w_n$ are weights (importance of each feature)  
+- $x_1, x_2, \ldots, x_n$ are the input features
 
-+w
-2
-	​
+---
 
-x
-2
-	​
+#### 🔍 Example 1: Single Feature
 
-+⋯+w
-n
-	​
+*Predict exam score from hours studied*
 
-x
-n
-	​
-
-What each term means:
-
-𝑦
-^
-y
-^
-	​
-
- → predicted value
-
-𝑤
-0
-w
-0
-	​
-
- → bias (intercept)
-
-𝑤
-1
-,
-𝑤
-2
-,
-…
-w
-1
-	​
-
-,w
-2
-	​
-
-,… → weights (importance of each feature)
-
-𝑥
-1
-,
-𝑥
-2
-,
-…
-x
-1
-	​
-
-,x
-2
-	​
-
-,… → input features
-
-🔍 Example 1: Single feature
-
-Predict exam score from hours studied
-
-𝑦
-^
-=
-30
-+
-5
-𝑥
-y
-^
-	​
-
-=30+5x
+$$
+\hat{y} = 30 + 5x
+$$
 
 If a student studies 6 hours:
 
-𝑦
-^
-=
-30
-+
-5
-(
-6
-)
-=
-60
-y
-^
-	​
+$$
+\hat{y} = 30 + 5(6) = 60
+$$
 
-=30+5(6)=60
+**➡ Predicted score = 60**
 
-➡ Predicted score = 60
+---
 
-🔍 Example 2: Multiple features
+#### 🔍 Example 2: Multiple Features
 
-Predict house price using size and number of rooms:
+*Predict house price using size and number of rooms:*
 
-𝑦
-^
-=
-50
-+
-2
-𝑥
-1
-+
-10
-𝑥
-2
-y
-^
-	​
+$$
+\hat{y} = 50 + 2x_1 + 10x_2
+$$
 
-=50+2x
-1
-	​
+Where:  
+$x_1$ = size (in m²)  
+$x_2$ = number of rooms
 
-+10x
-2
-	​
-
-
-Where:
-
-𝑥
-1
-x
-1
-	​
-
- = size (in m²)
-
-𝑥
-2
-x
-2
-	​
-
- = number of rooms
-
-For a house:
-
-size = 40
-
+Suppose:  
+size = 40  
 rooms = 3
 
-𝑦
-^
-=
-50
-+
-2
-(
-40
-)
-+
-10
-(
-3
-)
-=
-160
-y
-^
-	​
+$$
+\hat{y} = 50 + 2(40) + 10(3) = 160
+$$
 
-=50+2(40)+10(3)=160
-2️⃣ Error Functions
+---
+
+## Error Functions
 
 Error functions measure how wrong our predictions are.
 
-Let:
+Let:  
+$Y$ = true value  
+$\hat{Y}$ = predicted value  
+Error = $Y - \hat{Y}$
 
-𝑌
-Y = true value
+---
 
-𝑌
-^
-Y
-^
- = predicted value
+### 2.1️⃣ Sum of Squared Errors (SSE)
 
-Error = 
-𝑌
-−
-𝑌
-^
-Y−
-Y
-^
+$$
+SSE = \sum_{e} \big( Y(e) - \hat{Y}(e) \big)^2
+$$
 
-2.1️⃣ Sum of Squared Errors (SSE)
-𝑆
-𝑆
-𝐸
-=
-∑
-𝑒
-(
-𝑌
-(
-𝑒
-)
-−
-𝑌
-^
-(
-𝑒
-)
-)
-2
-SSE=
-e
-∑
-	​
+- **Why squared?**  
+  - Makes all errors positive  
+  - Penalizes large mistakes more
 
-(Y
-(e)
-−
-Y
-^
-(e)
-)
-2
-📌 Why squared?
+**Example:**
 
-Makes all errors positive
+| True $Y$ | Predicted $\hat{Y}$ | Error | Squared Error |
+|----------|---------------------|-------|---------------|
+|    10    |        8            |   2   |       4       |
+|    15    |       12            |   3   |       9       |
+|    20    |       18            |   2   |       4       |
 
-Penalizes large mistakes more
+$$
+SSE = 4 + 9 + 4 = 17
+$$
 
-🔍 Example:
-True Y	Predicted Ŷ	Error	Squared Error
-10	8	2	4
-15	12	3	9
-20	18	2	4
-𝑆
-𝑆
-𝐸
-=
-4
-+
-9
-+
-4
-=
-17
-SSE=4+9+4=
-17
-	​
+✔ Large errors matter more in SSE.
 
+---
 
-✔ Large errors matter a lot in SSE
+### 2.2️⃣ Sum of Absolute Errors (SAE)
 
-2.2️⃣ Sum of Absolute Errors (SAE)
-𝑆
-𝐴
-𝐸
-=
-∑
-𝑒
-∣
-𝑌
-(
-𝑒
-)
-−
-𝑌
-^
-(
-𝑒
-)
-∣
-SAE=
-e
-∑
-	​
+$$
+SAE = \sum_{e} \left| Y(e) - \hat{Y}(e) \right|
+$$
 
-∣Y
-(e)
-−
-Y
-^
-(e)
-∣
-📌 Why absolute value?
+- **Why absolute value?**  
+  - Treats all errors linearly  
+  - Less sensitive to outliers
 
-Treats all errors linearly
+**Same Example as above:**
 
-Less sensitive to outliers
+| Error | Absolute Error |
+|-------|---------------|
+|   2   |       2       |
+|   3   |       3       |
+|   2   |       2       |
 
-🔍 Same example:
-Error	Absolute Error
-2	2
-3	3
-2	2
-𝑆
-𝐴
-𝐸
-=
-2
-+
-3
-+
-2
-=
-7
-SAE=2+3+2=
-7
-	​
+$$
+SAE = 2 + 3 + 2 = 7
+$$
 
+✔ Each mistake contributes equally.
 
-✔ Each mistake contributes equally
+---
 
-🔁 SSE vs SAE (intuition)
-Measure	Punishes big errors more?
-SSE	✅ Yes
-SAE	❌ No
-2.3️⃣ 0/1 Error (Classification-style)
-0/1 Error
-=
-Number of wrong predictions
-0/1 Error=Number of wrong predictions
+### 🔁 SSE vs SAE (intuition)
 
-Used mainly in classification
+| Measure | Punishes big errors more? |
+|---------|:------------------------:|
+|   SSE   |           ✅ Yes          |
+|   SAE   |           ❌ No           |
 
-For regression, used only after converting to categories
+---
 
-🔍 Example:
+### 2.3️⃣ 0/1 Error (Classification-style)
 
-True values: [A, B, A, A]
-Predictions: [A, A, A, B]
+$$
+0/1\ \text{Error} = \text{Number of wrong predictions}
+$$
 
+- Used mainly in classification
+- For regression, used only after converting to categories
+
+**Example:**
+
+True values: `[A, B, A, A]`  
+Predictions: `[A, A, A, B]`  
 Wrong predictions = 2
 
-0/1 Error
-=
-2
-0/1 Error=
-2
-	​
+$$
+0/1\ \text{Error} = 2
+$$
 
+✔ Does not care how wrong, only if wrong.
 
-✔ Does not care how wrong, only if wrong
+---
 
-2.4️⃣ Worst-case Error (Maximum Error)
-max
-⁡
-∣
-𝑌
-−
-𝑌
-^
-∣
-max∣Y−
-Y
-^
-∣
-📌 Meaning:
+### 2.4️⃣ Worst-case Error (Maximum Error)
 
-Focuses on the single biggest mistake
+$$
+\max \left| Y - \hat{Y} \right|
+$$
 
-Important in safety-critical systems
+- **Meaning:** Focuses on the single biggest mistake
+- Important in safety-critical systems
 
-🔍 Example:
-True Y	Predicted Ŷ	Absolute Error
-10	9	1
-15	10	5
-20	14	6
-Worst-case Error
-=
-6
-Worst-case Error=
-6
-	​
+**Example:**
 
+| True $Y$ | Predicted $\hat{Y}$ | Absolute Error |
+|----------|---------------------|---------------|
+|    10    |         9           |       1       |
+|    15    |        10           |       5       |
+|    20    |        14           |       6       |
 
-✔ Shows worst possible failure
+$$
+\text{Worst-case Error} = 6
+$$
 
-🔚 Summary Table
-Concept	What it measures
-Linear Regression	Predicts continuous values
-SSE	Overall squared error (big errors matter more)
-SAE	Overall absolute error
-0/1 Error	Number of wrong predictions
-Worst-case Error	Largest single error
+✔ Shows the worst possible failure.
+
+---
+
+### 🔚 Summary Table
+
+| Concept              | What it measures                           |
+|----------------------|--------------------------------------------|
+| Linear Regression    | Predicts continuous values                 |
+| SSE                  | Overall squared error (big errors matter more) |
+| SAE                  | Overall absolute error                     |
+| 0/1 Error            | Number of wrong predictions                |
+| Worst-case Error     | Largest single error                       |
 
 ---
 
